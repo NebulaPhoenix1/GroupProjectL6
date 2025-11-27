@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float movementSpeedGainPerSecond = 0.1f;
     [SerializeField] private float maxMovementSpeed = 5.0f;
     [SerializeField] private float laneWidth = 1.5f;
+    [SerializeField] private float nextInputDelay = 0.2f; //Time delay between lane switch inputs
+    private float inputDelayTimer = 0f;
     private Lanes currentLane = Lanes.Center;
     private Rigidbody playerRigidbody;
     private float speedGainCooldown;
@@ -42,45 +44,53 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         playerRigidbody.linearVelocity = new Vector3(0, 0, movementSpeed);
-        
-        moveInput = moveAction.ReadValue<float>();
-        if(moveInput != 0){Debug.Log(moveInput); }
-        //Handle lane switching
-        if(moveInput < 0) //Move Left
+        if(inputDelayTimer <= 0f)
         {
-            if(currentLane == Lanes.Center)
+            moveInput = moveAction.ReadValue<float>();
+            if(moveInput != 0){Debug.Log(moveInput); }
+            //Handle lane switching
+            if(moveInput < 0) //Move Left
             {
-                currentLane = Lanes.Left;
-                playerRigidbody.position = new Vector3(playerRigidbody.position.x - laneWidth, playerRigidbody.position.y, playerRigidbody.position.z);
+                if(currentLane == Lanes.Center)
+                {
+                    currentLane = Lanes.Left;
+                    playerRigidbody.position = new Vector3(playerRigidbody.position.x - laneWidth, playerRigidbody.position.y, playerRigidbody.position.z);
+                }
+                else if(currentLane == Lanes.Right)
+                {
+                    currentLane = Lanes.Center;
+                    playerRigidbody.position = new Vector3(playerRigidbody.position.x - laneWidth, playerRigidbody.position.y, playerRigidbody.position.z);
+                }
+                else
+                {
+                    //Stumble eventually
+                    Debug.Log("Already in Left Lane");
+                }
+                inputDelayTimer = nextInputDelay;
             }
-            else if(currentLane == Lanes.Right)
+            else if(moveInput > 0) //Move Right
             {
-                currentLane = Lanes.Center;
-                playerRigidbody.position = new Vector3(playerRigidbody.position.x - laneWidth, playerRigidbody.position.y, playerRigidbody.position.z);
-            }
-            else
-            {
-                //Stumble eventually
-                Debug.Log("Already in Left Lane");
+                if(currentLane == Lanes.Center)
+                {
+                    currentLane = Lanes.Right;
+                    playerRigidbody.position = new Vector3(playerRigidbody.position.x + laneWidth, playerRigidbody.position.y, playerRigidbody.position.z);
+                }
+                else if(currentLane == Lanes.Left)
+                {
+                    currentLane = Lanes.Center;
+                    playerRigidbody.position = new Vector3(playerRigidbody.position.x + laneWidth, playerRigidbody.position.y, playerRigidbody.position.z);
+                }
+                else
+                {
+                    //Stumble eventually
+                    Debug.Log("Already in Right Lane");
+                }
+                inputDelayTimer = nextInputDelay;
             }
         }
-        else if(moveInput > 0) //Move Right
+        else
         {
-            if(currentLane == Lanes.Center)
-            {
-                currentLane = Lanes.Right;
-                playerRigidbody.position = new Vector3(playerRigidbody.position.x + laneWidth, playerRigidbody.position.y, playerRigidbody.position.z);
-            }
-            else if(currentLane == Lanes.Left)
-            {
-                currentLane = Lanes.Center;
-                playerRigidbody.position = new Vector3(playerRigidbody.position.x + laneWidth, playerRigidbody.position.y, playerRigidbody.position.z);
-            }
-            else
-            {
-                //Stumble eventually
-                Debug.Log("Already in Right Lane");
-            }
+            inputDelayTimer -= Time.deltaTime;
         }
     }
 }
