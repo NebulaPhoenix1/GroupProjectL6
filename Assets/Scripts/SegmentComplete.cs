@@ -16,7 +16,7 @@ public class SegmentComplete : MonoBehaviour
         {
             CompletedSegment.AddListener(levelSpawner.SpawnLevel);
             CompletedSegment.AddListener(() => levelSpawner.CompleteSegment(segmentObject));
-            Debug.Log("LevelSpawner found and listener added in SegmentComplete script on: " + gameObject.name);
+            //Debug.Log("LevelSpawner found and listener added in SegmentComplete script on: " + gameObject.name);
         }
         else
         {
@@ -29,7 +29,7 @@ public class SegmentComplete : MonoBehaviour
         if(!isCompleted)
         {
             isCompleted = true;
-            Debug.Log("Trigger entered by: " + other.name);
+            //Debug.Log("Trigger entered by: " + other.name);
             if(other.CompareTag("Player"))
             {
                 CompletedSegment.Invoke();
