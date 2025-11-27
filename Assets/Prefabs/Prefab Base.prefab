@@ -127,6 +127,7 @@ MonoBehaviour:
   CompletedSegment:
     m_PersistentCalls:
       m_Calls: []
+  segmentObject: {fileID: 9098834875976951334}
 --- !u!1 &8339094749612366265
 GameObject:
   m_ObjectHideFlags: 0
