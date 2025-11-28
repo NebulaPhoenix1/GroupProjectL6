@@ -38,8 +38,8 @@ public class LevelSpawner : MonoBehaviour
     public void CompleteSegment(GameObject segment)
     {
         completedSegments.Enqueue(segment);
-        // Optionally, you can destroy old segments to free up memory
-        Debug.Log("Queue Length: " + completedSegments.Count);
+        //Optionally, you can destroy old segments to free up memory
+        //Debug.Log("Queue Length: " + completedSegments.Count);
         if (completedSegments.Count > segmentDespawnDistance)
         {
             GameObject oldSegment = completedSegments.Dequeue();

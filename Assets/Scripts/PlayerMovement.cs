@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -23,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     private InputAction moveAction;
     private float moveInput;
 
-    
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float movementSpeed = 2.0f;
     [SerializeField] private float movementSpeedGainPerSecond = 0.1f;
@@ -124,8 +124,26 @@ public class PlayerMovement : MonoBehaviour
                 targetX = laneWidth;
                 break;
         }
-        playerRigidbody.position = new Vector3(targetX, playerRigidbody.position.y, playerRigidbody.position.z);
+        StartCoroutine(SmoothLaneSwitch(targetX));    
+        //Invoke unity event when the lane switch is complete
         currentLane = targetLane;
+        OnLaneChange.Invoke();
+    }
+
+    private IEnumerator SmoothLaneSwitch(float targetX)
+    {
+        //Math to make player smoothly switch lanes instead of snapping between them
+        float switchDuration = 0.2f;
+        float elapsedTime = 0f;
+        float startX = playerRigidbody.position.x;
+        while(elapsedTime < switchDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float newX = Mathf.SmoothStep(startX, targetX, elapsedTime / switchDuration);
+            playerRigidbody.position = new Vector3(newX, playerRigidbody.position.y, playerRigidbody.position.z);
+            yield return null;  
+        }
+        playerRigidbody.position = new Vector3(targetX, playerRigidbody.position.y, playerRigidbody.position.z);
         OnLaneChange.Invoke();
     }
 
