@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class ButtonsFunctionality : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    // Play game button
+    public void PlayGame()
     {
-        
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Luke's Scene");
     }
 
-    // Update is called once per frame
-    void Update()
+    // Quit game button
+    public void QuitGame()
     {
-        
+        Debug.Log("Exit!");
+        Application.Quit();
     }
 }
