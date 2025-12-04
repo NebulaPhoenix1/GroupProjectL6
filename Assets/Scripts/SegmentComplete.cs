@@ -11,17 +11,17 @@ public class SegmentComplete : MonoBehaviour
     private bool isCompleted = false;
     void Start()
     {
-        levelSpawner = FindFirstObjectByType<LevelSpawner>();
-        if(levelSpawner != null)
-        {
-            CompletedSegment.AddListener(levelSpawner.SpawnLevel);
-            CompletedSegment.AddListener(() => levelSpawner.CompleteSegment(segmentObject));
-            //Debug.Log("LevelSpawner found and listener added in SegmentComplete script on: " + gameObject.name);
-        }
-        else
-        {
-            Debug.LogError("LevelSpawner not found in the scene by: " + gameObject.name + " in SegmentComplete script.");
-        }
+        //levelSpawner = FindFirstObjectByType<LevelSpawner>();
+        //if(levelSpawner != null)
+        //{
+        //    CompletedSegment.AddListener(levelSpawner.SpawnLevel);
+        //    CompletedSegment.AddListener(() => levelSpawner.CompleteSegment(segmentObject));
+        //    //Debug.Log("LevelSpawner found and listener added in SegmentComplete script on: " + gameObject.name);
+        //}
+        //else
+        // {
+        //    Debug.LogError("LevelSpawner not found in the scene by: " + gameObject.name + " in SegmentComplete script.");
+        //}
     }
     
     public void OnTriggerEnter(Collider other)
