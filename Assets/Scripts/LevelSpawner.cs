@@ -1,55 +1,91 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 using System.Collections.Generic;
 
 public class LevelSpawner : MonoBehaviour
 {
-    /* 
-        Takes a set of predesigned level segments and spawns them in a sequence to create a continuous level.
-        Each level segment a 3D prefab of the same length that can be connected end-to-end
-    */
-    [SerializeField] private GameObject[] levelSegments; // Array of level segment prefabs
-    private Vector3 nextSpawnPoint = Vector3.zero; // Position to spawn the next segment
-    private Queue<GameObject> completedSegments = new Queue<GameObject>();
-    private int segmentDespawnDistance = 3; //How many segments need to be passed before despawning starts
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    /*
+    Spawns prefabs in a line which move under the player to create an endless runner effect
+    The player only moves left and right, the level moves underneath them
+    */    
+    [Header("Level Settings")]
+    [SerializeField] private GameObject [] levelPrefabs;
+    [SerializeField] private float segmentLength;
+    [SerializeField] private int initialSegmentCount; 
+    
+    [Header("Movement Settings")]
+    [SerializeField] private float moveSpeed = 10f; // Speed the world moves towards camera
+    [SerializeField] private float deleteZ = -20f; // The Z position where segments get destroyed
+    [SerializeField] private float moveSpeedGainPerSec = 0.01f;
+    [SerializeField] private float maxMoveSpeed = 30f;
+    
+    private List<GameObject> spawnedLevels = new List<GameObject>(); 
+    private float spawnZ = 0f; 
+    
     void Start()
     {
-        if (levelSegments.Length > 0)
+        // Spawn the initial level segments
+        for (int i = 0; i < initialSegmentCount; i++)
         {
-            for(int i = 0; i < 10; i++)
-            {
-                SpawnLevel();   
-            }
-        }
-        else {  Debug.LogError("No level segments assigned to LevelSpawner."); }
-    }
-
-    public void SpawnLevel()
-    {
-        //Select a random segment and spawn it at the next spawn point
-        int selectedIndex = Random.Range(0, levelSegments.Length);
-        GameObject segment = Instantiate(levelSegments[selectedIndex], nextSpawnPoint, Quaternion.identity);
-        //Update next spawn point for the next segment
-        nextSpawnPoint += new Vector3(0, 0, 5);
-    }
-
-    public void CompleteSegment(GameObject segment)
-    {
-        completedSegments.Enqueue(segment);
-        //Optionally, you can destroy old segments to free up memory
-        //Debug.Log("Queue Length: " + completedSegments.Count);
-        if (completedSegments.Count > segmentDespawnDistance)
-        {
-            GameObject oldSegment = completedSegments.Dequeue();
-            Destroy(oldSegment);
+            SpawnSegment();
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        UpdateMoveSpeed();
+        MoveSegments();
+        CheckForCleanup();
+    }
+
+    void UpdateMoveSpeed()
+    {
+        if (moveSpeed < maxMoveSpeed)
+        {
+            moveSpeed += moveSpeedGainPerSec * Time.deltaTime;
+            if (moveSpeed > maxMoveSpeed)
+            {
+                moveSpeed = maxMoveSpeed;
+            }
+        }
+    }
+
+    void MoveSegments()
+    {
+        // 1. Move the actual objects
+        foreach (GameObject segment in spawnedLevels)
+        {
+            segment.transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
+        }
+
+        spawnZ -= moveSpeed * Time.deltaTime;
+    }
+
+    void CheckForCleanup()
+    {
+        // Check if the oldest segment (index 0) has moved past the delete threshold
+        if (spawnedLevels.Count > 0 && spawnedLevels[0].transform.position.z < deleteZ)
+        {
+            RemoveOldestSegment();
+            SpawnSegment(); // Add a new one at the end to keep the loop going
+        }
+    }
+
+    void SpawnSegment()
+    {
+        int selectedPrefabIndex = Random.Range(0, levelPrefabs.Length);
         
+        // Instantiate at the current spawnZ position
+        GameObject segment = Instantiate(levelPrefabs[selectedPrefabIndex], new Vector3(0, 0, spawnZ), Quaternion.identity);
+        
+        spawnedLevels.Add(segment);
+        spawnZ += segmentLength;
+    }
+
+    void RemoveOldestSegment()
+    {
+        GameObject oldSegment = spawnedLevels[0];
+        spawnedLevels.RemoveAt(0); // Remove from list
+        Destroy(oldSegment);       // Remove from scene
     }
 }
