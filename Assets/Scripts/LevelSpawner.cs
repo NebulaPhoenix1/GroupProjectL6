@@ -88,4 +88,9 @@ public class LevelSpawner : MonoBehaviour
         spawnedLevels.RemoveAt(0); // Remove from list
         Destroy(oldSegment);       // Remove from scene
     }
+
+    public float GetSpeed()
+    {
+        return moveSpeed / 10;
+    }
 }
