@@ -21,6 +21,7 @@ public class GameMaster : MonoBehaviour
 
     private float rawScore;
     private float scoreOffset;
+    private bool gameplayStarted;
     private bool highScoreAchieved = false;
     private int currentScore = 0;
     private int highScore = 0;
@@ -44,12 +45,14 @@ public class GameMaster : MonoBehaviour
         
         if (gameState == GameState.MainMenu)
         {
+            gameplayStarted = false;
             scoreOffset = Time.time;
             //Debug.Log("ScoreOffset: " + scoreOffset);
             return;
         }
         else
         {
+            gameplayStarted = true;
             rawScore = (Time.time - scoreOffset) * levelSpawner.GetSpeed();
             currentScore = Convert.ToInt32(rawScore);
             //Debug.Log("CurrentScore: " + currentScore + " Time: " + Time.time + " Raw Score: " + rawScore);
@@ -80,6 +83,11 @@ public class GameMaster : MonoBehaviour
     public int GetCurrentScore()
     {
         return currentScore;
+    }
+
+    public bool GetGameplayState()
+    {
+        return gameplayStarted;
     }
 
     public void IncrementCollectiblesGained()

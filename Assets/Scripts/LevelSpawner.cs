@@ -19,11 +19,13 @@ public class LevelSpawner : MonoBehaviour
     [SerializeField] private float moveSpeedGainPerSec = 0.01f;
     [SerializeField] private float maxMoveSpeed = 30f;
     
+    private GameMaster gameMaster;
     private List<GameObject> spawnedLevels = new List<GameObject>(); 
     private float spawnZ = 0f; 
     
     void Start()
     {
+        gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
         // Spawn the initial level segments
         for (int i = 0; i < initialSegmentCount; i++)
         {
@@ -40,7 +42,7 @@ public class LevelSpawner : MonoBehaviour
 
     void UpdateMoveSpeed()
     {
-        if (moveSpeed < maxMoveSpeed)
+        if (moveSpeed < maxMoveSpeed && gameMaster.GetGameplayState())
         {
             moveSpeed += moveSpeedGainPerSec * Time.deltaTime;
             if (moveSpeed > maxMoveSpeed)
