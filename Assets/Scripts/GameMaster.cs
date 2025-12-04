@@ -1,11 +1,23 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Unity.Cinemachine;
 
 public class GameMaster : MonoBehaviour
 {
+    enum GameState
+    {
+        MainMenu,
+        Gameplay
+    }
+
+
     //Unity Events
     public UnityEvent OnHighScoreAchieved; //Called when the player gets a highscore in the current run
-    
+    public UnityEvent OnGameStart;
+
+    [SerializeField] private GameState gameState;
+    [SerializeField] private CinemachineCamera cineCam;
+
     private bool highScoreAchieved = false;
     private int currentScore = 0;
     private int highScore = 0;
@@ -21,17 +33,30 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentScore = (int)playerTransform.position.z;
-        if(currentScore > highScore)
+        if (gameState == GameState.MainMenu)
         {
-            highScore = currentScore;
-            //Only fire high score achieved event once per run
-            if(!highScoreAchieved)
-            {
-                highScoreAchieved = true;
-                OnHighScoreAchieved.Invoke();
-            }
+            return;
         }
+        else
+        {
+            currentScore = (int)playerTransform.position.z;
+            if (currentScore > highScore)
+            {
+                highScore = currentScore;
+                //Only fire high score achieved event once per run
+                if (!highScoreAchieved)
+                {
+                    highScoreAchieved = true;
+                    OnHighScoreAchieved.Invoke();
+                }
+            }
+            return;
+        }
+    }
+
+    public void StartGame()
+    {
+        gameState = GameState.Gameplay;
     }
 
     void OnDestroy()
