@@ -20,6 +20,13 @@ public class LevelSpawner : MonoBehaviour
     [SerializeField] private float moveSpeedGainPerSec = 0.01f;
     [SerializeField] private float maxMoveSpeed = 30f;
     
+    private GameMaster gameMaster;
+    private List<GameObject> spawnedLevels = new List<GameObject>(); 
+    private float spawnZ = 0f; 
+    
+    void Start()
+    {
+        gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
     private List<GameObject> activeSegments = new List<GameObject>(); 
     private float spawnZ = 0f;
 
@@ -52,7 +59,7 @@ public class LevelSpawner : MonoBehaviour
 
     void UpdateMoveSpeed()
     {
-        if (moveSpeed < maxMoveSpeed)
+        if (moveSpeed < maxMoveSpeed && gameMaster.GetGameplayState())
         {
             moveSpeed += moveSpeedGainPerSec * Time.deltaTime;
             if (moveSpeed > maxMoveSpeed)
@@ -134,5 +141,10 @@ public class LevelSpawner : MonoBehaviour
             Destroy(segment);
             Debug.LogWarning("Attempted to return a segment to a non-existent pool: " + segment.name);
         }
+    }
+
+    public float GetSpeed()
+    {
+        return moveSpeed / 10;
     }
 }
