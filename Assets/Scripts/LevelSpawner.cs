@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using Unity.Collections;
 
 public class LevelSpawner : MonoBehaviour
 {
@@ -26,6 +27,22 @@ public class LevelSpawner : MonoBehaviour
     void Start()
     {
         gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
+    private List<GameObject> activeSegments = new List<GameObject>(); 
+    private float spawnZ = 0f;
+
+    //Instead of instanting and destroying segments, we're using an object pool
+    //This means we can just reactivate and move segments; only Instantiating and Destroying when necessary as these calls are spenny. 
+    //The string is the prefab name with the queue of objects being all the instances of that prefab
+    private Dictionary<string, Queue<GameObject>> segmentPool = new Dictionary<string, Queue<GameObject>>();
+
+    void Start()
+    {
+        //Setup the dictionary
+        foreach(GameObject prefab in levelPrefabs)
+        {
+            segmentPool.Add(prefab.name, new Queue<GameObject>());
+        }
+
         // Spawn the initial level segments
         for (int i = 0; i < initialSegmentCount; i++)
         {
@@ -55,7 +72,7 @@ public class LevelSpawner : MonoBehaviour
     void MoveSegments()
     {
         // 1. Move the actual objects
-        foreach (GameObject segment in spawnedLevels)
+        foreach (GameObject segment in activeSegments)
         {
             segment.transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
         }
@@ -66,7 +83,7 @@ public class LevelSpawner : MonoBehaviour
     void CheckForCleanup()
     {
         // Check if the oldest segment (index 0) has moved past the delete threshold
-        if (spawnedLevels.Count > 0 && spawnedLevels[0].transform.position.z < deleteZ)
+        if (activeSegments.Count > 0 && activeSegments[0].transform.position.z < deleteZ)
         {
             RemoveOldestSegment();
             SpawnSegment(); // Add a new one at the end to keep the loop going
@@ -76,19 +93,54 @@ public class LevelSpawner : MonoBehaviour
     void SpawnSegment()
     {
         int selectedPrefabIndex = Random.Range(0, levelPrefabs.Length);
-        
-        // Instantiate at the current spawnZ position
-        GameObject segment = Instantiate(levelPrefabs[selectedPrefabIndex], new Vector3(0, 0, spawnZ), Quaternion.identity);
-        
-        spawnedLevels.Add(segment);
+        GameObject selectedPrefab = levelPrefabs[selectedPrefabIndex];
+        GameObject segment = GetSegmentFromPool(selectedPrefab);
+        segment.transform.position = new Vector3(0, 0, spawnZ);
+        segment.SetActive(true);
+        activeSegments.Add(segment);
         spawnZ += segmentLength;
     }
 
     void RemoveOldestSegment()
     {
-        GameObject oldSegment = spawnedLevels[0];
-        spawnedLevels.RemoveAt(0); // Remove from list
-        Destroy(oldSegment);       // Remove from scene
+        GameObject oldSegment = activeSegments[0];
+        activeSegments.RemoveAt(0); 
+        ReturnSegmentToPool(oldSegment);
+    }
+
+    private GameObject GetSegmentFromPool(GameObject prefab)
+    {
+        //If we have an available segment in the pool, reuse it
+        if (segmentPool.ContainsKey(prefab.name) && segmentPool[prefab.name].Count > 0)
+        {
+            GameObject segment = segmentPool[prefab.name].Dequeue();
+            segment.SetActive(true);
+            Debug.Log("Reusing segment from pool: " + prefab.name);
+            return segment;
+        }
+        //Otherwise, instantiate a new one
+        else
+        {
+            GameObject segment = Instantiate(prefab);
+            segment.name = prefab.name; // Ensure the name matches for pooling
+            Debug.Log("Instantiating new segment: " + prefab.name);
+            return segment;
+        }
+    }
+
+    private void ReturnSegmentToPool(GameObject segment)
+    {
+        segment.SetActive(false);
+        if (segmentPool.ContainsKey(segment.name))
+        {
+            segmentPool[segment.name].Enqueue(segment);
+            Debug.Log("Returned segment to pool: " + segment.name);
+        }
+        else
+        {
+            Destroy(segment);
+            Debug.LogWarning("Attempted to return a segment to a non-existent pool: " + segment.name);
+        }
     }
 
     public float GetSpeed()
