@@ -22,13 +22,9 @@ public class LevelSpawner : MonoBehaviour
     
     private GameMaster gameMaster;
     private List<GameObject> spawnedLevels = new List<GameObject>(); 
-    private float spawnZ = 0f; 
-    
-    void Start()
-    {
-        gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
-    private List<GameObject> activeSegments = new List<GameObject>(); 
     private float spawnZ = 0f;
+    private List<GameObject> activeSegments = new List<GameObject>(); 
+    
 
     //Instead of instanting and destroying segments, we're using an object pool
     //This means we can just reactivate and move segments; only Instantiating and Destroying when necessary as these calls are spenny. 
@@ -37,8 +33,9 @@ public class LevelSpawner : MonoBehaviour
 
     void Start()
     {
+        gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
         //Setup the dictionary
-        foreach(GameObject prefab in levelPrefabs)
+        foreach (GameObject prefab in levelPrefabs)
         {
             segmentPool.Add(prefab.name, new Queue<GameObject>());
         }
