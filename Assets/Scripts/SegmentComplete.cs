@@ -37,7 +37,8 @@ public class SegmentComplete : MonoBehaviour
         }
         else
         {
-            Debug.Log("Segment already completed, ignoring trigger by: " + other.name);
+            //Debug.Log("Segment already completed, ignoring trigger by: " + other.name);
+            return;
         }
     }
 }
