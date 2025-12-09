@@ -96,6 +96,17 @@ public class LevelSpawner : MonoBehaviour
         segment.SetActive(true);
         activeSegments.Add(segment);
         spawnZ += segmentLength;
+
+        //If main game has started
+        if(gameMaster.GetGameplayState())
+        {
+            //Iterate through each obstacle in segment and spawn in obstacle
+            ObjectSpawner[] spawners = segment.GetComponentsInChildren<ObjectSpawner>();
+            foreach (ObjectSpawner spawner in spawners)
+            {
+                spawner.SpawnObject();
+            }
+        } 
     }
 
     void RemoveOldestSegment()
@@ -112,7 +123,7 @@ public class LevelSpawner : MonoBehaviour
         {
             GameObject segment = segmentPool[prefab.name].Dequeue();
             segment.SetActive(true);
-            Debug.Log("Reusing segment from pool: " + prefab.name);
+            //Debug.Log("Reusing segment from pool: " + prefab.name);
             return segment;
         }
         //Otherwise, instantiate a new one
@@ -120,7 +131,7 @@ public class LevelSpawner : MonoBehaviour
         {
             GameObject segment = Instantiate(prefab);
             segment.name = prefab.name; // Ensure the name matches for pooling
-            Debug.Log("Instantiating new segment: " + prefab.name);
+            //Debug.Log("Instantiating new segment: " + prefab.name);
             return segment;
         }
     }
@@ -131,12 +142,12 @@ public class LevelSpawner : MonoBehaviour
         if (segmentPool.ContainsKey(segment.name))
         {
             segmentPool[segment.name].Enqueue(segment);
-            Debug.Log("Returned segment to pool: " + segment.name);
+            //Debug.Log("Returned segment to pool: " + segment.name);
         }
         else
         {
             Destroy(segment);
-            Debug.LogWarning("Attempted to return a segment to a non-existent pool: " + segment.name);
+            //Debug.LogWarning("Attempted to return a segment to a non-existent pool: " + segment.name);
         }
     }
 
