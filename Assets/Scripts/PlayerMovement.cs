@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     //Input System
     private InputAction moveAction;
     private float moveInput;
+    private GameMaster gameMaster;
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float movementSpeed = 2.0f;
@@ -42,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
         playerRigidbody = GetComponent<Rigidbody>();
         moveAction = InputSystem.actions.FindAction("Move");
         //Adding a listener to the OnStumble event through script
@@ -51,6 +53,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Process no player movement if the game has not started (aka still in a menu)
+        if(gameMaster.GetGameplayState() == false) { return; }
+
         if(movementSpeed < maxMovementSpeed)
         {
             speedGainCooldown+=Time.deltaTime;
