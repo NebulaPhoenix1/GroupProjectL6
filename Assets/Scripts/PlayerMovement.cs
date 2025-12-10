@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     //Input System
     private InputAction moveAction;
     private float moveInput;
+    private GameMaster gameMaster;
+    private LevelSpawner levelSpawner;
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float movementSpeed = 2.0f;
@@ -36,12 +38,23 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody playerRigidbody;
 
     //Stumble Values
-    private bool isStumbling = false; 
+    [Header("Stumble Settings")]
+    private bool isStumbling = false;
+    [SerializeField] private Transform stumbleCheckOrigin;
+    [SerializeField] private float stumbleRayDefaultDistance;
+
+    [Tooltip("How much the stumble check ray's distance is multiplied by world speed e.g. 1 is multiply world speed x default distance and 2 is 2 x world speed x default distance")]
+    [SerializeField] private float worldSpeedRayDistanceMultiplier = 1f;
+    [SerializeField] LayerMask stumbleRayCastExcludedlayers;
+
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
+        levelSpawner = GameObject.Find("Level Spawner").GetComponent<LevelSpawner>();
+
         playerRigidbody = GetComponent<Rigidbody>();
         moveAction = InputSystem.actions.FindAction("Move");
         //Adding a listener to the OnStumble event through script
@@ -51,6 +64,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Process no player movement if the game has not started (aka still in a menu)
+        if(gameMaster.GetGameplayState() == false) { return; }
+
         if(movementSpeed < maxMovementSpeed)
         {
             speedGainCooldown+=Time.deltaTime;
@@ -124,13 +140,33 @@ public class PlayerMovement : MonoBehaviour
                 targetX = laneWidth;
                 break;
         }
-        StartCoroutine(SmoothLaneSwitch(targetX));    
-        //Invoke unity event when the lane switch is complete
-        currentLane = targetLane;
-        OnLaneChange.Invoke();
+
+        //Do a raycast every time we switch lane just before the switch takes place to see if it was a close call or not
+        //If it was a close call, we'll stumble but let the switch occur.
+        RaycastHit hit;
+        float raycastDistance = worldSpeedRayDistanceMultiplier * levelSpawner.GetSpeed() * stumbleRayDefaultDistance;
+        Debug.Log("Raycast Distance: " + raycastDistance);
+        if(Physics.Raycast(stumbleCheckOrigin.position, stumbleCheckOrigin.forward, out hit, raycastDistance, stumbleRayCastExcludedlayers))
+        {
+            Debug.Log("Stumbled..");
+            Debug.DrawLine(stumbleCheckOrigin.position, hit.point, Color.red, 2);
+            StumbleHandle();
+            StartCoroutine(LaneSwitch(targetX));
+            currentLane = targetLane;
+            OnLaneChange.Invoke();
+        }
+        else
+        {
+            Debug.Log("Smooth lane switch!");
+            Debug.DrawLine(stumbleCheckOrigin.position, stumbleCheckOrigin.position + stumbleCheckOrigin.forward * raycastDistance, Color.green, 2);
+            StartCoroutine(LaneSwitch(targetX));    
+            //Invoke unity event when the lane switch is complete
+            currentLane = targetLane;
+            OnLaneChange.Invoke();
+        }
     }
 
-    private IEnumerator SmoothLaneSwitch(float targetX)
+    private IEnumerator LaneSwitch(float targetX)
     {
         //Math to make player smoothly switch lanes instead of snapping between them
         float switchDuration = 0.2f;
@@ -161,6 +197,7 @@ public class PlayerMovement : MonoBehaviour
             isStumbling = true;
             //Reduce speed temporarily
             movementSpeed *= 0.5f;
+            OnStumble.Invoke();
             //Recover after 1 second
             Invoke("RecoverFromStumble", 1.0f);
         }
