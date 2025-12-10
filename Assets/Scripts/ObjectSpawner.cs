@@ -56,20 +56,20 @@ public abstract class ObjectSpawner : MonoBehaviour
         //Create key if it doesn't exist
         if(!objectPool.ContainsKey(searchObject.name))
         {
-            Debug.Log("Making new key for object pool");
+            //Debug.Log("Making new key for object pool");
             objectPool.Add(searchObject.name, new Queue<GameObject>());
         }
         //Search pool
         if(objectPool[searchObject.name].Count > 0)
         {
-            Debug.Log("Reusing object from pool: " + searchObject.name);
+            //Debug.Log("Reusing object from pool: " + searchObject.name);
             GameObject pooledObject = objectPool[searchObject.name].Dequeue();
             pooledObject.transform.parent = transform; //Reparent to spawner
             return pooledObject;
         }
         else //No objects in pool, instantiate a new one
         {
-            Debug.Log("Instantiating new object for pool: " + searchObject.name);
+            //Debug.Log("Instantiating new object for pool: " + searchObject.name);
             GameObject newObject = Instantiate(searchObject, transform);
             newObject.name = searchObject.name; //Ensure name matches for pooling
             return newObject;
@@ -83,7 +83,7 @@ public abstract class ObjectSpawner : MonoBehaviour
         if(objectPool.ContainsKey(returnObject.name))
         {
             objectPool[returnObject.name].Enqueue(returnObject);
-            Debug.Log("Returned object to pool: " + returnObject.name);
+            //Debug.Log("Returned object to pool: " + returnObject.name);
         }
         else
         {
