@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float jumpForce;
-    [SerializeField] private float laneWidth = 1.5f;
+    [SerializeField] private float laneWidth = 2f;
     [SerializeField] private float nextInputDelay = 3f; //Time delay between lane switch inputs
     [SerializeField] private float jumpInputDelay = 1.0f;
     private float currentJumpDelay;
