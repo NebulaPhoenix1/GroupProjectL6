@@ -18,22 +18,24 @@ public class PlayerMovement : MonoBehaviour
     public UnityEvent OnStumble; //Called when the player hits into a wall but does not die
     public UnityEvent OnRecover; //Called when the player has recovered from a stumble and is back to normal
     public UnityEvent OnLaneChange; //Called when the player successfully changes lanes
+    public UnityEvent OnJump; //Called when the player is mid air
     public UnityEvent OnGameOver; //Called when the player dies. RIP.
 
     //Input System
     private InputAction moveAction;
+    private InputAction jumpAction;
     private float moveInput;
     private GameMaster gameMaster;
     private LevelSpawner levelSpawner;
 
     [Header("Movement Speed and Input Settings")]
-    [SerializeField] private float movementSpeed = 2.0f;
-    [SerializeField] private float movementSpeedGainPerSecond = 0.1f;
-    [SerializeField] private float maxMovementSpeed = 5.0f;
+    [SerializeField] private float jumpForce;
     [SerializeField] private float laneWidth = 1.5f;
-    [SerializeField] private float nextInputDelay = 0.2f; //Time delay between lane switch inputs
+    [SerializeField] private float nextInputDelay = 3f; //Time delay between lane switch inputs
+    [SerializeField] private float jumpInputDelay = 1.0f;
+    private float currentJumpDelay;
+
     private float inputDelayTimer = 0f;
-    private float speedGainCooldown;
     private Lanes currentLane = Lanes.Center;
     private Rigidbody playerRigidbody;
 
@@ -57,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerRigidbody = GetComponent<Rigidbody>();
         moveAction = InputSystem.actions.FindAction("Move");
+        jumpAction = InputSystem.actions.FindAction("Jump");
         //Adding a listener to the OnStumble event through script
         OnStumble.AddListener(StumbleHandle);
     }
@@ -67,16 +70,6 @@ public class PlayerMovement : MonoBehaviour
         //Process no player movement if the game has not started (aka still in a menu)
         if(gameMaster.GetGameplayState() == false) { return; }
 
-        if(movementSpeed < maxMovementSpeed)
-        {
-            speedGainCooldown+=Time.deltaTime;
-            if(speedGainCooldown >= 1.0f)
-            {
-                movementSpeed += movementSpeedGainPerSecond;
-                speedGainCooldown = 0f;
-            }
-        }
-        playerRigidbody.linearVelocity = new Vector3(0, 0, movementSpeed);
         if(inputDelayTimer <= 0f)
         {
             moveInput = moveAction.ReadValue<float>();
@@ -122,6 +115,16 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             inputDelayTimer -= Time.deltaTime;
+        }
+        //Handle Jump
+        if (jumpAction.WasPressedThisFrame() && currentJumpDelay <= 0f)
+        {
+            playerRigidbody.AddForce(new Vector3(0, jumpForce, 0));
+            currentJumpDelay = jumpInputDelay;
+        }
+        else
+        {
+            currentJumpDelay -= Time.deltaTime;
         }
     }
 
@@ -195,8 +198,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             isStumbling = true;
-            //Reduce speed temporarily
-            movementSpeed *= 0.5f;
+            
             OnStumble.Invoke();
             //Recover after 1 second
             Invoke("RecoverFromStumble", 1.0f);
@@ -206,8 +208,6 @@ public class PlayerMovement : MonoBehaviour
     private void RecoverFromStumble()
     {
         isStumbling = false;
-        //Restore speed
-        movementSpeed *= 2.0f;
         OnRecover.Invoke();
     }
 }
