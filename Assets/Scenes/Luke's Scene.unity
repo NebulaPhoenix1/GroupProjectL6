@@ -3584,7 +3584,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 235492045715688470, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_Mass
-      value: 0.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 710210701519522452, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3628,7 +3628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: jumpForce
-      value: 100
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: nextInputDelay
