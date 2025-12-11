@@ -2505,6 +2505,7 @@ MonoBehaviour:
   maxMovementSpeed: 0
   laneWidth: 1.5
   nextInputDelay: 0.2
+  jumpForce: 10
 --- !u!1 &1851322891
 GameObject:
   m_ObjectHideFlags: 0

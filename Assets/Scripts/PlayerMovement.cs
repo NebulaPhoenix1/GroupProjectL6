@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Input System
     private InputAction moveAction;
+    private InputAction jumpAction;
     private float moveInput;
 
     [Header("Movement Speed and Input Settings")]
@@ -36,14 +37,19 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody playerRigidbody;
 
     //Stumble Values
-    private bool isStumbling = false; 
-    
+    private bool isStumbling = false;
+
+    //Jump Variables
+    [SerializeField] private float jumpForce;
+    private bool isGrounded = false;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         moveAction = InputSystem.actions.FindAction("Move");
+        jumpAction = InputSystem.actions.FindAction("Jump");
         //Adding a listener to the OnStumble event through script
         OnStumble.AddListener(StumbleHandle);
     }
@@ -51,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if(movementSpeed < maxMovementSpeed)
         {
             speedGainCooldown+=Time.deltaTime;
@@ -106,6 +113,21 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             inputDelayTimer -= Time.deltaTime;
+        }
+    }
+
+    void OnJump()
+    {
+        Debug.Log("Jump pressed");
+        if (!isGrounded)
+        {
+            playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            Debug.Log("Jump!");
+        }
+        else
+        {
+            playerRigidbody.linearVelocity = Vector3.zero;
+            Debug.Log("Can't jump");
         }
     }
 
