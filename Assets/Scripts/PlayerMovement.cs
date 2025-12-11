@@ -23,15 +23,19 @@ public class PlayerMovement : MonoBehaviour
 
     //Input System
     private InputAction moveAction;
+    private InputAction jumpAction;
     private float moveInput;
     private GameMaster gameMaster;
     private LevelSpawner levelSpawner;
 
     [Header("Movement Speed and Input Settings")]
+    [SerializeField] private float jumpForce;
     [SerializeField] private float laneWidth = 1.5f;
-    [SerializeField] private float nextInputDelay = 0.2f; //Time delay between lane switch inputs
+    [SerializeField] private float nextInputDelay = 3f; //Time delay between lane switch inputs
+    [SerializeField] private float jumpInputDelay = 1.0f;
+    private float currentJumpDelay;
+
     private float inputDelayTimer = 0f;
-    private float speedGainCooldown;
     private Lanes currentLane = Lanes.Center;
     private Rigidbody playerRigidbody;
 
@@ -55,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerRigidbody = GetComponent<Rigidbody>();
         moveAction = InputSystem.actions.FindAction("Move");
+        jumpAction = InputSystem.actions.FindAction("Jump");
         //Adding a listener to the OnStumble event through script
         OnStumble.AddListener(StumbleHandle);
     }
@@ -110,6 +115,16 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             inputDelayTimer -= Time.deltaTime;
+        }
+        //Handle Jump
+        if (jumpAction.WasPressedThisFrame() && currentJumpDelay <= 0f)
+        {
+            playerRigidbody.AddForce(new Vector3(0, jumpForce, 0));
+            currentJumpDelay = jumpInputDelay;
+        }
+        else
+        {
+            currentJumpDelay -= Time.deltaTime;
         }
     }
 
