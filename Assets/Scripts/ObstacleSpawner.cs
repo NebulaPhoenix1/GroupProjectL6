@@ -16,7 +16,6 @@ public class ObstacleSpawner : ObjectSpawner
 
     protected override void Awake()
     {
-        
         base.Awake(); //Calls base awake in ObjectSpawner.cs
     }
 }
