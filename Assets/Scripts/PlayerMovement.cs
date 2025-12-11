@@ -119,7 +119,8 @@ public class PlayerMovement : MonoBehaviour
         //Handle Jump
         if (jumpAction.WasPressedThisFrame() && currentJumpDelay <= 0f)
         {
-            playerRigidbody.AddForce(new Vector3(0, jumpForce, 0));
+            playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            OnJump.Invoke();
             currentJumpDelay = jumpInputDelay;
         }
         else
