@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using UnityEngine.Events;
 using Unity.Cinemachine;
 
@@ -18,28 +19,43 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private GameState gameState;
     [SerializeField] private CinemachineCamera cineCam;
 
+    private float rawScore;
+    private float scoreOffset;
+    private bool gameplayStarted;
     private bool highScoreAchieved = false;
     private int currentScore = 0;
     private int highScore = 0;
     private int collectiblesGained = 0;
+
     private Transform playerTransform;
+    private LevelSpawner levelSpawner;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        rawScore = 0;
+        scoreOffset = 0;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        levelSpawner = GameObject.Find("Level Spawner").GetComponent<LevelSpawner>();
         highScore = PlayerPrefs.GetInt("HighScore", 0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (gameState == GameState.MainMenu)
         {
+            gameplayStarted = false;
+            scoreOffset = Time.time;
+            //Debug.Log("ScoreOffset: " + scoreOffset);
             return;
         }
         else
         {
-            currentScore = (int)playerTransform.position.z;
+            gameplayStarted = true;
+            rawScore = (Time.time - scoreOffset) * levelSpawner.GetSpeed();
+            currentScore = Convert.ToInt32(rawScore);
+            //Debug.Log("CurrentScore: " + currentScore + " Time: " + Time.time + " Raw Score: " + rawScore);
             if (currentScore > highScore)
             {
                 highScore = currentScore;
@@ -67,6 +83,11 @@ public class GameMaster : MonoBehaviour
     public int GetCurrentScore()
     {
         return currentScore;
+    }
+
+    public bool GetGameplayState()
+    {
+        return gameplayStarted;
     }
 
     public void IncrementCollectiblesGained()
