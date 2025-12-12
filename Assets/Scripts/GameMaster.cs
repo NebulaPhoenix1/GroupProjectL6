@@ -93,6 +93,7 @@ public class GameMaster : MonoBehaviour
     public void IncrementCollectiblesGained()
     {
         collectiblesGained++;
+        SaveValues();
     }
 
     public void SaveValues()
