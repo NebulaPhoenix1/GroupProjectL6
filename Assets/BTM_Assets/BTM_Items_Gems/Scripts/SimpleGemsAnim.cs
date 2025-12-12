@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+//Script grabbed from an asset pack 
+
 namespace Benjathemaker
 {
     public class SimpleGemsAnim : MonoBehaviour

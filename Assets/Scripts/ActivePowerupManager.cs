@@ -18,7 +18,9 @@ public class ActivePowerupManager : MonoBehaviour
 
     private void HandleTimers()
     {
-        foreach(var effect in powerupDurations.Keys)
+        var values = new List<PowerUpEffect>(powerupDurations.Keys);
+
+        foreach (var effect in values)
         {
             powerupDurations[effect] -= Time.deltaTime;
             effect.OnTick(gameObject);
