@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float jumpForce;
+    [SerializeField] private Transform groundCheckTransform;
+    [SerializeField] private float groundCheckRayCastDistance;
+    [SerializeField] private LayerMask groundLayers;
     [SerializeField] private float laneWidth = 2f;
     [SerializeField] private float nextInputDelay = 3f; //Time delay between lane switch inputs
     [SerializeField] private float jumpInputDelay = 1.0f;
@@ -47,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Tooltip("How much the stumble check ray's distance is multiplied by world speed e.g. 1 is multiply world speed x default distance and 2 is 2 x world speed x default distance")]
     [SerializeField] private float worldSpeedRayDistanceMultiplier = 1f;
-    [SerializeField] LayerMask stumbleRayCastExcludedlayers;
+    [SerializeField] LayerMask obstacleLayers;
 
     
 
@@ -117,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
             inputDelayTimer -= Time.deltaTime;
         }
         //Handle Jump
-        if (jumpAction.WasPressedThisFrame() && currentJumpDelay <= 0f)
+        if (jumpAction.WasPressedThisFrame() && currentJumpDelay <= 0f && GroundCheck())
         {
             playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             OnJump.Invoke();
@@ -129,6 +132,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private bool GroundCheck()
+    {
+        RaycastHit groundHit;
+        //Raycast down from stumble check origin which is slightly in front of player
+        if(Physics.Raycast(groundCheckTransform.position, Vector3.down, out groundHit, groundCheckRayCastDistance, groundLayers))
+        {
+            Debug.DrawLine(groundCheckTransform.position, groundHit.point, Color.green, 2);
+            Debug.Log("Grounded.");
+            return true;
+        }
+        Vector3 endOfRay = groundCheckTransform.position + (Vector3.down * groundCheckRayCastDistance);
+        Debug.DrawLine(groundCheckTransform.position, endOfRay, Color.red, 2);
+        return false;
+    }
     private void SwitchLane(Lanes targetLane)
     {
         float targetX = 0f;
@@ -150,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         float raycastDistance = worldSpeedRayDistanceMultiplier * levelSpawner.GetSpeed() * stumbleRayDefaultDistance;
         Debug.Log("Raycast Distance: " + raycastDistance);
-        if(Physics.Raycast(stumbleCheckOrigin.position, stumbleCheckOrigin.forward, out hit, raycastDistance, stumbleRayCastExcludedlayers))
+        if(Physics.Raycast(stumbleCheckOrigin.position, stumbleCheckOrigin.forward, out hit, raycastDistance, obstacleLayers))
         {
             Debug.Log("Stumbled..");
             Debug.DrawLine(stumbleCheckOrigin.position, hit.point, Color.red, 2);
@@ -180,10 +197,12 @@ public class PlayerMovement : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             float newX = Mathf.SmoothStep(startX, targetX, elapsedTime / switchDuration);
-            playerRigidbody.position = new Vector3(newX, playerRigidbody.position.y, playerRigidbody.position.z);
+            Vector3 newPosition = new Vector3(newX, playerRigidbody.position.y, playerRigidbody.position.z);
+            playerRigidbody.MovePosition(newPosition);
             yield return null;  
         }
-        playerRigidbody.position = new Vector3(targetX, playerRigidbody.position.y, playerRigidbody.position.z);
+        Vector3 newPos = new Vector3(targetX, playerRigidbody.position.y, playerRigidbody.position.z);
+        playerRigidbody.MovePosition(newPos);
         OnLaneChange.Invoke();
     }
 
