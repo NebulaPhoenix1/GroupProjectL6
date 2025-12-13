@@ -3599,6 +3599,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Powerup Pickup
       objectReference: {fileID: 0}
+    - target: {fileID: 8038367995280657837, guid: e042272c9e9ae4f2781591b5caca2447, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
