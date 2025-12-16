@@ -37,12 +37,13 @@ public class GameMaster : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         levelSpawner = GameObject.Find("Level Spawner").GetComponent<LevelSpawner>();
         highScore = PlayerPrefs.GetInt("HighScore", 0);
+        Debug.Log("Highscore:" +  highScore.ToString());
+        highScoreAchieved = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
         if (gameState == GameState.MainMenu)
         {
             gameplayStarted = false;
@@ -73,6 +74,7 @@ public class GameMaster : MonoBehaviour
     public void StartGame()
     {
         gameState = GameState.Gameplay;
+        OnGameStart.Invoke();
     }
 
     void OnDestroy()
@@ -80,9 +82,19 @@ public class GameMaster : MonoBehaviour
         SaveValues();          
     }
 
+    public bool HasAchievedHighScore()
+    {
+        return highScoreAchieved; 
+    }
+
     public int GetCurrentScore()
     {
         return currentScore;
+    }
+
+    public int GetHighScore()
+    {
+        return highScore; 
     }
 
     public bool GetGameplayState()
@@ -106,4 +118,6 @@ public class GameMaster : MonoBehaviour
         PlayerPrefs.SetInt("Collectibles", PlayerPrefs.GetInt("Collectibles", 0) + collectiblesGained);
         PlayerPrefs.Save();
     }
+
+    
 }
