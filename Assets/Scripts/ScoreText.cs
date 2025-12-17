@@ -5,13 +5,7 @@ public class ScoreText : MonoBehaviour
 {
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text highScores;
-    private GameMaster gameMaster;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        gameMaster = FindFirstObjectByType<GameMaster>();
-    }
+    [SerializeField] private GameMaster gameMaster;
 
     // Update is called once per frame
     void Update()
