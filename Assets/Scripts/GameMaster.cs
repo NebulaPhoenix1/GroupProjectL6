@@ -2,13 +2,15 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 using Unity.Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
     enum GameState
     {
         MainMenu,
-        Gameplay
+        Gameplay,
+        GameOver
     }
 
 
@@ -51,7 +53,7 @@ public class GameMaster : MonoBehaviour
             //Debug.Log("ScoreOffset: " + scoreOffset);
             return;
         }
-        else
+        else if(gameState == GameState.Gameplay)
         {
             gameplayStarted = true;
             rawScore = (Time.time - scoreOffset) * levelSpawner.GetSpeed();
@@ -69,6 +71,11 @@ public class GameMaster : MonoBehaviour
             }
             return;
         }
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene("Luke's Scene");
     }
 
     public void StartGame()
@@ -127,5 +134,6 @@ public class GameMaster : MonoBehaviour
         //Save last score seperately to ensure the last score is always accurate and not saved mid run.
         PlayerPrefs.SetInt("Last Score", lastScore);
         PlayerPrefs.Save();
+        gameState = GameState.GameOver;
     }
 }

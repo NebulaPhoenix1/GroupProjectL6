@@ -7,22 +7,23 @@ public class ScreenFading : MonoBehaviour
 {
     public UnityEvent onFadeComplete;
 
-    [SerializeField] private int targetAlpha; //Final alpha value at the end of fade
+    [SerializeField] private float targetAlpha; //Final alpha value at the end of fade
     [SerializeField] private float startingAlpha; //Initial alpha value at the start of fade
     [SerializeField] private float duration; //How long the fade will take
-    private Image image; //The image that's having its alpha changed
+    [SerializeField] private Image image;
     private Color imageColor;
 
-    void Start()
-    {
-        image = GetComponent<Image>();
-        
-    }
+    
 
     public void StartFade()
     {
+        if(image == null){ Debug.LogWarning("Diva we're missing an image component"); return; }
+
         imageColor = image.color;
         imageColor.a = startingAlpha;
+        
+
+        Debug.Log("Called start fade on game over");
         StartCoroutine(FadeRoutine());
     }
 
@@ -48,5 +49,6 @@ public class ScreenFading : MonoBehaviour
         imageColor.a = targetAlpha;
         image.color = imageColor;
         onFadeComplete.Invoke();
+        Debug.Log("Fade complete");
     }
 }

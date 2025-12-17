@@ -5,19 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/Scenes/Shara's Scene.unity
-    guid: 1ffc9d6f0d6774a8d9df75e9b3a22172
-  - enabled: 1
-    path: Assets/Scenes/Rob's Scene.unity
-    guid: 65879bd4ffa114a0b88cf00857fb299e
   - enabled: 1
     path: Assets/Scenes/Luke's Scene.unity
     guid: 416d8f21a2b9245cdbc057eebf7e9695
-  - enabled: 1
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 0
+    path: Assets/Scenes/Shara's Scene.unity
+    guid: 1ffc9d6f0d6774a8d9df75e9b3a22172
+  - enabled: 0
+    path: Assets/Scenes/Rob's Scene.unity
+    guid: 65879bd4ffa114a0b88cf00857fb299e
+  - enabled: 0
     path: Assets/Scenes/Leyton's Scene.unity
     guid: 80e847767dcbe475eb013bc52ad3e3eb
   m_configObjects:
