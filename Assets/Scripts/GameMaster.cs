@@ -119,5 +119,13 @@ public class GameMaster : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    
+    //This gets called when OnGameOver unity event in playerMovement.cs is invoked
+    public void OnGameOver()
+    {
+        int lastScore = currentScore;
+        SaveValues();
+        //Save last score seperately to ensure the last score is always accurate and not saved mid run.
+        PlayerPrefs.SetInt("Last Score", lastScore);
+        PlayerPrefs.Save();
+    }
 }
