@@ -36,7 +36,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float laneWidth = 2f;
     [SerializeField] private float nextInputDelay = 3f; //Time delay between lane switch inputs
     [SerializeField] private float jumpInputDelay = 1.0f;
+    [SerializeField] private float stumbleInvincibilityTime;
+    [SerializeField] private float stumbleRecoverTime;
+
     private float currentJumpDelay;
+    private float currentStumbleInvincibilityTime;
 
     private float inputDelayTimer = 0f;
     private Lanes currentLane = Lanes.Center;
@@ -65,6 +69,14 @@ public class PlayerMovement : MonoBehaviour
         jumpAction = InputSystem.actions.FindAction("Jump");
         //Adding a listener to the OnStumble event through script
         OnStumble.AddListener(StumbleHandle);
+        if(stumbleRecoverTime == stumbleInvincibilityTime)
+        {
+            Debug.LogError("Player cannot die as stumble recover time and stumble invincibility time are the same in PlayerMovement");
+        }
+        else if(stumbleInvincibilityTime > stumbleRecoverTime)
+        {
+            Debug.LogError("Player cannot die as stumble recover time is lower than stumble invincibility time in PlayerMovement");
+        }
     }
 
     // Update is called once per frame
@@ -130,6 +142,11 @@ public class PlayerMovement : MonoBehaviour
         {
             currentJumpDelay -= Time.deltaTime;
         }
+        //Stumble invinicibility time tick down
+        if(currentStumbleInvincibilityTime > 0)
+        {
+            currentStumbleInvincibilityTime -= Time.deltaTime;
+        }
     }
 
     private bool GroundCheck()
@@ -166,10 +183,10 @@ public class PlayerMovement : MonoBehaviour
         //If it was a close call, we'll stumble but let the switch occur.
         RaycastHit hit;
         float raycastDistance = worldSpeedRayDistanceMultiplier * levelSpawner.GetSpeed() * stumbleRayDefaultDistance;
-        Debug.Log("Raycast Distance: " + raycastDistance);
+        //Debug.Log("Raycast Distance: " + raycastDistance);
         if(Physics.Raycast(stumbleCheckOrigin.position, stumbleCheckOrigin.forward, out hit, raycastDistance, obstacleLayers))
         {
-            Debug.Log("Stumbled..");
+            //Debug.Log("Stumbled..");
             Debug.DrawLine(stumbleCheckOrigin.position, hit.point, Color.red, 2);
             StumbleHandle();
             StartCoroutine(LaneSwitch(targetX));
@@ -178,7 +195,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log("Smooth lane switch!");
+            //Debug.Log("Smooth lane switch!");
             Debug.DrawLine(stumbleCheckOrigin.position, stumbleCheckOrigin.position + stumbleCheckOrigin.forward * raycastDistance, Color.green, 2);
             StartCoroutine(LaneSwitch(targetX));    
             //Invoke unity event when the lane switch is complete
@@ -209,20 +226,51 @@ public class PlayerMovement : MonoBehaviour
     //This function gets called when OnStumble event is invoked
     private void StumbleHandle()
     {
-        //We need to check if the player is already stumbling; if so invoke OnGameOver
-        if(isStumbling)
+        Debug.Log("I frame duration: " + stumbleInvincibilityTime + " Current I frame duration: " + currentStumbleInvincibilityTime);
+        //If stumbling during I frames, return and do nothing
+        if(currentStumbleInvincibilityTime > 0) { return; }
+        //If not already stumbling and current invincibilty time <= 0, stumble
+        else if(!isStumbling && currentStumbleInvincibilityTime <= 0)
+        {
+            Debug.Log("First stumble");
+            isStumbling = true;
+            currentStumbleInvincibilityTime = stumbleInvincibilityTime;
+            OnStumble.Invoke();
+            Invoke("RecoverFromStumble", stumbleRecoverTime);
+        }
+        //If stumbling while already stumbling outside of I frames, game over
+        else if(isStumbling && currentStumbleInvincibilityTime <= 0)
         {
             OnGameOver.Invoke();
-            Debug.Log("Game Over! Player has stumbled again while already stumbling.");
+            Debug.Log("Game Over");
         }
         else
         {
-            isStumbling = true;
-            
-            OnStumble.Invoke();
-            //Recover after 1 second
-            Invoke("RecoverFromStumble", 1.0f);
+            Debug.LogError("StumbleHandle reached unintended branch on line 240 in PlayerMovement.cs");
         }
+
+        ////We need to check if the player is already stumbling and not in invincibility frames; if so invoke OnGameOver
+        //if(isStumbling && currentStumbleInvincibilityTime <= 0)
+        //{
+        //    OnGameOver.Invoke();
+        //    Debug.Log("Game Over! Player has stumbled again while already stumbling.");
+        //}
+        ////If stumble after I frames
+        //else if(!isStumbling && currentStumbleInvincibilityTime <= 0)
+        //{
+        //    Debug.Log("Stumble...");
+        //    isStumbling = true;
+        //    OnStumble.Invoke();
+        //    currentStumbleInvincibilityTime = stumbleInvincibilityTime;
+        //    //Recover after 1 second
+        //    Invoke("RecoverFromStumble", 1.0f);
+        //}
+        ////Stumble during I frames; do nothing
+        //else
+        //{
+        //    Debug.Log("I frames active");
+        //    return; 
+        //}
     }
 
     private void RecoverFromStumble()
