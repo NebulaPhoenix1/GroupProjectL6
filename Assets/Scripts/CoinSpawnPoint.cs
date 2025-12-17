@@ -28,7 +28,7 @@ public class CoinSpawnPoint : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Log("Coin spawner enabled");
+        //Debug.Log("Coin spawner enabled");
 
         // If the coin is missing
         if (activeCoin == null && positionCaptured)
@@ -47,6 +47,6 @@ public class CoinSpawnPoint : MonoBehaviour
         activeCoin = Instantiate(coinPrefab, transform);
         activeCoin.transform.localPosition = initialLocalPosition;
 
-        Debug.Log("Spawned a new coin");
+        //Debug.Log("Spawned a new coin");
     }
 }
