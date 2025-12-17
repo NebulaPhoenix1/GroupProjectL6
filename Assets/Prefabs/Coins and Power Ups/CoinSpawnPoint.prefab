@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5406116461658215525}
   - component: {fileID: 9091443798974993220}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CoinSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -7,7 +7,7 @@ public class CoinCollection : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log(collision.gameObject.name);
+        //Debug.Log(collision.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
             gameMaster.IncrementCollectiblesGained();

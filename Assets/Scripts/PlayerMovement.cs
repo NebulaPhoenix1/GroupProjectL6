@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     //Stumble eventually
-                    Debug.Log("Already in Left Lane");
+                    //Debug.Log("Already in Left Lane");
                     OnStumble.Invoke();
                 }
                 inputDelayTimer = nextInputDelay;
@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     //Stumble eventually
-                    Debug.Log("Already in Right Lane");
+                    //Debug.Log("Already in Right Lane");
                     OnStumble.Invoke();
                 }
                 inputDelayTimer = nextInputDelay;
@@ -156,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
         if(Physics.Raycast(groundCheckTransform.position, Vector3.down, out groundHit, groundCheckRayCastDistance, groundLayers))
         {
             Debug.DrawLine(groundCheckTransform.position, groundHit.point, Color.green, 2);
-            Debug.Log("Grounded.");
+            //Debug.Log("Grounded.");
             return true;
         }
         Vector3 endOfRay = groundCheckTransform.position + (Vector3.down * groundCheckRayCastDistance);
@@ -186,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("Raycast Distance: " + raycastDistance);
         if(Physics.Raycast(stumbleCheckOrigin.position, stumbleCheckOrigin.forward, out hit, raycastDistance, obstacleLayers))
         {
-            //Debug.Log("Stumbled..");
+            Debug.Log("Stumbled from close call");
             Debug.DrawLine(stumbleCheckOrigin.position, hit.point, Color.red, 2);
             StumbleHandle();
             StartCoroutine(LaneSwitch(targetX));
