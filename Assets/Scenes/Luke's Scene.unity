@@ -2495,7 +2495,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -4874,8 +4874,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 155348362287156159, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 235492045715688470, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 578090192333950122, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 710210701519522452, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
@@ -4917,6 +4925,14 @@ PrefabInstance:
     - target: {fileID: 710210701519522452, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 761168239548577865, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 925996132920332842, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: jumpForce
@@ -5034,6 +5050,10 @@ PrefabInstance:
       propertyPath: OnGameOver.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1489417722580615352, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1784990914102299703, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.65529
@@ -5062,9 +5082,29 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2235473084966420698, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 3975258454316316088, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426863343704261354, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912979495905167400, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5151060437853171202, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5295023918628579373, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6341985320947650565, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5086,6 +5126,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8007151806061599281, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_Center.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8065648053830933396, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_Name
       value: Player
@@ -5093,6 +5137,22 @@ PrefabInstance:
     - target: {fileID: 8065648053830933396, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383280060661136709, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8580915576106201895, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8839329324791310387, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035639945611442340, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2196182350929970503, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
