@@ -4,10 +4,12 @@ public class Obstacle : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Collided");
         if(collision.gameObject.CompareTag("Player"))
         {
             //Notify player of collision
             collision.gameObject.GetComponent<PlayerMovement>().OnStumble.Invoke();
+            Debug.Log("Player Collision");
         }
         else
         {
