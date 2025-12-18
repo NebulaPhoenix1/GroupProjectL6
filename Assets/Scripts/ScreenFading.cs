@@ -13,8 +13,6 @@ public class ScreenFading : MonoBehaviour
     [SerializeField] private Image image;
     private Color imageColor;
 
-    
-
     public void StartFade()
     {
         if(image == null){ Debug.LogWarning("Diva we're missing an image component"); return; }
