@@ -101,7 +101,13 @@ public class GameMaster : MonoBehaviour
 
     public int GetHighScore()
     {
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
         return highScore; 
+    }
+
+    public int GetLastScore()
+    {
+        return PlayerPrefs.GetInt("Last Score", 0);
     }
 
     public bool GetGameplayState()
@@ -136,4 +142,6 @@ public class GameMaster : MonoBehaviour
         PlayerPrefs.Save();
         gameState = GameState.GameOver;
     }
+
+
 }
