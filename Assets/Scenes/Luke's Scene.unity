@@ -5166,9 +5166,21 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: levelPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: 'levelPrefabs.Array.data[0]'
       value: 
       objectReference: {fileID: 9098834875976951334, guid: 96cd734f56d7891438ae3a58d79ca471, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'levelPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 2758dc3c0bfc88d47b072bb2199938c3, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'levelPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: e5e903a9266091f46b76011efbacbfb6, type: 3}
     - target: {fileID: 6606079764639810192, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: m_Name
       value: Level Spawner
@@ -5626,6 +5638,10 @@ PrefabInstance:
     - target: {fileID: 3975258454316316088, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4294904808366297304, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 247
       objectReference: {fileID: 0}
     - target: {fileID: 4426863343704261354, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_TagString
