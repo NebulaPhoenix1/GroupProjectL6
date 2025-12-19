@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
 using Unity.Collections;
+using UnityEngine.Rendering.PostProcessing;
 
 public class LevelSpawner : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class LevelSpawner : MonoBehaviour
     */    
     [Header("Level Settings")]
     [SerializeField] private GameObject [] levelPrefabs;
-    [SerializeField] private float segmentLength;
+    [SerializeField] private float defaultSegmentLength;
+    private float segmentLength;
     [SerializeField] private int initialSegmentCount; 
     
     [Header("Movement Settings")]
@@ -95,10 +97,23 @@ public class LevelSpawner : MonoBehaviour
         segment.transform.position = new Vector3(0, 0, spawnZ);
         segment.SetActive(true);
         activeSegments.Add(segment);
-        spawnZ += segmentLength;
+
+        //Get the individual segment length (this makes it so each segment does not have to be of equal length)
+        SegmentData segmentData = segment.GetComponent<SegmentData>();
+        if (segmentData != null)
+        {
+            segmentLength = segmentData.GetSegmentLength();
+            spawnZ += segmentLength;
+        }
+        else
+        {
+            Debug.LogWarning("Level spawner could not find: " + segment.name + "'s SegementData");
+            spawnZ += defaultSegmentLength;
+        }
+
 
         //If main game has started
-        if(gameMaster.GetGameplayState())
+        if (gameMaster.GetGameplayState())
         {
             //Iterate through each obstacle in segment and spawn in obstacle
             ObjectSpawner[] spawners = segment.GetComponentsInChildren<ObjectSpawner>();
