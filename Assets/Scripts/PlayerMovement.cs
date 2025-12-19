@@ -241,36 +241,18 @@ public class PlayerMovement : MonoBehaviour
         //If stumbling while already stumbling outside of I frames, game over
         else if(isStumbling && currentStumbleInvincibilityTime <= 0)
         {
-            OnGameOver.Invoke();
-            Debug.Log("Game Over");
+            GameOverHandle();
         }
         else
         {
             Debug.LogError("StumbleHandle reached unintended branch on line 240 in PlayerMovement.cs");
         }
+    }
 
-        ////We need to check if the player is already stumbling and not in invincibility frames; if so invoke OnGameOver
-        //if(isStumbling && currentStumbleInvincibilityTime <= 0)
-        //{
-        //    OnGameOver.Invoke();
-        //    Debug.Log("Game Over! Player has stumbled again while already stumbling.");
-        //}
-        ////If stumble after I frames
-        //else if(!isStumbling && currentStumbleInvincibilityTime <= 0)
-        //{
-        //    Debug.Log("Stumble...");
-        //    isStumbling = true;
-        //    OnStumble.Invoke();
-        //    currentStumbleInvincibilityTime = stumbleInvincibilityTime;
-        //    //Recover after 1 second
-        //    Invoke("RecoverFromStumble", 1.0f);
-        //}
-        ////Stumble during I frames; do nothing
-        //else
-        //{
-        //    Debug.Log("I frames active");
-        //    return; 
-        //}
+    private void GameOverHandle()
+    {
+        OnGameOver.Invoke();
+        Debug.Log("Game Over");
     }
 
     private void RecoverFromStumble()

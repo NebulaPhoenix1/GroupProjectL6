@@ -2,14 +2,24 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
+    [SerializeField] private bool instantGameOver = false;
+
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Collided");
         if(collision.gameObject.CompareTag("Player"))
         {
             //Notify player of collision
-            collision.gameObject.GetComponent<PlayerMovement>().OnStumble.Invoke();
-            Debug.Log("Player Collision");
+            if (instantGameOver)
+            {
+                collision.gameObject.GetComponent<PlayerMovement>().OnGameOver.Invoke();
+                Debug.Log("Player Collision: Game Over");
+            }
+            else
+            {
+                collision.gameObject.GetComponent<PlayerMovement>().OnStumble.Invoke();
+                Debug.Log("Player Collision: Stumble");
+            }
         }
         else
         {

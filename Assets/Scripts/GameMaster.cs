@@ -101,7 +101,6 @@ public class GameMaster : MonoBehaviour
 
     public int GetHighScore()
     {
-        highScore = PlayerPrefs.GetInt("HighScore", 0);
         return highScore; 
     }
 
