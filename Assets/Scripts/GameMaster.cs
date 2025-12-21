@@ -114,10 +114,18 @@ public class GameMaster : MonoBehaviour
         return gameplayStarted;
     }
 
+    public int GetCollectiblesGained()
+    {
+        return collectiblesGained;
+    }
+
     public void IncrementCollectiblesGained()
     {
-        collectiblesGained++;
-        SaveValues();
+        if (gameplayStarted)
+        {
+            collectiblesGained++;
+            SaveValues();
+        }
     }
 
     public void SaveValues()
