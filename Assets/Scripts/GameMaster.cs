@@ -148,6 +148,7 @@ public class GameMaster : MonoBehaviour
         PlayerPrefs.SetInt("Last Score", lastScore);
         PlayerPrefs.Save();
         gameState = GameState.GameOver;
+        gameplayStarted = false;
     }
 
 

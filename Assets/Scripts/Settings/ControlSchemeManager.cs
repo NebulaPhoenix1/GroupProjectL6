@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 [DefaultExecutionOrder(-1)]
 public class ControlSchemeManager : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
+
     public InputActionAsset inputActions;
 
     private InputAction WASD;
@@ -13,9 +15,10 @@ public class ControlSchemeManager : MonoBehaviour
 
     private void Awake()
     {
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         inputActions.FindActionMap("Player");
-        WASD = inputActions.FindAction("Player/LeftRight (WASD)");
-        ArrowKeys = inputActions.FindAction("Player/LeftRight (ArrowKeys)");
+        WASD = inputActions.FindAction("Player/Move (WASD)");
+        ArrowKeys = inputActions.FindAction("Player/Move (ArrowKeys)");
     }
 
     private void Start()
@@ -38,6 +41,7 @@ public class ControlSchemeManager : MonoBehaviour
 
     private void SetControlScheme()
     {
+        playerMovement.InitialiseControlScheme();
         switch(currentControlScheme)
         {
             case 0:
@@ -79,5 +83,6 @@ public class ControlSchemeManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("ControlSchemeKey", 0);
         }
+        SetControlScheme();
     }
 }

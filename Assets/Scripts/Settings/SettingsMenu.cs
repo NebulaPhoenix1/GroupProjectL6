@@ -21,6 +21,7 @@ public class SettingsMenu : MonoBehaviour
 
     //declare the components
     public Slider volumeSlider;
+    public Slider musicSlider;
     private TextMeshProUGUI volumeDisplayText;
     private TMP_Dropdown qualityOptions;
     private Button windowToggle;
@@ -34,6 +35,7 @@ public class SettingsMenu : MonoBehaviour
     {
         //find and assign the components of the settings menu
         volumeSlider = GameObject.Find("VolumeSlider").GetComponent<Slider>();
+        musicSlider = GameObject.Find("Music Slider").GetComponent<Slider>();
         volumeDisplayText = GameObject.Find("VolumeText").GetComponent<TextMeshProUGUI>();
         qualityOptions = GameObject.Find("QualityOptions").GetComponent<TMP_Dropdown>();
         windowToggle = GameObject.Find("WindowButton").GetComponent<Button>();
@@ -76,7 +78,7 @@ public class SettingsMenu : MonoBehaviour
         controlsToggle.onClick.AddListener(ChangeControlScheme);
         volumeSlider.onValueChanged.AddListener(ChangeVolume);
 
-        if(PlayerPrefs.HasKey("Volume") || PlayerPrefs.HasKey("Resolution") || PlayerPrefs.HasKey("ResolutionX") || PlayerPrefs.HasKey("ResolutionY")|| PlayerPrefs.HasKey("Volume"))
+        if(PlayerPrefs.HasKey("Volume") || PlayerPrefs.HasKey("Resolution") || PlayerPrefs.HasKey("ResolutionX") || PlayerPrefs.HasKey("ResolutionY"))
         {
             LoadPlayerPrefs();
         }
@@ -203,9 +205,14 @@ public class SettingsMenu : MonoBehaviour
     public void SetDefaultSettings()
     {
         float volume = volumeSlider.value;
-        PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteKey("Volume");
+        PlayerPrefs.DeleteKey("Resolution");
+        PlayerPrefs.DeleteKey("ResolutionX");
+        PlayerPrefs.DeleteKey("ResolutionY");
         volumeSlider.value = startingVolume;
         ChangeVolume(volume);
+
+        musicSlider.value = 0.5f;
 
         Screen.SetResolution(defaultResolution.width, defaultResolution.height, currentFullScreenMode);
         PlayerPrefs.SetString("Resolution", (defaultResolution.width.ToString() + "x" + defaultResolution.height.ToString()));

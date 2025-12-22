@@ -79,9 +79,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move",
+                    "name": "Move (WASD)",
                     "type": "Value",
                     "id": "fdf4b2eb-c045-4419-8875-c9b173b78f2c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Move (ArrowKeys)",
+                    "type": "Value",
+                    "id": "6ab87801-7092-42c5-8a4b-ed0aa16c61db",
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
@@ -349,7 +358,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "Move (WASD)",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -360,7 +369,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Move (WASD)",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -371,7 +380,40 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Move (WASD)",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "5863aecd-6a22-4e06-821f-89d5fa711ee1",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move (ArrowKeys)",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "1660c5d5-73cd-4511-9941-2453a2ba5131",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move (ArrowKeys)",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "0b51966f-754f-423d-93f9-f14c2bfbdc54",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move (ArrowKeys)",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
