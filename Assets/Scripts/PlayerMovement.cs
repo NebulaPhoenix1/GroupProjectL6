@@ -64,9 +64,11 @@ public class PlayerMovement : MonoBehaviour
         gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
         levelSpawner = GameObject.Find("Level Spawner").GetComponent<LevelSpawner>();
 
-        playerRigidbody = GetComponent<Rigidbody>();
-        moveAction = InputSystem.actions.FindAction("Move");
+        InitialiseControlScheme();
         jumpAction = InputSystem.actions.FindAction("Jump");
+
+        playerRigidbody = GetComponent<Rigidbody>();
+
         //Adding a listener to the OnStumble event through script
         OnStumble.AddListener(StumbleHandle);
         if(stumbleRecoverTime == stumbleInvincibilityTime)
@@ -163,6 +165,30 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawLine(groundCheckTransform.position, endOfRay, Color.red, 2);
         return false;
     }
+
+    public void InitialiseControlScheme()
+    {
+        if (PlayerPrefs.HasKey("ControlSchemeKey"))
+        {
+            switch (PlayerPrefs.GetInt("ControlSchemeKey"))
+            {
+                case 0:
+                    moveAction = InputSystem.actions.FindAction("Move (WASD)");
+                    break;
+                case 1:
+                    moveAction = InputSystem.actions.FindAction("Move (ArrowKeys)");
+                    break;
+                default:
+                    moveAction = InputSystem.actions.FindAction("Move (WASD)");
+                    break;
+            }
+        }
+        else
+        {
+            moveAction = InputSystem.actions.FindAction("Move (WASD)");
+        }
+    }
+
     private void SwitchLane(Lanes targetLane)
     {
         float targetX = 0f;

@@ -15,7 +15,7 @@ public class CoinCollection : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void Start()
+    void Awake()
     {
         coinCollider = GetComponent<Collider>();
         if(!gameMaster)

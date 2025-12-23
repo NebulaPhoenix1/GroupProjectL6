@@ -55,7 +55,6 @@ public class GameMaster : MonoBehaviour
         }
         else if(gameState == GameState.Gameplay)
         {
-            gameplayStarted = true;
             rawScore = (Time.time - scoreOffset) * levelSpawner.GetSpeed();
             currentScore = Convert.ToInt32(rawScore);
             //Debug.Log("CurrentScore: " + currentScore + " Time: " + Time.time + " Raw Score: " + rawScore);
@@ -80,8 +79,10 @@ public class GameMaster : MonoBehaviour
 
     public void StartGame()
     {
+        gameplayStarted = true;
         gameState = GameState.Gameplay;
         OnGameStart.Invoke();
+        levelSpawner.UpdateSegmentCount();
     }
 
     void OnDestroy()
@@ -114,10 +115,18 @@ public class GameMaster : MonoBehaviour
         return gameplayStarted;
     }
 
+    public int GetCollectiblesGained()
+    {
+        return collectiblesGained;
+    }
+
     public void IncrementCollectiblesGained()
     {
-        collectiblesGained++;
-        SaveValues();
+        if (gameplayStarted)
+        {
+            collectiblesGained++;
+            SaveValues();
+        }
     }
 
     public void SaveValues()
@@ -140,6 +149,7 @@ public class GameMaster : MonoBehaviour
         PlayerPrefs.SetInt("Last Score", lastScore);
         PlayerPrefs.Save();
         gameState = GameState.GameOver;
+        gameplayStarted = false;
     }
 
 

@@ -1,5 +1,4 @@
 using Unity.VisualScripting;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 //Powerup collectible; no powerup logic is held in this class
