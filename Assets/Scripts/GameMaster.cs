@@ -55,7 +55,6 @@ public class GameMaster : MonoBehaviour
         }
         else if(gameState == GameState.Gameplay)
         {
-            gameplayStarted = true;
             rawScore = (Time.time - scoreOffset) * levelSpawner.GetSpeed();
             currentScore = Convert.ToInt32(rawScore);
             //Debug.Log("CurrentScore: " + currentScore + " Time: " + Time.time + " Raw Score: " + rawScore);
@@ -80,8 +79,10 @@ public class GameMaster : MonoBehaviour
 
     public void StartGame()
     {
+        gameplayStarted = true;
         gameState = GameState.Gameplay;
         OnGameStart.Invoke();
+        levelSpawner.UpdateSegmentCount();
     }
 
     void OnDestroy()

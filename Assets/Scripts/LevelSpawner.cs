@@ -14,7 +14,8 @@ public class LevelSpawner : MonoBehaviour
     [SerializeField] private GameObject [] levelPrefabs;
     [SerializeField] private float defaultSegmentLength;
     private float segmentLength;
-    [SerializeField] private int initialSegmentCount; 
+    [SerializeField] private int menuInitialSegmentCount;
+    [SerializeField] private int additionalInitialSegmentCount; 
     
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 10f; // Speed the world moves towards camera
@@ -43,7 +44,7 @@ public class LevelSpawner : MonoBehaviour
         }
 
         // Spawn the initial level segments
-        for (int i = 0; i < initialSegmentCount; i++)
+        for (int i = 0; i < menuInitialSegmentCount; i++)
         {
             SpawnSegment();
         }
@@ -65,6 +66,15 @@ public class LevelSpawner : MonoBehaviour
             {
                 moveSpeed = maxMoveSpeed;
             }
+        }
+    }
+
+    public void UpdateSegmentCount()
+    {
+        //add a specified number of extra segments when play button is pressed
+        for (int i = 0; i < additionalInitialSegmentCount; i++)
+        {
+            SpawnSegment();
         }
     }
 
