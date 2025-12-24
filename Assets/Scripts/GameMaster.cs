@@ -31,6 +31,7 @@ public class GameMaster : MonoBehaviour
 
     private Transform playerTransform;
     private LevelSpawner levelSpawner;
+    [SerializeField] PlayerDashAndDisplay PlayerDashAndDisplay;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -126,6 +127,7 @@ public class GameMaster : MonoBehaviour
         {
             collectiblesGained++;
             SaveValues();
+            PlayerDashAndDisplay.IncrementCollectedCoins();
         }
     }
 
