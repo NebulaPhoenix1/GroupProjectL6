@@ -180,4 +180,9 @@ public class LevelSpawner : MonoBehaviour
     {
         return moveSpeed / 10;
     }
+
+    public void SetSpeed(float newSpeed)
+    {
+        moveSpeed = newSpeed;
+    }
 }

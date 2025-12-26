@@ -7,9 +7,10 @@ public class PlayerDashAndDisplay : MonoBehaviour
 
     private int collectedCoins;
 
-    public int meterStartValue = 0;
-    public int meterMinimum = 0;
-    public int meterMaximum = 15;
+    [SerializeField] private int meterStartValue = 0;
+    [SerializeField] private int meterMinimum = 0;
+    [SerializeField] private int meterMaximum = 15;
+    public bool canDash = false;
 
     private void Awake()
     {
@@ -33,13 +34,24 @@ public class PlayerDashAndDisplay : MonoBehaviour
         {
             Debug.Log("Can't find display object");
         }
+
+        if (collectedCoins >= meterMaximum)
+        {
+            canDash = true;
+        }
     }
 
     public void IncrementCollectedCoins()
     {
-        if (collectedCoins <= meterMaximum)
+        if (collectedCoins < meterMaximum)
         {
             collectedCoins++;
         }
+    }
+
+    public void OnPlayerDash()
+    {
+        collectedCoins = 0;
+        canDash = false;
     }
 }

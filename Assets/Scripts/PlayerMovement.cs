@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -20,13 +21,16 @@ public class PlayerMovement : MonoBehaviour
     public UnityEvent OnLaneChange; //Called when the player successfully changes lanes
     public UnityEvent OnJump; //Called when the player is mid air
     public UnityEvent OnGameOver; //Called when the player dies. RIP.
+    public UnityEvent OnDash; //Called when the player dashes forward
 
     //Input System
     private InputAction moveAction;
     private InputAction jumpAction;
     private float moveInput;
+    private InputAction dashAction;
     private GameMaster gameMaster;
     private LevelSpawner levelSpawner;
+    public PlayerDashAndDisplay dashAndDisplay;
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float jumpForce;
@@ -38,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpInputDelay = 1.0f;
     [SerializeField] private float stumbleInvincibilityTime;
     [SerializeField] private float stumbleRecoverTime;
+    [SerializeField] private bool isPlayerDashing = false;
 
     private float currentJumpDelay;
     private float currentStumbleInvincibilityTime;
@@ -149,6 +154,11 @@ public class PlayerMovement : MonoBehaviour
         {
             currentStumbleInvincibilityTime -= Time.deltaTime;
         }
+        if(dashAction.WasPressedThisFrame() && dashAndDisplay.canDash)
+        {
+            OnPlayerDash();
+            OnDash.Invoke();
+        }
     }
 
     private bool GroundCheck()
@@ -170,22 +180,27 @@ public class PlayerMovement : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("ControlSchemeKey"))
         {
+            //change the referenced input actions based on current control scheme pulled from player prefs
             switch (PlayerPrefs.GetInt("ControlSchemeKey"))
             {
                 case 0:
                     moveAction = InputSystem.actions.FindAction("Move (WASD)");
+                    dashAction = InputSystem.actions.FindAction("Dash (WASD)");
                     break;
                 case 1:
                     moveAction = InputSystem.actions.FindAction("Move (ArrowKeys)");
+                    dashAction = InputSystem.actions.FindAction("Dash (ArrowKeys)");
                     break;
                 default:
                     moveAction = InputSystem.actions.FindAction("Move (WASD)");
+                    dashAction = InputSystem.actions.FindAction("Dash (WASD)");
                     break;
             }
         }
         else
         {
             moveAction = InputSystem.actions.FindAction("Move (WASD)");
+            dashAction = InputSystem.actions.FindAction("Dash (WASD)");
         }
     }
 
@@ -274,6 +289,50 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError("StumbleHandle reached unintended branch on line 240 in PlayerMovement.cs");
         }
     }
+    public void OnPlayerDash()
+    {
+        isPlayerDashing = true; //toggle to let player destroy obstacles instead of dying to them
+        dashAndDisplay.OnPlayerDash(); //reset dash meter
+        StartCoroutine(Dash());
+    }
+
+    private IEnumerator Dash()
+    {
+        float startingDashSpeed = (levelSpawner.GetSpeed() * 10);
+        float maxDashSpeed = (levelSpawner.GetSpeed() * 10) * 3;
+        //bool isDashIncreasing = true;
+        bool hasDashFinished = false;
+
+        //increase player's speed
+        for (float increasingSpeed = (levelSpawner.GetSpeed() * 10); (levelSpawner.GetSpeed() * 10) < maxDashSpeed; increasingSpeed++)
+        {
+            levelSpawner.SetSpeed(increasingSpeed);
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        //duration player will stay at max speed of dash before decreasing
+        yield return new WaitForSeconds(2f);
+
+        //decrease player's speed
+        for (float decreasingSpeed = (levelSpawner.GetSpeed() * 10); (levelSpawner.GetSpeed() * 10) > startingDashSpeed; decreasingSpeed--)
+        {
+            levelSpawner.SetSpeed(decreasingSpeed);
+            yield return new WaitForSeconds(0.03f);
+
+            if((levelSpawner.GetSpeed() * 10) <= startingDashSpeed)
+            {
+                hasDashFinished = true;
+                levelSpawner.SetSpeed(startingDashSpeed);
+                break;
+            }
+        }
+        
+        if (hasDashFinished)
+        {
+            isPlayerDashing = false;
+            yield return null;
+        }
+    }
 
     private void GameOverHandle()
     {
@@ -285,5 +344,10 @@ public class PlayerMovement : MonoBehaviour
     {
         isStumbling = false;
         OnRecover.Invoke();
+    }
+
+    public bool GetIsPlayerDashing()
+    {
+        return isPlayerDashing;
     }
 }

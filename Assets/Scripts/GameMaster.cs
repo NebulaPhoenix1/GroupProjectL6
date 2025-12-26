@@ -31,6 +31,7 @@ public class GameMaster : MonoBehaviour
 
     private Transform playerTransform;
     private LevelSpawner levelSpawner;
+    private PlayerMovement playerMovement;
     [SerializeField] PlayerDashAndDisplay PlayerDashAndDisplay;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -39,6 +40,7 @@ public class GameMaster : MonoBehaviour
         scoreOffset = 0;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         levelSpawner = GameObject.Find("Level Spawner").GetComponent<LevelSpawner>();
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         Debug.Log("Highscore:" +  highScore.ToString());
         highScoreAchieved = false;
@@ -127,7 +129,10 @@ public class GameMaster : MonoBehaviour
         {
             collectiblesGained++;
             SaveValues();
-            PlayerDashAndDisplay.IncrementCollectedCoins();
+            if (!playerMovement.GetIsPlayerDashing())
+            {
+                PlayerDashAndDisplay.IncrementCollectedCoins();
+            }
         }
     }
 

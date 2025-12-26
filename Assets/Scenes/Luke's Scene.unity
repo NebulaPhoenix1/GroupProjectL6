@@ -321,8 +321,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5.0000153, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0.17689514, y: 0}
+  m_SizeDelta: {x: 1.4538, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &176390678
 GameObject:
@@ -1622,6 +1622,7 @@ MonoBehaviour:
   meterStartValue: 0
   meterMinimum: 0
   meterMaximum: 15
+  canDash: 0
 --- !u!114 &480294355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5397,8 +5398,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_AnchoredPosition: {x: -0.5, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1783103916
 MonoBehaviour:
@@ -6361,6 +6362,10 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 235492045715688470, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_Constraints
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 578090192333950122, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -6421,6 +6426,10 @@ PrefabInstance:
       propertyPath: laneWidth
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: dashAndDisplay
+      value: 
+      objectReference: {fileID: 480294354}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: jumpInputDelay
       value: 0.05
