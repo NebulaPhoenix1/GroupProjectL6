@@ -178,7 +178,7 @@ public class LevelSpawner : MonoBehaviour
 
     public float GetSpeed()
     {
-        return moveSpeed / 10;
+        return moveSpeed;
     }
 
     public void SetSpeed(float newSpeed)

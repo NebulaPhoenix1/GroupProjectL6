@@ -223,7 +223,7 @@ public class PlayerMovement : MonoBehaviour
         //Do a raycast every time we switch lane just before the switch takes place to see if it was a close call or not
         //If it was a close call, we'll stumble but let the switch occur.
         RaycastHit hit;
-        float raycastDistance = worldSpeedRayDistanceMultiplier * levelSpawner.GetSpeed() * stumbleRayDefaultDistance;
+        float raycastDistance = worldSpeedRayDistanceMultiplier * (levelSpawner.GetSpeed() / 10) * stumbleRayDefaultDistance;
         //Debug.Log("Raycast Distance: " + raycastDistance);
         if(Physics.Raycast(stumbleCheckOrigin.position, stumbleCheckOrigin.forward, out hit, raycastDistance, obstacleLayers))
         {
@@ -298,13 +298,13 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        float startingDashSpeed = (levelSpawner.GetSpeed() * 10);
-        float maxDashSpeed = (levelSpawner.GetSpeed() * 10) * 3;
+        float startingDashSpeed = levelSpawner.GetSpeed();
+        float maxDashSpeed = levelSpawner.GetSpeed() * 3;
         //bool isDashIncreasing = true;
         bool hasDashFinished = false;
 
         //increase player's speed
-        for (float increasingSpeed = (levelSpawner.GetSpeed() * 10); (levelSpawner.GetSpeed() * 10) < maxDashSpeed; increasingSpeed++)
+        for (float increasingSpeed = levelSpawner.GetSpeed(); levelSpawner.GetSpeed() < maxDashSpeed; increasingSpeed = increasingSpeed + (startingDashSpeed / 10))
         {
             levelSpawner.SetSpeed(increasingSpeed);
             yield return new WaitForSeconds(0.02f);
@@ -314,12 +314,12 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         //decrease player's speed
-        for (float decreasingSpeed = (levelSpawner.GetSpeed() * 10); (levelSpawner.GetSpeed() * 10) > startingDashSpeed; decreasingSpeed--)
+        for (float decreasingSpeed = levelSpawner.GetSpeed(); levelSpawner.GetSpeed() > startingDashSpeed; decreasingSpeed = decreasingSpeed - ((startingDashSpeed * 3) / 10))
         {
             levelSpawner.SetSpeed(decreasingSpeed);
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.2f);
 
-            if((levelSpawner.GetSpeed() * 10) <= startingDashSpeed)
+            if(levelSpawner.GetSpeed() <= startingDashSpeed)
             {
                 hasDashFinished = true;
                 levelSpawner.SetSpeed(startingDashSpeed);
