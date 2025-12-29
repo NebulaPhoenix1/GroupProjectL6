@@ -58,7 +58,7 @@ public class GameMaster : MonoBehaviour
         }
         else if(gameState == GameState.Gameplay)
         {
-            rawScore = (Time.time - scoreOffset) * levelSpawner.GetSpeed();
+            rawScore = (Time.time - scoreOffset) * (levelSpawner.GetSpeed() / 10);
             currentScore = Convert.ToInt32(rawScore);
             //Debug.Log("CurrentScore: " + currentScore + " Time: " + Time.time + " Raw Score: " + rawScore);
             if (currentScore > highScore)
@@ -73,6 +73,24 @@ public class GameMaster : MonoBehaviour
             }
             return;
         }
+    }
+
+    public void CalculateDashScoreOffset()
+    {
+        float dashScoreOffset = 0;
+
+        while (playerMovement.GetIsPlayerDashing())
+        {
+
+
+            if (!playerMovement.GetIsPlayerDashing())
+            {
+                break;
+            }
+        }
+
+        
+
     }
 
     public void ReloadScene()

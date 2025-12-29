@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     public UnityEvent OnJump; //Called when the player is mid air
     public UnityEvent OnGameOver; //Called when the player dies. RIP.
     public UnityEvent OnDash; //Called when the player dashes forward
+    public UnityEvent OnDashFinish; //Called when the player's dash finishes
 
     //Input System
     private InputAction moveAction;
@@ -293,6 +294,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isPlayerDashing = true; //toggle to let player destroy obstacles instead of dying to them
         dashAndDisplay.OnPlayerDash(); //reset dash meter
+        Debug.Log("Dash started at " + Time.time);
         StartCoroutine(Dash());
     }
 
@@ -304,7 +306,7 @@ public class PlayerMovement : MonoBehaviour
         bool hasDashFinished = false;
 
         //increase player's speed
-        for (float increasingSpeed = levelSpawner.GetSpeed(); levelSpawner.GetSpeed() < maxDashSpeed; increasingSpeed = increasingSpeed + (startingDashSpeed / 10))
+        for (float increasingSpeed = levelSpawner.GetSpeed(); levelSpawner.GetSpeed() < maxDashSpeed; increasingSpeed += (startingDashSpeed / 10))
         {
             levelSpawner.SetSpeed(increasingSpeed);
             yield return new WaitForSeconds(0.02f);
@@ -314,7 +316,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         //decrease player's speed
-        for (float decreasingSpeed = levelSpawner.GetSpeed(); levelSpawner.GetSpeed() > startingDashSpeed; decreasingSpeed = decreasingSpeed - ((startingDashSpeed * 3) / 10))
+        for (float decreasingSpeed = levelSpawner.GetSpeed(); levelSpawner.GetSpeed() > startingDashSpeed; decreasingSpeed -= ((startingDashSpeed * 3) / 20))
         {
             levelSpawner.SetSpeed(decreasingSpeed);
             yield return new WaitForSeconds(0.2f);
@@ -330,6 +332,8 @@ public class PlayerMovement : MonoBehaviour
         if (hasDashFinished)
         {
             isPlayerDashing = false;
+            OnDashFinish.Invoke();
+            Debug.Log("Dash finished at " + Time.time);
             yield return null;
         }
     }
