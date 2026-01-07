@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class ControlSchemeManager : MonoBehaviour
 {
     private PlayerMovement playerMovement;
+    [SerializeField] private TutorialButtons tutorialButtons;
 
     public InputActionAsset inputActions;
 
@@ -55,6 +56,7 @@ public class ControlSchemeManager : MonoBehaviour
                 ArrowKeys.Enable();
                 break;
         }
+        tutorialButtons.UpdateGlyphs();
     }
 
     public void ChangeControlScheme()
