@@ -31,7 +31,8 @@ public class PlayerMovement : MonoBehaviour
     private InputAction dashAction;
     private GameMaster gameMaster;
     private LevelSpawner levelSpawner;
-    public PlayerDashAndDisplay dashAndDisplay;
+    [SerializeField] private PlayerDashAndDisplay dashAndDisplay;
+    [SerializeField] private TutorialStateManager tutorialStateManager;
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float jumpForce;
@@ -252,7 +253,8 @@ public class PlayerMovement : MonoBehaviour
         float switchDuration = 0.2f;
         float elapsedTime = 0f;
         float startX = playerRigidbody.position.x;
-        while(elapsedTime < switchDuration)
+        OnLaneChange.Invoke();
+        while (elapsedTime < switchDuration)
         {
             elapsedTime += Time.deltaTime;
             float newX = Mathf.SmoothStep(startX, targetX, elapsedTime / switchDuration);
@@ -262,7 +264,7 @@ public class PlayerMovement : MonoBehaviour
         }
         Vector3 newPos = new Vector3(targetX, playerRigidbody.position.y, playerRigidbody.position.z);
         playerRigidbody.MovePosition(newPos);
-        OnLaneChange.Invoke();
+
     }
 
     //This function gets called when OnStumble event is invoked
@@ -353,5 +355,19 @@ public class PlayerMovement : MonoBehaviour
     public bool GetIsPlayerDashing()
     {
         return isPlayerDashing;
+    }
+
+    public void AssignTutorialEvents()
+    {
+        OnLaneChange.AddListener(delegate {tutorialStateManager.ToggleTutorialX(0);});
+        OnJump.AddListener(delegate {tutorialStateManager.ToggleTutorialX(1);});
+        OnDash.AddListener(delegate { tutorialStateManager.ToggleTutorialX(2);});
+    }
+
+    public void UnassignTutorialEvents()
+    {
+        OnLaneChange.RemoveListener(delegate { tutorialStateManager.ToggleTutorialX(0);});
+        OnJump.RemoveListener(delegate { tutorialStateManager.ToggleTutorialX(1);});
+        OnDash.RemoveListener(delegate { tutorialStateManager.ToggleTutorialX(2);});
     }
 }

@@ -7,11 +7,11 @@ public class PlayerDashAndDisplay : MonoBehaviour
     private Slider dashDisplay;
     [SerializeField] private GameObject sliderFill;
 
-    private float collectedCoins;
+    private float collectedCoins = 3;
     private Color fillDefaultColour;
     private Color fillFullColor = new Color (1f, (100f / 255f), 0f);
 
-    [SerializeField] private int meterStartValue = 0;
+    [SerializeField] private int meterStartValue = 3;
     [SerializeField] private int meterMinimum = 0;
     [SerializeField] private int meterMaximum = 15;
     public bool canDash = false;

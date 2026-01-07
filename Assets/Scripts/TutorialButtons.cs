@@ -17,6 +17,8 @@ public class TutorialButtons : MonoBehaviour
     [SerializeField] private float fadeOutDuration;
     private bool hasFadedOut;
 
+    [SerializeField] private TutorialStateManager tutorialStateManager;
+
     private void OnEnable()
     {
         hasFadedOut = false;
@@ -25,55 +27,58 @@ public class TutorialButtons : MonoBehaviour
 
     public void UpdateGlyphs()
     {
-        //change the displayed glyphs on screen based on the control scheme
-        switch (PlayerPrefs.GetInt("ControlSchemeKey"))
+        if (!tutorialStateManager.GetIsFirstTutorial())
         {
-            case 0:
-                WASDGlyphHolder.SetActive(true);
-                for (int i = 0; i < WASDGlyphs.Length; i++)
-                {
-                    WASDGlyphs[i].SetActive(true);
-                }
+            //change the displayed glyphs on screen based on the control scheme
+            switch (PlayerPrefs.GetInt("ControlSchemeKey"))
+            {
+                case 0:
+                    WASDGlyphHolder.SetActive(true);
+                    for (int i = 0; i < WASDGlyphs.Length; i++)
+                    {
+                        WASDGlyphs[i].SetActive(true);
+                    }
 
-                arrowKeysGlyphHolder.SetActive(false);
-                for (int i = 0; i < arrowKeysGlyphs.Length; i++)
-                {
-                    arrowKeysGlyphs[i].SetActive(false);
-                }
-                break;
+                    arrowKeysGlyphHolder.SetActive(false);
+                    for (int i = 0; i < arrowKeysGlyphs.Length; i++)
+                    {
+                        arrowKeysGlyphs[i].SetActive(false);
+                    }
+                    break;
 
-            case 1:
-                arrowKeysGlyphHolder.SetActive(true);
-                for (int i = 0;i < arrowKeysGlyphs.Length; i++)
-                {
-                    arrowKeysGlyphs[i].SetActive(true);
-                }
+                case 1:
+                    arrowKeysGlyphHolder.SetActive(true);
+                    for (int i = 0; i < arrowKeysGlyphs.Length; i++)
+                    {
+                        arrowKeysGlyphs[i].SetActive(true);
+                    }
 
-                WASDGlyphHolder.SetActive(false);
-                for (int i = 0; i < WASDGlyphs.Length; i++)
-                {
-                    WASDGlyphs[i].SetActive(false);
-                }
-                break;
+                    WASDGlyphHolder.SetActive(false);
+                    for (int i = 0; i < WASDGlyphs.Length; i++)
+                    {
+                        WASDGlyphs[i].SetActive(false);
+                    }
+                    break;
 
-            default:
-                WASDGlyphHolder.SetActive(true);
-                for (int i = 0; i < WASDGlyphs.Length; i++)
-                {
-                    WASDGlyphs[i].SetActive(true);
-                }
+                default:
+                    WASDGlyphHolder.SetActive(true);
+                    for (int i = 0; i < WASDGlyphs.Length; i++)
+                    {
+                        WASDGlyphs[i].SetActive(true);
+                    }
 
-                arrowKeysGlyphHolder.SetActive(false);
-                for (int i = 0; i < arrowKeysGlyphs.Length; i++)
-                {
-                    arrowKeysGlyphs[i].SetActive(false);
-                }
-                break;
-        }
-        UpdateGlyphAlphas();
-        if (!hasFadedOut && this.isActiveAndEnabled)
-        {
-            StartCoroutine(GlyphFade());
+                    arrowKeysGlyphHolder.SetActive(false);
+                    for (int i = 0; i < arrowKeysGlyphs.Length; i++)
+                    {
+                        arrowKeysGlyphs[i].SetActive(false);
+                    }
+                    break;
+            }
+            UpdateGlyphAlphas();
+            if (!hasFadedOut && this.isActiveAndEnabled)
+            {
+                StartCoroutine(GlyphFade());
+            }
         }
     }
 

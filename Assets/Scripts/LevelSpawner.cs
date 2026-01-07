@@ -12,7 +12,7 @@ public class LevelSpawner : MonoBehaviour
     */    
     [Header("Level Settings")]
     [SerializeField] private GameObject [] levelPrefabs;
-    [SerializeField] private float defaultSegmentLength;
+    [SerializeField] private int defaultSegmentLength;
     private float segmentLength;
     [SerializeField] private int menuInitialSegmentCount;
     [SerializeField] private int additionalInitialSegmentCount; 
@@ -184,5 +184,16 @@ public class LevelSpawner : MonoBehaviour
     public void SetSpeed(float newSpeed)
     {
         moveSpeed = newSpeed;
+    }
+
+    public void SetMenuInitialSegmentCount(int intialCount)
+    {
+        menuInitialSegmentCount = intialCount;
+        CalculateSegmentRatio();
+    }
+
+    private void CalculateSegmentRatio()
+    {
+        additionalInitialSegmentCount = defaultSegmentLength - menuInitialSegmentCount;
     }
 }
