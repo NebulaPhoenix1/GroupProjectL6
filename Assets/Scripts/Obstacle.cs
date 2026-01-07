@@ -1,24 +1,40 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
+    PlayerMovement playerMovement;
     [SerializeField] private bool instantGameOver = false;
+    [SerializeField] private GameObject debrisParticles;
 
+    private void Awake()
+    {
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+    }
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Collided");
         if(collision.gameObject.CompareTag("Player"))
         {
-            //Notify player of collision
-            if (instantGameOver)
+            if (!playerMovement.GetIsPlayerDashing())
             {
-                collision.gameObject.GetComponent<PlayerMovement>().OnGameOver.Invoke();
-                Debug.Log("Player Collision: Game Over");
+                //Notify player of collision
+                if (instantGameOver)
+                {
+                    collision.gameObject.GetComponent<PlayerMovement>().OnGameOver.Invoke();
+                    Debug.Log("Player Collision: Game Over");
+                }
+                else
+                {
+                    collision.gameObject.GetComponent<PlayerMovement>().OnStumble.Invoke();
+                    Debug.Log("Player Collision: Stumble");
+                }
             }
-            else
+            //destroy obstacle on collision with player if they're dashing instead of triggering gameover/stumbling
+            else if(playerMovement.GetIsPlayerDashing())
             {
-                collision.gameObject.GetComponent<PlayerMovement>().OnStumble.Invoke();
-                Debug.Log("Player Collision: Stumble");
+                Instantiate(debrisParticles, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity);
+                GameObject.Destroy(this.gameObject);
             }
         }
         else

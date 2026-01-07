@@ -10,7 +10,8 @@ public class GameMaster : MonoBehaviour
     {
         MainMenu,
         Gameplay,
-        GameOver
+        GameOver,
+        FirstTutorial
     }
 
 
@@ -23,6 +24,7 @@ public class GameMaster : MonoBehaviour
 
     private float rawScore;
     private float scoreOffset;
+    private float tutorialOffset;
     private bool gameplayStarted;
     private bool highScoreAchieved = false;
     private int currentScore = 0;
@@ -31,6 +33,9 @@ public class GameMaster : MonoBehaviour
 
     private Transform playerTransform;
     private LevelSpawner levelSpawner;
+    private PlayerMovement playerMovement;
+    [SerializeField] PlayerDashAndDisplay PlayerDashAndDisplay;
+    [SerializeField] TutorialStateManager tutorialStateManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -38,6 +43,7 @@ public class GameMaster : MonoBehaviour
         scoreOffset = 0;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         levelSpawner = GameObject.Find("Level Spawner").GetComponent<LevelSpawner>();
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         Debug.Log("Highscore:" +  highScore.ToString());
         highScoreAchieved = false;
@@ -55,7 +61,7 @@ public class GameMaster : MonoBehaviour
         }
         else if(gameState == GameState.Gameplay)
         {
-            rawScore = (Time.time - scoreOffset) * levelSpawner.GetSpeed();
+            rawScore = (Time.time - scoreOffset) * (levelSpawner.GetSpeed() / 10) - tutorialOffset;
             currentScore = Convert.ToInt32(rawScore);
             //Debug.Log("CurrentScore: " + currentScore + " Time: " + Time.time + " Raw Score: " + rawScore);
             if (currentScore > highScore)
@@ -70,6 +76,29 @@ public class GameMaster : MonoBehaviour
             }
             return;
         }
+        else if(gameState == GameState.FirstTutorial)
+        {
+            tutorialOffset = Time.time - scoreOffset;
+            return;
+        }
+    }
+
+    public void CalculateDashScoreOffset()
+    {
+        float dashScoreOffset = 0;
+
+        while (playerMovement.GetIsPlayerDashing())
+        {
+
+
+            if (!playerMovement.GetIsPlayerDashing())
+            {
+                break;
+            }
+        }
+
+        
+
     }
 
     public void ReloadScene()
@@ -80,7 +109,15 @@ public class GameMaster : MonoBehaviour
     public void StartGame()
     {
         gameplayStarted = true;
-        gameState = GameState.Gameplay;
+
+        if(tutorialStateManager.GetIsFirstTutorial())
+        {
+            gameState = GameState.FirstTutorial;
+        }
+        else 
+        { 
+            gameState = GameState.Gameplay;
+        }
         OnGameStart.Invoke();
         levelSpawner.UpdateSegmentCount();
     }
@@ -126,6 +163,10 @@ public class GameMaster : MonoBehaviour
         {
             collectiblesGained++;
             SaveValues();
+            if (!playerMovement.GetIsPlayerDashing())
+            {
+                PlayerDashAndDisplay.IncrementCollectedCoins();
+            }
         }
     }
 
@@ -152,5 +193,9 @@ public class GameMaster : MonoBehaviour
         gameplayStarted = false;
     }
 
-
+    //This only exists to leave the first tutorial state after the player completes it and start counting score.
+    public void SetStateGameplay()
+    {
+        gameState = GameState.Gameplay;
+    }
 }

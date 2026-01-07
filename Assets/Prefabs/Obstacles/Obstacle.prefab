@@ -124,3 +124,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a94c41ed92ec12647b31f28b3fd6c953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
+  instantGameOver: 0
+  debrisParticles: {fileID: 1105822864513978609, guid: 89ef7be19e3803b47ab8f7c98e92105d, type: 3}
