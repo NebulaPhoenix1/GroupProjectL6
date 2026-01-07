@@ -27,6 +27,8 @@ public class LevelSpawner : MonoBehaviour
     private List<GameObject> spawnedLevels = new List<GameObject>(); 
     private float spawnZ = 0f;
     private List<GameObject> activeSegments = new List<GameObject>(); 
+
+    private bool movementStopped = false;
     
 
     //Instead of instanting and destroying segments, we're using an object pool
@@ -80,6 +82,7 @@ public class LevelSpawner : MonoBehaviour
 
     void MoveSegments()
     {
+        if(movementStopped) { return; }
         // 1. Move the actual objects
         foreach (GameObject segment in activeSegments)
         {
@@ -195,5 +198,11 @@ public class LevelSpawner : MonoBehaviour
     private void CalculateSegmentRatio()
     {
         additionalInitialSegmentCount = defaultSegmentLength - menuInitialSegmentCount;
+    }
+
+    public void StopMovement()
+    {
+        moveSpeed = 0f;
+        movementStopped = true;
     }
 }
