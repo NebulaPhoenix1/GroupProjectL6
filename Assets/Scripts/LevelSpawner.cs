@@ -12,6 +12,7 @@ public class LevelSpawner : MonoBehaviour
     */    
     [Header("Level Settings")]
     [SerializeField] private GameObject [] levelPrefabs;
+    [SerializeField] private GameObject [] tutorialLevelPrefabs;
     [SerializeField] private int defaultSegmentLength;
     private float segmentLength;
     [SerializeField] private int menuInitialSegmentCount;
@@ -24,6 +25,7 @@ public class LevelSpawner : MonoBehaviour
     [SerializeField] private float maxMoveSpeed = 30f;
     
     private GameMaster gameMaster;
+    private TutorialStateManager tutorialStateManager;
     private List<GameObject> spawnedLevels = new List<GameObject>(); 
     private float spawnZ = 0f;
     private List<GameObject> activeSegments = new List<GameObject>(); 
@@ -39,13 +41,13 @@ public class LevelSpawner : MonoBehaviour
     void Start()
     {
         gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
+        tutorialStateManager = GameObject.Find("Game Master").GetComponent<TutorialStateManager>();
         //Setup the dictionary
         foreach (GameObject prefab in levelPrefabs)
         {
             segmentPool.Add(prefab.name, new Queue<GameObject>());
         }
-
-        // Spawn the initial level segments
+            // Spawn the initial level segments
         for (int i = 0; i < menuInitialSegmentCount; i++)
         {
             SpawnSegment();
@@ -73,10 +75,27 @@ public class LevelSpawner : MonoBehaviour
 
     public void UpdateSegmentCount()
     {
-        //add a specified number of extra segments when play button is pressed
-        for (int i = 0; i < additionalInitialSegmentCount; i++)
+        if (tutorialStateManager.GetIsFirstTutorial())
         {
-            SpawnSegment();
+            for (int i = 0; i < additionalInitialSegmentCount; i++)
+            {
+                if (i < tutorialLevelPrefabs.Length)
+                {
+                    SpawnTutorialSegment(i);
+                }
+                else if (i >= tutorialLevelPrefabs.Length)
+                {
+                    SpawnSegment();
+                }
+            }
+        }
+        else
+        {
+            //add a specified number of extra segments when play button is pressed
+            for (int i = 0; i < additionalInitialSegmentCount; i++)
+            {
+                SpawnSegment();
+            }
         }
     }
 
@@ -135,6 +154,42 @@ public class LevelSpawner : MonoBehaviour
                 spawner.SpawnObject();
             }
         } 
+    }
+
+    private void SpawnTutorialSegment(int index)
+    {
+        GameObject selectedPrefab = tutorialLevelPrefabs[index];
+        GameObject segment = Instantiate(selectedPrefab);
+        //Debug.Log("Instantiating new segment: " + prefab.name);
+
+        segment.transform.position = new Vector3(0, 0, spawnZ);
+        segment.SetActive(true);
+        activeSegments.Add(segment);
+
+        //Get the individual segment length (this makes it so each segment does not have to be of equal length)
+        SegmentData segmentData = segment.GetComponent<SegmentData>();
+        if (segmentData != null)
+        {
+            segmentLength = segmentData.GetSegmentLength();
+            spawnZ += segmentLength;
+        }
+        else
+        {
+            Debug.LogWarning("Level spawner could not find: " + segment.name + "'s SegementData");
+            spawnZ += defaultSegmentLength;
+        }
+
+
+        //If main game has started
+        if (gameMaster.GetGameplayState())
+        {
+            //Iterate through each obstacle in segment and spawn in obstacle
+            ObjectSpawner[] spawners = segment.GetComponentsInChildren<ObjectSpawner>();
+            foreach (ObjectSpawner spawner in spawners)
+            {
+                spawner.SpawnObject();
+            }
+        }
     }
 
     void RemoveOldestSegment()

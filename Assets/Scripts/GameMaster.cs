@@ -50,7 +50,7 @@ public class GameMaster : MonoBehaviour
         levelSpawner = GameObject.Find("Level Spawner").GetComponent<LevelSpawner>();
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         highScore = PlayerPrefs.GetInt("HighScore", 0);
-        Debug.Log("Highscore:" +  highScore.ToString());
+        Debug.Log("Highscore:" + highScore.ToString());
         highScoreAchieved = false;
     }
 
@@ -64,10 +64,10 @@ public class GameMaster : MonoBehaviour
             //Debug.Log("ScoreOffset: " + scoreOffset);
             return;
         }
-        else if(gameState == GameState.Gameplay)
+        else if (gameState == GameState.Gameplay)
         {
             scoreMultiplier = levelSpawner.GetSpeed() / 10;
-            rawScore += Time.deltaTime *  (scoreMultiplier + currentDashMultiplier);
+            rawScore += Time.deltaTime * (scoreMultiplier + currentDashMultiplier);
             currentScore = Convert.ToInt32(rawScore);
             //Debug.Log("CurrentScore: " + currentScore + " Time: " + Time.time + " Raw Score: " + rawScore);
             if (currentScore > highScore)
@@ -82,7 +82,7 @@ public class GameMaster : MonoBehaviour
             }
             return;
         }
-        else if(gameState == GameState.FirstTutorial)
+        else if (gameState == GameState.FirstTutorial)
         {
             tutorialOffset = Time.time - scoreOffset;
             return;
@@ -113,7 +113,7 @@ public class GameMaster : MonoBehaviour
             }
         }
 
-        
+
 
     }
 
@@ -126,12 +126,12 @@ public class GameMaster : MonoBehaviour
     {
         gameplayStarted = true;
 
-        if(tutorialStateManager.GetIsFirstTutorial())
+        if (tutorialStateManager.GetIsFirstTutorial())
         {
             gameState = GameState.FirstTutorial;
         }
-        else 
-        { 
+        else
+        {
             gameState = GameState.Gameplay;
         }
         OnGameStart.Invoke();
@@ -140,12 +140,12 @@ public class GameMaster : MonoBehaviour
 
     void OnDestroy()
     {
-        SaveValues();          
+        SaveValues();
     }
 
     public bool HasAchievedHighScore()
     {
-        return highScoreAchieved; 
+        return highScoreAchieved;
     }
 
     public int GetCurrentScore()
@@ -155,7 +155,7 @@ public class GameMaster : MonoBehaviour
 
     public int GetHighScore()
     {
-        return highScore; 
+        return highScore;
     }
 
     public int GetLastScore()
@@ -188,7 +188,7 @@ public class GameMaster : MonoBehaviour
 
     public void SaveValues()
     {
-        if(highScoreAchieved)
+        if (highScoreAchieved)
         {
             PlayerPrefs.SetInt("HighScore", highScore);
         }

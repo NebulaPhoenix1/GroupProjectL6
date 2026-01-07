@@ -8942,7 +8942,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 10
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -10165,6 +10165,46 @@ PrefabInstance:
       propertyPath: additionalInitialSegmentCount
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: tutorialLevelPrefabs.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 7af1ef6b5b1891044bd55ae5a9c11bbf, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 5766eb950c4c0fe4c98925b70d6a8015, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 7af1ef6b5b1891044bd55ae5a9c11bbf, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 5edf6a751aafda9459c6101543641fcd, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 7af1ef6b5b1891044bd55ae5a9c11bbf, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[5]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 6e07a3e7d8c3fc44ca29090e35e7c640, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[6]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 7af1ef6b5b1891044bd55ae5a9c11bbf, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[7]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: e0d30dd275276054b973cc6c84edc2ff, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[8]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 7af1ef6b5b1891044bd55ae5a9c11bbf, type: 3}
     - target: {fileID: 6606079764639810192, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: m_Name
       value: Level Spawner
