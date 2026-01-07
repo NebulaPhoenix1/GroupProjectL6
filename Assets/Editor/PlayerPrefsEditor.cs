@@ -14,6 +14,8 @@ public class PlayerPrefsEditor : EditorWindow
     private int editedResolutionX;
     private int editedResolutionY;
 
+    private Vector2 scrollPos;
+
     private const string highScoreKeyName = "HighScore";
     private const string collectibleKeyName = "Collectibles";
     private const string lastScoreKeyName = "Last Score";
@@ -67,6 +69,8 @@ public class PlayerPrefsEditor : EditorWindow
     {
         //EditorGUILayout.BeginVertical();
         //EditorGUILayout.BeginScrollView(new Vector2(), GUILayout.MaxHeight());
+
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
         //Last score editor
         GUILayout.Label("Last Score Settings", EditorStyles.boldLabel);
@@ -222,7 +226,7 @@ public class PlayerPrefsEditor : EditorWindow
             Debug.Log("Resolution Y key deleted.");
         }
 
-        //EditorGUILayout.EndScrollView();
+        EditorGUILayout.EndScrollView();
         //EditorGUILayout.EndVertical();
     }
 }
