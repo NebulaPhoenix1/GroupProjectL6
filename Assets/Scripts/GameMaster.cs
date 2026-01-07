@@ -3,6 +3,7 @@ using System;
 using UnityEngine.Events;
 using Unity.Cinemachine;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class GameMaster : MonoBehaviour
 {
@@ -36,6 +37,10 @@ public class GameMaster : MonoBehaviour
     private PlayerMovement playerMovement;
     [SerializeField] PlayerDashAndDisplay PlayerDashAndDisplay;
     [SerializeField] TutorialStateManager tutorialStateManager;
+
+    [SerializeField] private float dashScoreMultiplier = 3f;
+    private float currentDashMultiplier = 1f;
+    private float scoreMultiplier;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -61,7 +66,8 @@ public class GameMaster : MonoBehaviour
         }
         else if(gameState == GameState.Gameplay)
         {
-            rawScore = (Time.time - scoreOffset) * (levelSpawner.GetSpeed() / 10) - tutorialOffset;
+            scoreMultiplier = levelSpawner.GetSpeed() / 10;
+            rawScore += Time.deltaTime *  (scoreMultiplier + currentDashMultiplier);
             currentScore = Convert.ToInt32(rawScore);
             //Debug.Log("CurrentScore: " + currentScore + " Time: " + Time.time + " Raw Score: " + rawScore);
             if (currentScore > highScore)
@@ -82,6 +88,16 @@ public class GameMaster : MonoBehaviour
             return;
         }
     }
+
+    public void EnableDashScoreMultiplier()
+    {
+        currentDashMultiplier = dashScoreMultiplier;
+    }
+    public void DisableDashScoreMultiplier()
+    {
+        currentDashMultiplier = 1f;
+    }
+
 
     public void CalculateDashScoreOffset()
     {

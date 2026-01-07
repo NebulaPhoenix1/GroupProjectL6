@@ -1,4 +1,5 @@
 using System.Collections;
+using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -63,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float worldSpeedRayDistanceMultiplier = 1f;
     [SerializeField] LayerMask obstacleLayers;
 
-    
+    private bool isGameOver = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -274,7 +275,7 @@ public class PlayerMovement : MonoBehaviour
         //If stumbling during I frames, return and do nothing
         if(currentStumbleInvincibilityTime > 0) { return; }
         //If not already stumbling and current invincibilty time <= 0, stumble
-        else if(!isStumbling && currentStumbleInvincibilityTime <= 0)
+        else if(!isStumbling && currentStumbleInvincibilityTime <= 0 && !isGameOver)
         {
             Debug.Log("First stumble");
             isStumbling = true;
@@ -283,7 +284,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke("RecoverFromStumble", stumbleRecoverTime);
         }
         //If stumbling while already stumbling outside of I frames, game over
-        else if(isStumbling && currentStumbleInvincibilityTime <= 0)
+        else if(isStumbling && currentStumbleInvincibilityTime <= 0 && !isGameOver)
         {
             GameOverHandle();
         }
@@ -343,6 +344,7 @@ public class PlayerMovement : MonoBehaviour
     private void GameOverHandle()
     {
         OnGameOver.Invoke();
+        isGameOver = true;
         Debug.Log("Game Over");
     }
 
