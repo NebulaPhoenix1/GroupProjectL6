@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -20,13 +21,18 @@ public class PlayerMovement : MonoBehaviour
     public UnityEvent OnLaneChange; //Called when the player successfully changes lanes
     public UnityEvent OnJump; //Called when the player is mid air
     public UnityEvent OnGameOver; //Called when the player dies. RIP.
+    public UnityEvent OnDash; //Called when the player dashes forward
+    public UnityEvent OnDashFinish; //Called when the player's dash finishes
 
     //Input System
     private InputAction moveAction;
     private InputAction jumpAction;
     private float moveInput;
+    private InputAction dashAction;
     private GameMaster gameMaster;
     private LevelSpawner levelSpawner;
+    [SerializeField] private PlayerDashAndDisplay dashAndDisplay;
+    [SerializeField] private TutorialStateManager tutorialStateManager;
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float jumpForce;
@@ -38,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpInputDelay = 1.0f;
     [SerializeField] private float stumbleInvincibilityTime;
     [SerializeField] private float stumbleRecoverTime;
+    [SerializeField] private bool isPlayerDashing = false;
 
     private float currentJumpDelay;
     private float currentStumbleInvincibilityTime;
@@ -149,6 +156,11 @@ public class PlayerMovement : MonoBehaviour
         {
             currentStumbleInvincibilityTime -= Time.deltaTime;
         }
+        if(dashAction.WasPressedThisFrame() && dashAndDisplay.canDash)
+        {
+            OnPlayerDash();
+            OnDash.Invoke();
+        }
     }
 
     private bool GroundCheck()
@@ -170,22 +182,27 @@ public class PlayerMovement : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("ControlSchemeKey"))
         {
+            //change the referenced input actions based on current control scheme pulled from player prefs
             switch (PlayerPrefs.GetInt("ControlSchemeKey"))
             {
                 case 0:
                     moveAction = InputSystem.actions.FindAction("Move (WASD)");
+                    dashAction = InputSystem.actions.FindAction("Dash (WASD)");
                     break;
                 case 1:
                     moveAction = InputSystem.actions.FindAction("Move (ArrowKeys)");
+                    dashAction = InputSystem.actions.FindAction("Dash (ArrowKeys)");
                     break;
                 default:
                     moveAction = InputSystem.actions.FindAction("Move (WASD)");
+                    dashAction = InputSystem.actions.FindAction("Dash (WASD)");
                     break;
             }
         }
         else
         {
             moveAction = InputSystem.actions.FindAction("Move (WASD)");
+            dashAction = InputSystem.actions.FindAction("Dash (WASD)");
         }
     }
 
@@ -208,7 +225,7 @@ public class PlayerMovement : MonoBehaviour
         //Do a raycast every time we switch lane just before the switch takes place to see if it was a close call or not
         //If it was a close call, we'll stumble but let the switch occur.
         RaycastHit hit;
-        float raycastDistance = worldSpeedRayDistanceMultiplier * levelSpawner.GetSpeed() * stumbleRayDefaultDistance;
+        float raycastDistance = worldSpeedRayDistanceMultiplier * (levelSpawner.GetSpeed() / 10) * stumbleRayDefaultDistance;
         //Debug.Log("Raycast Distance: " + raycastDistance);
         if(Physics.Raycast(stumbleCheckOrigin.position, stumbleCheckOrigin.forward, out hit, raycastDistance, obstacleLayers))
         {
@@ -236,7 +253,8 @@ public class PlayerMovement : MonoBehaviour
         float switchDuration = 0.2f;
         float elapsedTime = 0f;
         float startX = playerRigidbody.position.x;
-        while(elapsedTime < switchDuration)
+        OnLaneChange.Invoke();
+        while (elapsedTime < switchDuration)
         {
             elapsedTime += Time.deltaTime;
             float newX = Mathf.SmoothStep(startX, targetX, elapsedTime / switchDuration);
@@ -246,7 +264,7 @@ public class PlayerMovement : MonoBehaviour
         }
         Vector3 newPos = new Vector3(targetX, playerRigidbody.position.y, playerRigidbody.position.z);
         playerRigidbody.MovePosition(newPos);
-        OnLaneChange.Invoke();
+
     }
 
     //This function gets called when OnStumble event is invoked
@@ -274,6 +292,53 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError("StumbleHandle reached unintended branch on line 240 in PlayerMovement.cs");
         }
     }
+    public void OnPlayerDash()
+    {
+        isPlayerDashing = true; //toggle to let player destroy obstacles instead of dying to them
+        dashAndDisplay.OnPlayerDash(); //reset dash meter
+        Debug.Log("Dash started at " + Time.time);
+        StartCoroutine(Dash());
+    }
+
+    private IEnumerator Dash()
+    {
+        float startingDashSpeed = levelSpawner.GetSpeed();
+        float maxDashSpeed = levelSpawner.GetSpeed() * 3;
+        //bool isDashIncreasing = true;
+        bool hasDashFinished = false;
+
+        //increase player's speed
+        for (float increasingSpeed = levelSpawner.GetSpeed(); levelSpawner.GetSpeed() < maxDashSpeed; increasingSpeed += (startingDashSpeed / 10))
+        {
+            levelSpawner.SetSpeed(increasingSpeed);
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        //duration player will stay at max speed of dash before decreasing
+        yield return new WaitForSeconds(2f);
+
+        //decrease player's speed
+        for (float decreasingSpeed = levelSpawner.GetSpeed(); levelSpawner.GetSpeed() > startingDashSpeed; decreasingSpeed -= ((startingDashSpeed * 3) / 20))
+        {
+            levelSpawner.SetSpeed(decreasingSpeed);
+            yield return new WaitForSeconds(0.2f);
+
+            if(levelSpawner.GetSpeed() <= startingDashSpeed)
+            {
+                hasDashFinished = true;
+                levelSpawner.SetSpeed(startingDashSpeed);
+                break;
+            }
+        }
+        
+        if (hasDashFinished)
+        {
+            isPlayerDashing = false;
+            OnDashFinish.Invoke();
+            Debug.Log("Dash finished at " + Time.time);
+            yield return null;
+        }
+    }
 
     private void GameOverHandle()
     {
@@ -285,5 +350,24 @@ public class PlayerMovement : MonoBehaviour
     {
         isStumbling = false;
         OnRecover.Invoke();
+    }
+
+    public bool GetIsPlayerDashing()
+    {
+        return isPlayerDashing;
+    }
+
+    public void AssignTutorialEvents()
+    {
+        OnLaneChange.AddListener(delegate {tutorialStateManager.ToggleTutorialX(0);});
+        OnJump.AddListener(delegate {tutorialStateManager.ToggleTutorialX(1);});
+        OnDash.AddListener(delegate { tutorialStateManager.ToggleTutorialX(2);});
+    }
+
+    public void UnassignTutorialEvents()
+    {
+        OnLaneChange.RemoveListener(delegate { tutorialStateManager.ToggleTutorialX(0);});
+        OnJump.RemoveListener(delegate { tutorialStateManager.ToggleTutorialX(1);});
+        OnDash.RemoveListener(delegate { tutorialStateManager.ToggleTutorialX(2);});
     }
 }
