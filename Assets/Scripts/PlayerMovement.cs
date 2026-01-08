@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private LevelSpawner levelSpawner;
     [SerializeField] private PlayerDashAndDisplay dashAndDisplay;
     [SerializeField] private TutorialStateManager tutorialStateManager;
+    [SerializeField] private TutorialButtons tutorialButtons;
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float jumpForce;
@@ -363,12 +364,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void AssignTutorialEvents()
     {
+        OnLaneChange.AddListener(delegate {tutorialButtons.StartFadeOut();});
+        OnJump.AddListener(delegate {tutorialButtons.StartFadeOut();});
+    }
+
+    public void AssignFirstTutorialEvents()
+    {
         OnLaneChange.AddListener(delegate {tutorialStateManager.ToggleTutorialX(0);});
         OnJump.AddListener(delegate {tutorialStateManager.ToggleTutorialX(1);});
         OnDash.AddListener(delegate { tutorialStateManager.ToggleTutorialX(2);});
     }
 
-    public void UnassignTutorialEvents()
+    public void UnassignFirstTutorialEvents()
     {
         OnLaneChange.RemoveListener(delegate { tutorialStateManager.ToggleTutorialX(0);});
         OnJump.RemoveListener(delegate { tutorialStateManager.ToggleTutorialX(1);});
