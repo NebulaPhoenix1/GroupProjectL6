@@ -2118,6 +2118,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDashAndDisplay
   sliderFill: {fileID: 1783103914}
+  nonFilledColor: {r: 1, g: 0, b: 0, a: 1}
+  filledColor: {r: 1, g: 0.39215687, b: 0, a: 1}
   meterStartValue: 3
   meterMinimum: 0
   meterMaximum: 15
@@ -3871,6 +3873,7 @@ MonoBehaviour:
   fadeDuration: 0.5
   fadeOutDuration: 2.5
   tutorialStateManager: {fileID: 1771808299}
+  playerMovement: {fileID: 1803198818}
 --- !u!1 &835173382
 GameObject:
   m_ObjectHideFlags: 0
@@ -10533,6 +10536,10 @@ PrefabInstance:
       value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: tutorialButtons
+      value: 
+      objectReference: {fileID: 834271965}
+    - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: stumbleRecoverTime
       value: 2.5
       objectReference: {fileID: 0}
@@ -10578,7 +10585,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: OnJump.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: OnGameOver.m_PersistentCalls.m_Calls.Array.size
@@ -10590,7 +10597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: OnLaneChange.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: OnDash.m_PersistentCalls.m_Calls.Array.data[0].m_Mode

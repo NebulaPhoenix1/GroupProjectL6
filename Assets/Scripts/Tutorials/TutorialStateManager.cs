@@ -213,7 +213,7 @@ public class TutorialStateManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         highScoreText.SetActive(true);
         scoreText.SetActive(true);
