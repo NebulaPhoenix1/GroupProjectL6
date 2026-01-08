@@ -2,22 +2,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/* 
-   Base class for object spawners (obstacle, powerup and coins)
-   It's set up so child classes can define their own logic if needed (I doubt it, but hey why not)
-*/
-
 public abstract class ObjectSpawner : MonoBehaviour
 {
     [SerializeField] protected GameObject[] prefabList;
-
-    //Pool of objects to spawn from to reduce instantiating
+    
+    // Pool of objects
     static private Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>();
     private static bool isInitialized = false;
+    private GameObject spawnedObject;
 
     protected virtual void Awake()
     {
-        //Ensure pool is cleared on scene load
         if (!isInitialized)
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -25,70 +20,73 @@ public abstract class ObjectSpawner : MonoBehaviour
         }
     }
 
-    protected virtual void Start()
-    {
-        
-    }
+    protected virtual void Start() { }
+    protected virtual void Update() { }
 
-    protected virtual void Update()
-    {
-        
-    }
-
-    //Spawn a random obstacle
     public virtual void SpawnObject()
     {
-        if(prefabList.Length == 0)
-        {
-            return;
-        }
+        if(prefabList.Length == 0) return;
+
         int selectedIndex = Random.Range(0, prefabList.Length);
         GameObject selectedPrefab = prefabList[selectedIndex];
+        
         GameObject spawnedPrefab = GetPooledObject(selectedPrefab);
+        
+        // Ensure the object is positioned correctly
         spawnedPrefab.transform.position = transform.position;
         spawnedPrefab.transform.rotation = transform.rotation; 
         spawnedPrefab.SetActive(true);
+        
+        spawnedObject = spawnedPrefab;
     }
 
-    //Get pooled object or create one
     protected GameObject GetPooledObject(GameObject searchObject)
     {
-        //Create key if it doesn't exist
         if(!objectPool.ContainsKey(searchObject.name))
         {
-            //Debug.Log("Making new key for object pool");
             objectPool.Add(searchObject.name, new Queue<GameObject>());
         }
-        //Search pool
-        if(objectPool[searchObject.name].Count > 0)
+
+        // Loop through the queue until we find a valid object or run out
+        while (objectPool[searchObject.name].Count > 0)
         {
-            //Debug.Log("Reusing object from pool: " + searchObject.name);
             GameObject pooledObject = objectPool[searchObject.name].Dequeue();
-            pooledObject.transform.parent = transform; //Reparent to spawner
-            Debug.Log("Grabbed pooled object");
-            return pooledObject;
+
+            // Check if the object still exists (hasn't been destroyed externally)
+            if (pooledObject != null)
+            {
+                pooledObject.transform.parent = transform; // Reparent to current spawner
+                return pooledObject;
+            }
+            else
+            {
+                Debug.LogWarning("Found destroyed object in pool. Cleaning up.");
+            }
         }
-        else //No objects in pool, instantiate a new one
-        {
-            //Debug.Log("Instantiating new object for pool: " + searchObject.name);
-            GameObject newObject = Instantiate(searchObject, transform);
-            newObject.name = searchObject.name; //Ensure name matches for pooling
-            return newObject;
-        }
+        
+        // If queue is empty or all items were null, create new
+        GameObject newObject = Instantiate(searchObject, transform);
+        newObject.name = searchObject.name; 
+        return newObject;
     }
 
-    //Put object back in pool
     public static void ReturnObjectToPool(GameObject returnObject)
     {
+        //Just in case returnObject is already destroyed
+        if (returnObject == null) return;
+
         returnObject.SetActive(false);
+
+        // Unparent the object so it doesn't get destroyed if the Spawner is destroyed
+        returnObject.transform.parent = null; 
+
         if(objectPool.ContainsKey(returnObject.name))
         {
             objectPool[returnObject.name].Enqueue(returnObject);
-            Debug.Log("Returned object to pool: " + returnObject.name);
         }
         else
         {
-            Debug.LogWarning("Attempted to return an object to a non-existent pool: " + returnObject.name);
+            Debug.LogWarning("Attempted to return object to non-existent pool: " + returnObject.name);
             Destroy(returnObject);
         }
     }
