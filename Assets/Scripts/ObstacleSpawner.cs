@@ -22,16 +22,16 @@ public class ObstacleSpawner : ObjectSpawner
     {
         base.Update(); //Calls base update in ObjectSpawner.cs
         // Only check immediately after we try to spawn something
-        if(gameMaster != null && gameMaster.GetGameplayState())
+        /*if (gameMaster != null && gameMaster.GetGameplayState())
         {
-            if(!hasAttemptedSpawn && transform.childCount == 0 && transform.position.z > 5f)
+            if (!hasAttemptedSpawn && transform.childCount == 0 && transform.position.z > 5f)
             {
                 Debug.Log("Obstacle Spawner attempting to spawn object again");
                 SpawnObject();
                 hasAttemptedSpawn = true;
             }
-        }
-        
+        }*/
+
     }
 
     protected override void Awake()
