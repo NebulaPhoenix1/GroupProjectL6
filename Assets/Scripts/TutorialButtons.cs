@@ -18,17 +18,20 @@ public class TutorialButtons : MonoBehaviour
     private bool hasFadedOut;
 
     [SerializeField] private TutorialStateManager tutorialStateManager;
+    [SerializeField] private PlayerMovement playerMovement;
 
     private void OnEnable()
     {
-        hasFadedOut = false;
-        UpdateGlyphs();
+        hasFadedOut = false;     
+        if (!tutorialStateManager.GetIsFirstTutorial())
+        {
+            playerMovement.AssignTutorialEvents();
+            UpdateGlyphs();
+        }
     }
 
     public void UpdateGlyphs()
     {
-        if (!tutorialStateManager.GetIsFirstTutorial())
-        {
             //change the displayed glyphs on screen based on the control scheme
             switch (PlayerPrefs.GetInt("ControlSchemeKey"))
             {
@@ -79,7 +82,6 @@ public class TutorialButtons : MonoBehaviour
             {
                 StartCoroutine(GlyphFade());
             }
-        }
     }
 
     public void StartFadeOut()
