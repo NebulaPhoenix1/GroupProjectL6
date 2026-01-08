@@ -557,7 +557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 6
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -681,7 +681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: 02d41bb63d9b75a4f9df0974b6f58542, type: 3}
       propertyPath: m_Name
-      value: Obstacle 1
+      value: Obstacle 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -743,7 +743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 3
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -805,7 +805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 7
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -929,7 +929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 8
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1177,7 +1177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 9
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1239,7 +1239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 5
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1363,7 +1363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 4
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
