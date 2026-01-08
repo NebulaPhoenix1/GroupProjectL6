@@ -195,6 +195,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1494076}
   m_CullTransparentMesh: 1
+--- !u!1 &40022123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1716775985845467871, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+  m_PrefabInstance: {fileID: 8702455018720419479}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &109926510
 GameObject:
   m_ObjectHideFlags: 0
@@ -5416,11 +5421,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!1 &1079899936 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1716775985845467871, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
-  m_PrefabInstance: {fileID: 8702455018720419479}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1081916503
 GameObject:
   m_ObjectHideFlags: 0
@@ -6945,6 +6945,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &1330166877 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1273091710495225668, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+  m_PrefabInstance: {fileID: 8702455018720419479}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1379468904
 GameObject:
   m_ObjectHideFlags: 0
@@ -7380,11 +7385,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1494462393 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1273091710495225668, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
-  m_PrefabInstance: {fileID: 8702455018720419479}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1499287174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8952,7 +8952,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 10
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -10175,6 +10175,46 @@ PrefabInstance:
       propertyPath: additionalInitialSegmentCount
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: tutorialLevelPrefabs.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 7af1ef6b5b1891044bd55ae5a9c11bbf, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 5766eb950c4c0fe4c98925b70d6a8015, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 7af1ef6b5b1891044bd55ae5a9c11bbf, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 5edf6a751aafda9459c6101543641fcd, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 7af1ef6b5b1891044bd55ae5a9c11bbf, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[5]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 6e07a3e7d8c3fc44ca29090e35e7c640, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[6]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 7af1ef6b5b1891044bd55ae5a9c11bbf, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[7]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: e0d30dd275276054b973cc6c84edc2ff, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'tutorialLevelPrefabs.Array.data[8]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 7af1ef6b5b1891044bd55ae5a9c11bbf, type: 3}
     - target: {fileID: 6606079764639810192, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: m_Name
       value: Level Spawner
@@ -10505,6 +10545,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 463125550}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: invincibilityTesting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: tutorialStateManager
       value: 
       objectReference: {fileID: 1771808299}
@@ -10627,11 +10671,11 @@ PrefabInstance:
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: OnGameOver.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
-      objectReference: {fileID: 1494462393}
+      objectReference: {fileID: 1330166877}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: OnGameOver.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
-      objectReference: {fileID: 1079899936}
+      objectReference: {fileID: 40022123}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: OnJump.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: StartFadeOut
