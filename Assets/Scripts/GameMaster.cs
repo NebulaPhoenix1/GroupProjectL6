@@ -98,25 +98,6 @@ public class GameMaster : MonoBehaviour
         currentDashMultiplier = 1f;
     }
 
-
-    public void CalculateDashScoreOffset()
-    {
-        float dashScoreOffset = 0;
-
-        while (playerMovement.GetIsPlayerDashing())
-        {
-
-
-            if (!playerMovement.GetIsPlayerDashing())
-            {
-                break;
-            }
-        }
-
-
-
-    }
-
     public void ReloadScene()
     {
         SceneManager.LoadScene("Luke's Scene");

@@ -39,7 +39,7 @@ public class Obstacle : MonoBehaviour
         }
         else
         {
-            Debug.Log("Road work ahead? uh yeah i sure hope it does");
+            Debug.Log("Obstacle collided with non player entity");
         }
     }
 
