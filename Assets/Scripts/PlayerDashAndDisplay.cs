@@ -17,6 +17,13 @@ public class PlayerDashAndDisplay : MonoBehaviour
     public bool canDash = false;
     [SerializeField] private float dashDuration;
 
+    //Bool to say if player is dashing; this determines how the bar fills/depletes
+    //If depleting, bar shows time left on dash
+    //If filling, bar shows how much dash is charged
+    private bool isDashing = false;
+    private float dashPercentageLeft;
+
+
     private void Awake()
     {
         dashDisplay = GetComponent<Slider>();
@@ -33,9 +40,15 @@ public class PlayerDashAndDisplay : MonoBehaviour
 
     private void Update()
     {
-        if (dashDisplay)
+        //Show dash charge amount on display
+        if (dashDisplay && !isDashing)
         {
             dashDisplay.value = collectedCoins;
+        }
+        //Show dash time left on display
+        else if (dashDisplay && isDashing)
+        {
+            dashDisplay.value = dashPercentageLeft;
         }
         else
         {
@@ -68,18 +81,33 @@ public class PlayerDashAndDisplay : MonoBehaviour
         StartCoroutine(DecreaseCoinCount());
         canDash = false;
         sliderFill.GetComponent<Image>().color = nonFilledColor;
+        isDashing = true;
     }
 
     private IEnumerator DecreaseCoinCount()
+{
+    float timePassed = 0;
+    
+    //Assume meter full (meterMaximum) at start of dash
+    float startValue = meterMaximum; 
+
+    while (timePassed < dashDuration)
     {
-        float timePassed = 0;
+        timePassed += Time.deltaTime;
+        
+        // Calculate the percentage complete 
+        float t = timePassed / dashDuration;
+        float currentValue = Mathf.Lerp(startValue, 0, t);
+        
+        dashPercentageLeft = currentValue;
+        collectedCoins = currentValue; 
 
-        while (timePassed < dashDuration)
-        {
-            timePassed += Time.deltaTime;
-
-            collectedCoins = Mathf.Lerp(collectedCoins, 0, timePassed / dashDuration);
-            yield return null;
-        }
+        yield return null;
     }
+
+    //Ensure values are 0 at end
+    isDashing = false;
+    collectedCoins = 0;
+    dashDisplay.value = 0;
+}
 }
