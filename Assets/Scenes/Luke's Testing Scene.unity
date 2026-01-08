@@ -2118,6 +2118,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDashAndDisplay
   sliderFill: {fileID: 1783103914}
+  nonFilledColor: {r: 1, g: 0, b: 0, a: 1}
+  filledColor: {r: 1, g: 0.39215687, b: 0, a: 1}
   meterStartValue: 3
   meterMinimum: 0
   meterMaximum: 15
@@ -8961,7 +8963,7 @@ MonoBehaviour:
   isFirstTutorial: 0
   playerMovement: {fileID: 1803198818}
   gameMaster: {fileID: 1771808296}
-  devToggleFirstTutorial: 0
+  devToggleFirstTutorial: 1
 --- !u!1 &1783103914
 GameObject:
   m_ObjectHideFlags: 0
