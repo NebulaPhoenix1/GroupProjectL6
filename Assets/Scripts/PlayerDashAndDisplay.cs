@@ -8,8 +8,8 @@ public class PlayerDashAndDisplay : MonoBehaviour
     [SerializeField] private GameObject sliderFill;
 
     private float collectedCoins = 3;
-    private Color fillDefaultColour;
-    private Color fillFullColor = new Color (1f, (100f / 255f), 0f);
+    [SerializeField] private Color nonFilledColor; //Red for when using dash
+    [SerializeField] private Color filledColor = new Color (1f, (100f / 255f), 0f); //Orange for fully charged
 
     [SerializeField] private int meterStartValue = 3;
     [SerializeField] private int meterMinimum = 0;
@@ -24,7 +24,7 @@ public class PlayerDashAndDisplay : MonoBehaviour
 
     private void Start()
     {
-        fillDefaultColour = sliderFill.GetComponent<Image>().color;
+        //nonFilledColor = sliderFill.GetComponent<Image>().color;
 
         dashDisplay.minValue = meterMinimum;
         dashDisplay.maxValue = meterMaximum;
@@ -44,8 +44,14 @@ public class PlayerDashAndDisplay : MonoBehaviour
 
         if (collectedCoins >= meterMaximum)
         {
-            sliderFill.GetComponent<Image>().color = fillFullColor;
+            sliderFill.GetComponent<Image>().color = filledColor;
             canDash = true;
+            
+        }
+        //Failsafe to reset color 
+        else
+        {
+            sliderFill.GetComponent<Image>().color = nonFilledColor;
         }
     }
 
@@ -61,7 +67,7 @@ public class PlayerDashAndDisplay : MonoBehaviour
     {
         StartCoroutine(DecreaseCoinCount());
         canDash = false;
-        sliderFill.GetComponent <Image>().color = fillDefaultColour;
+        sliderFill.GetComponent<Image>().color = nonFilledColor;
     }
 
     private IEnumerator DecreaseCoinCount()

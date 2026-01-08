@@ -159,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentStumbleInvincibilityTime -= Time.deltaTime;
         }
-        if(dashAction.WasPressedThisFrame() && dashAndDisplay.canDash)
+        if(dashAction.WasPressedThisFrame() && dashAndDisplay.canDash && !isPlayerDashing)
         {
             OnPlayerDash();
             OnDash.Invoke();
