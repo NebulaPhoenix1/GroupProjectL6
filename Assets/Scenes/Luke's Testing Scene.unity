@@ -2125,6 +2125,7 @@ MonoBehaviour:
   meterMaximum: 15
   canDash: 0
   dashDuration: 6
+  fillSpeed: 5
 --- !u!114 &480294355
 MonoBehaviour:
   m_ObjectHideFlags: 0

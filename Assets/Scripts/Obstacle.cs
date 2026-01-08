@@ -13,7 +13,7 @@ public class Obstacle : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collided");
+        //Debug.Log("Collided");
         if(collision.gameObject.CompareTag("Player"))
         {
             if (!playerMovement.GetIsPlayerDashing())
@@ -46,7 +46,7 @@ public class Obstacle : MonoBehaviour
         }
         else
         {
-            Debug.Log("Obstacle collided with non player entity");
+            //Debug.Log("Obstacle collided with non player entity");
         }
     }
 

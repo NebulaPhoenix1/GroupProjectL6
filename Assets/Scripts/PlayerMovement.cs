@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
         if(inputDelayTimer <= 0f)
         {
             moveInput = moveAction.ReadValue<float>();
-            if(moveInput != 0){Debug.Log(moveInput); }
+            //if(moveInput != 0){Debug.Log(moveInput); }
             //Handle lane switching
             if(moveInput < 0) //Move Left
             {
@@ -274,13 +274,13 @@ public class PlayerMovement : MonoBehaviour
     private void StumbleHandle()
     {
         if(invincibilityTesting) { return; }
-        Debug.Log("I frame duration: " + stumbleInvincibilityTime + " Current I frame duration: " + currentStumbleInvincibilityTime);
+        //Debug.Log("I frame duration: " + stumbleInvincibilityTime + " Current I frame duration: " + currentStumbleInvincibilityTime);
         //If stumbling during I frames, return and do nothing
         if(currentStumbleInvincibilityTime > 0) { return; }
         //If not already stumbling and current invincibilty time <= 0, stumble
         else if(!isStumbling && currentStumbleInvincibilityTime <= 0 && !isGameOver)
         {
-            Debug.Log("First stumble");
+            //Debug.Log("First stumble");
             isStumbling = true;
             currentStumbleInvincibilityTime = stumbleInvincibilityTime;
             OnStumble.Invoke();
@@ -300,7 +300,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isPlayerDashing = true; //toggle to let player destroy obstacles instead of dying to them
         dashAndDisplay.OnPlayerDash(); //reset dash meter
-        Debug.Log("Dash started at " + Time.time);
+        //Debug.Log("Dash started at " + Time.time);
         StartCoroutine(Dash());
     }
 
@@ -339,7 +339,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isPlayerDashing = false;
             OnDashFinish.Invoke();
-            Debug.Log("Dash finished at " + Time.time);
+            //Debug.Log("Dash finished at " + Time.time);
             yield return null;
         }
     }
