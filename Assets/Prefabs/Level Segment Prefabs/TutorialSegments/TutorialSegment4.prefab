@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 951420438282891984}
   - component: {fileID: 5849352902994169770}
   - component: {fileID: 3849520822184035555}
+  - component: {fileID: 6628096167649385106}
   m_Layer: 2
   m_Name: End Flag
   m_TagString: Untagged
@@ -128,6 +129,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   segmentObject: {fileID: 9098834875976951334}
+--- !u!114 &6628096167649385106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423325354032544185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f5c2c9f364d814a8d7159fda4d5d32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstTutorialTriggerController
+  identifier: 1
 --- !u!1 &8339094749612366265
 GameObject:
   m_ObjectHideFlags: 0
