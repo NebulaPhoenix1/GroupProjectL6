@@ -65,6 +65,7 @@ public abstract class ObjectSpawner : MonoBehaviour
             //Debug.Log("Reusing object from pool: " + searchObject.name);
             GameObject pooledObject = objectPool[searchObject.name].Dequeue();
             pooledObject.transform.parent = transform; //Reparent to spawner
+            Debug.Log("Grabbed pooled object");
             return pooledObject;
         }
         else //No objects in pool, instantiate a new one
@@ -83,7 +84,7 @@ public abstract class ObjectSpawner : MonoBehaviour
         if(objectPool.ContainsKey(returnObject.name))
         {
             objectPool[returnObject.name].Enqueue(returnObject);
-            //Debug.Log("Returned object to pool: " + returnObject.name);
+            Debug.Log("Returned object to pool: " + returnObject.name);
         }
         else
         {

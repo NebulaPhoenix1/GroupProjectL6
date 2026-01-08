@@ -65,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask obstacleLayers;
 
     private bool isGameOver = false;
+    [SerializeField] private bool invincibilityTesting = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -271,6 +272,7 @@ public class PlayerMovement : MonoBehaviour
     //This function gets called when OnStumble event is invoked
     private void StumbleHandle()
     {
+        if(invincibilityTesting) { return; }
         Debug.Log("I frame duration: " + stumbleInvincibilityTime + " Current I frame duration: " + currentStumbleInvincibilityTime);
         //If stumbling during I frames, return and do nothing
         if(currentStumbleInvincibilityTime > 0) { return; }
@@ -290,7 +292,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.LogError("StumbleHandle reached unintended branch on line 240 in PlayerMovement.cs");
+            Debug.LogError("StumbleHandle reached unintended branch in PlayerMovement.cs");
         }
     }
     public void OnPlayerDash()
