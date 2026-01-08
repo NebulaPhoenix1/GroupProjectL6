@@ -40,7 +40,7 @@ public class TutorialStateManager : MonoBehaviour
         {
             isFirstTutorial = true;
             setFirstTutorialSegments.Invoke();
-            playerMovement.AssignTutorialEvents();
+            playerMovement.AssignFirstTutorialEvents();
         }
     }
 
@@ -74,7 +74,7 @@ public class TutorialStateManager : MonoBehaviour
                 arrowKeysGlyphHolder.SetActive(false);
                 arrowKeysGlyphs[0].SetActive(false);
                 arrowKeysGlyphs[1].SetActive(false);
-
+                Debug.Log("Showing WASD Glyphs");
                 break;
 
             case 1:
@@ -85,7 +85,7 @@ public class TutorialStateManager : MonoBehaviour
                 WASDGlyphHolder.SetActive(false);
                 WASDGlyphs[0].SetActive(false);
                 WASDGlyphs[1].SetActive(false);
-
+                Debug.Log("Showing ArrowKeys Glyphs");
                 break;
 
             default:
@@ -96,7 +96,7 @@ public class TutorialStateManager : MonoBehaviour
                 arrowKeysGlyphHolder.SetActive(false);
                 arrowKeysGlyphs[0].SetActive(false);
                 arrowKeysGlyphs[1].SetActive(false);
-
+                Debug.Log("Showing WASD Glyphs by default");
                 break;
         }
 
@@ -227,7 +227,7 @@ public class TutorialStateManager : MonoBehaviour
         scoreText.SetActive(true);
         pauseButton.SetActive(true);
 
-        playerMovement.UnassignTutorialEvents();
+        playerMovement.UnassignFirstTutorialEvents();
         gameMaster.SetStateGameplay();
 
         yield return null;
