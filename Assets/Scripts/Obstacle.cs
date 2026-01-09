@@ -21,12 +21,12 @@ public class Obstacle : MonoBehaviour
                 //Notify player of collision
                 if (instantGameOver)
                 {
-                    collision.gameObject.GetComponent<PlayerMovement>().OnGameOver.Invoke();
+                    collision.gameObject.GetComponent<PlayerMovement>().TriggerGameOver();
                     Debug.Log("Player Collision: Game Over");
                 }
                 else
                 {
-                    collision.gameObject.GetComponent<PlayerMovement>().OnStumble.Invoke();
+                    collision.gameObject.GetComponent<PlayerMovement>().AttemptStumble();
                     Debug.Log("Player Collision: Stumble");
                 }
             }
@@ -40,9 +40,9 @@ public class Obstacle : MonoBehaviour
         }
         else if(collision.gameObject.CompareTag("Obstacle"))
         {
-            Debug.LogWarning("Obstacle collided with another obstacle, or potentially itself?");
+            //Debug.LogWarning("Obstacle collided with another obstacle, or potentially itself?");
             ObstacleSpawner.ReturnObjectToPool(collision.gameObject);
-            Debug.Log("Obstacle forced back to pool");
+            //Debug.Log("Obstacle forced back to pool");
         }
         else
         {
