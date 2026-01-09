@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     //Unity Events: Please use these to handle other logic when these events occur.
     //Please don't hook into Update or other functions in this script for these events.
     //Oh and remember to assign functions in inspector/through script :)
+    [Header("Events")]
     public UnityEvent OnStumble; //Called when the player hits into a wall but does not die
     public UnityEvent OnRecover; //Called when the player has recovered from a stumble and is back to normal
     public UnityEvent OnLaneChange; //Called when the player successfully changes lanes
@@ -25,47 +26,53 @@ public class PlayerMovement : MonoBehaviour
     public UnityEvent OnDash; //Called when the player dashes forward
     public UnityEvent OnDashFinish; //Called when the player's dash finishes
 
-    //Input System
+    //Inputs
     private InputAction moveAction;
     private InputAction jumpAction;
-    private float moveInput;
     private InputAction dashAction;
-    private GameMaster gameMaster;
-    private LevelSpawner levelSpawner;
+    
+    [Header("References")]
     [SerializeField] private PlayerDashAndDisplay dashAndDisplay;
     [SerializeField] private TutorialStateManager tutorialStateManager;
     [SerializeField] private TutorialButtons tutorialButtons;
+    private GameMaster gameMaster;
+    private LevelSpawner levelSpawner;
+    private Rigidbody playerRigidbody;
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float jumpForce;
-    [SerializeField] private Transform groundCheckTransform;
-    [SerializeField] private float groundCheckRayCastDistance;
-    [SerializeField] private LayerMask groundLayers;
     [SerializeField] private float laneWidth = 2f;
     [SerializeField] private float nextInputDelay = 3f; //Time delay between lane switch inputs
     [SerializeField] private float jumpInputDelay = 1.0f;
-    [SerializeField] private float stumbleInvincibilityTime;
-    [SerializeField] private float stumbleRecoverTime;
+    [SerializeField] private float laneChangeSpeed = 5f;
+
     [SerializeField] private bool isPlayerDashing = false;
 
+    [Header("Ground Detection")]
+    [SerializeField] private Transform groundCheckTransform;
+    [SerializeField] private float groundCheckRayCastDistance;
+    [SerializeField] private LayerMask groundLayers;
+
+    //States
+    private Lanes currentLane = Lanes.Center;
     private float currentJumpDelay;
     private float currentStumbleInvincibilityTime;
-
+    private float currentStumbleTimer;
     private float inputDelayTimer = 0f;
-    private Lanes currentLane = Lanes.Center;
-    private Rigidbody playerRigidbody;
+    
+    private bool isStumbling = false;
+    private bool isGameOver = false;
 
     //Stumble Values
     [Header("Stumble Settings")]
-    private bool isStumbling = false;
+    [SerializeField] private float stumbleInvincibilityTime;
+    [SerializeField] private float stumbleRecoverTime;
     [SerializeField] private Transform stumbleCheckOrigin;
     [SerializeField] private float stumbleRayDefaultDistance;
 
     [Tooltip("How much the stumble check ray's distance is multiplied by world speed e.g. 1 is multiply world speed x default distance and 2 is 2 x world speed x default distance")]
     [SerializeField] private float worldSpeedRayDistanceMultiplier = 1f;
     [SerializeField] LayerMask obstacleLayers;
-
-    private bool isGameOver = false;
     [SerializeField] private bool invincibilityTesting = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -73,114 +80,197 @@ public class PlayerMovement : MonoBehaviour
     {
         gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
         levelSpawner = GameObject.Find("Level Spawner").GetComponent<LevelSpawner>();
-
+        playerRigidbody = GetComponent<Rigidbody>();
         InitialiseControlScheme();
         jumpAction = InputSystem.actions.FindAction("Jump");
 
-        playerRigidbody = GetComponent<Rigidbody>();
-
-        //Adding a listener to the OnStumble event through script
-        OnStumble.AddListener(StumbleHandle);
-        if(stumbleRecoverTime == stumbleInvincibilityTime)
+        //Check stumble timings are valid
+        if(stumbleRecoverTime <= stumbleInvincibilityTime)
         {
             Debug.LogError("Player cannot die as stumble recover time and stumble invincibility time are the same in PlayerMovement");
-        }
-        else if(stumbleInvincibilityTime > stumbleRecoverTime)
-        {
-            Debug.LogError("Player cannot die as stumble recover time is lower than stumble invincibility time in PlayerMovement");
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Process no player movement if the game has not started (aka still in a menu)
-        if(gameMaster.GetGameplayState() == false) { return; }
+        if(gameMaster != null && !gameMaster.GetGameplayState()){ return; }
+        if(isGameOver) { return; }
 
+        HandleTimers();
+        HandleInputs();
+    }
+
+    private void HandleTimers()
+    {
+        //Lane switch and jump delay timers
+        if(inputDelayTimer > 0f) inputDelayTimer -= Time.deltaTime;
+        if(currentJumpDelay >0f) currentJumpDelay -= Time.deltaTime;
+        //Stumbling logic
+        if(currentStumbleInvincibilityTime > 0f) currentStumbleInvincibilityTime -= Time.deltaTime;
+        if(isStumbling)
+        {
+            currentStumbleTimer -= Time.deltaTime;
+            //Debug.Log("Stumlbing time left" + currentStumbleTimer);
+            if(currentStumbleTimer <= 0f)
+            {
+                RecoverFromStumble();
+            }
+        }
+    }
+
+    private void HandleInputs()
+    {
+        //Lane switch
         if(inputDelayTimer <= 0f)
         {
-            moveInput = moveAction.ReadValue<float>();
-            //if(moveInput != 0){Debug.Log(moveInput); }
-            //Handle lane switching
-            if(moveInput < 0) //Move Left
-            {
-                if(currentLane == Lanes.Center)
-                {
-                    SwitchLane(Lanes.Left);
-                }
-                else if(currentLane == Lanes.Right)
-                {
-                    SwitchLane(Lanes.Center);
-                }
-                else
-                {
-                    //Stumble eventually
-                    //Debug.Log("Already in Left Lane");
-                    OnStumble.Invoke();
-                }
-                inputDelayTimer = nextInputDelay;
-            }
-            else if(moveInput > 0) //Move Right
-            {
-                if(currentLane == Lanes.Center)
-                {
-                    SwitchLane(Lanes.Right);
-                }
-                else if(currentLane == Lanes.Left)
-                {
-                    SwitchLane(Lanes.Center);
-                }
-                else
-                {
-                    //Stumble eventually
-                    //Debug.Log("Already in Right Lane");
-                    OnStumble.Invoke();
-                }
-                inputDelayTimer = nextInputDelay;
-            }
-        }
-        else
+            float moveInput = moveAction.ReadValue<float>();
+            if(moveInput < -0.1f) { TrySwitchLane(Lanes.Left, Lanes.Right);} //Left input
+            else if(moveInput > 0.1f) { TrySwitchLane(Lanes.Right, Lanes.Left);} //Right input
+        } 
+        //Jump
+        if(jumpAction.WasPressedThisFrame() && currentJumpDelay <= 0f && GroundCheck())
         {
-            inputDelayTimer -= Time.deltaTime;
+           PerformJump();
         }
-        //Handle Jump
-        if (jumpAction.WasPressedThisFrame() && currentJumpDelay <= 0f && GroundCheck())
-        {
-            playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            OnJump.Invoke();
-            currentJumpDelay = jumpInputDelay;
-        }
-        else
-        {
-            currentJumpDelay -= Time.deltaTime;
-        }
-        //Stumble invinicibility time tick down
-        if(currentStumbleInvincibilityTime > 0)
-        {
-            currentStumbleInvincibilityTime -= Time.deltaTime;
-        }
+        //Dash
         if(dashAction.WasPressedThisFrame() && dashAndDisplay.canDash && !isPlayerDashing)
         {
             OnPlayerDash();
-            OnDash.Invoke();
         }
+    }
+        
+    private void TrySwitchLane(Lanes targetLane, Lanes oppositeLane)
+    {
+        Lanes finalTargetLane = currentLane;
+        if(targetLane == Lanes.Left)
+        {
+            if(currentLane == Lanes.Center) { finalTargetLane = Lanes.Left;}
+            else if(currentLane == Lanes.Right) { finalTargetLane = Lanes.Center;}
+            else { AttemptStumble(); return;}
+        }
+        else
+        {
+            if(currentLane == Lanes.Center) { finalTargetLane = Lanes.Right;}
+            else if(currentLane == Lanes.Left) { finalTargetLane = Lanes.Center;}
+            else { AttemptStumble(); return;}
+        }
+        //Calculate target X position based on final target lane
+        float targetX = 0f;
+        switch(finalTargetLane)
+        {
+            case Lanes.Left:
+                targetX = -laneWidth;
+                break;
+            case Lanes.Center:
+                targetX = 0f;
+                break;
+            case Lanes.Right:
+                targetX = laneWidth;
+                break;
+        }
+        if(CheckForCloseCallObstacles())
+        {
+            Debug.Log("Close call lane switch");
+            AttemptStumble();
+        }
+        StartCoroutine(SmoothLaneSwitch(targetX));
+        currentLane = finalTargetLane;
+        inputDelayTimer = nextInputDelay;
+        OnLaneChange.Invoke();
+    }
+
+    private IEnumerator SmoothLaneSwitch(float targetX)
+    {
+        float startX = playerRigidbody.position.x;
+        float t = 0f;
+        while(t < 1f)
+        {
+            t += Time.deltaTime * laneChangeSpeed;
+            float newX = Mathf.Lerp(startX, targetX, t);
+            Vector3 newPosition = new Vector3(newX, playerRigidbody.position.y, playerRigidbody.position.z);
+            playerRigidbody.MovePosition(newPosition);
+            yield return null;
+        }
+        Vector3 finalPosition = new Vector3(targetX, playerRigidbody.position.y, playerRigidbody.position.z);
+        playerRigidbody.MovePosition(finalPosition);
+    }
+
+    private bool CheckForCloseCallObstacles()
+    {
+        if(levelSpawner == null) { return false; }
+        float currentSpeed = levelSpawner.GetSpeed();
+        float rayDistance = worldSpeedRayDistanceMultiplier * (currentSpeed / 10) * stumbleRayDefaultDistance;
+        RaycastHit hit;
+        if(Physics.Raycast(stumbleCheckOrigin.position, stumbleCheckOrigin.forward, out hit, rayDistance, obstacleLayers))
+        {
+            Debug.DrawLine(stumbleCheckOrigin.position, hit.point, Color.red, 2);
+            return true;
+        }
+        Debug.DrawLine(stumbleCheckOrigin.position, stumbleCheckOrigin.position + stumbleCheckOrigin.forward * rayDistance, Color.green, 2);
+        return false;
+    }  
+
+    private void PerformJump()
+    {
+        Vector3 velocity = playerRigidbody.linearVelocity;
+        velocity.y = 0;
+        playerRigidbody.linearVelocity = velocity;
+        playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        currentJumpDelay = jumpInputDelay;
+        OnJump.Invoke();
     }
 
     private bool GroundCheck()
     {
-        RaycastHit groundHit;
-        //Raycast down from stumble check origin which is slightly in front of player
-        if(Physics.Raycast(groundCheckTransform.position, Vector3.down, out groundHit, groundCheckRayCastDistance, groundLayers))
-        {
-            Debug.DrawLine(groundCheckTransform.position, groundHit.point, Color.green, 2);
-            //Debug.Log("Grounded.");
-            return true;
-        }
-        Vector3 endOfRay = groundCheckTransform.position + (Vector3.down * groundCheckRayCastDistance);
-        Debug.DrawLine(groundCheckTransform.position, endOfRay, Color.red, 2);
-        return false;
+        return Physics.Raycast(groundCheckTransform.position, Vector3.down, groundCheckRayCastDistance, groundLayers);
     }
 
+    public void AttemptStumble()
+    {
+        if(invincibilityTesting || isGameOver) { return; }
+        //In I frames, ignore hit
+        if(currentStumbleInvincibilityTime > 0 )
+        {
+            Debug.Log("Ignored stumble due to invincibility frames");
+            return;
+        }
+        if(isStumbling)
+        {
+            Debug.Log("Player hit while stumbling, triggering game over");
+            TriggerGameOver();
+        }
+        else
+        {
+            Debug.Log("Player hit, starting stumble");
+            StartStumble();
+        }
+    }
+
+    private void StartStumble()
+    {
+        isStumbling = true;
+        currentStumbleInvincibilityTime = stumbleInvincibilityTime;
+        currentStumbleTimer = stumbleRecoverTime;
+        //Debug.Log("Player Stumbled");
+        OnStumble.Invoke();
+    }
+
+    private void RecoverFromStumble()
+    {
+        if(isGameOver) { return; }
+        isStumbling = false;
+        Debug.Log("Recovered from stumble");
+        OnRecover.Invoke();
+    }
+
+    public void TriggerGameOver()
+    {
+        isGameOver = true;
+        Debug.Log("Game Over");
+        OnGameOver.Invoke();
+        playerRigidbody.isKinematic = true; //Stop all player movement
+    }
     public void InitialiseControlScheme()
     {
         if (PlayerPrefs.HasKey("ControlSchemeKey"))
@@ -209,93 +299,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void SwitchLane(Lanes targetLane)
-    {
-        float targetX = 0f;
-        switch(targetLane)
-        {
-            case Lanes.Left:
-                targetX = -laneWidth;
-                break;
-            case Lanes.Center:
-                targetX = 0f;
-                break;
-            case Lanes.Right:
-                targetX = laneWidth;
-                break;
-        }
-
-        //Do a raycast every time we switch lane just before the switch takes place to see if it was a close call or not
-        //If it was a close call, we'll stumble but let the switch occur.
-        RaycastHit hit;
-        float raycastDistance = worldSpeedRayDistanceMultiplier * (levelSpawner.GetSpeed() / 10) * stumbleRayDefaultDistance;
-        //Debug.Log("Raycast Distance: " + raycastDistance);
-        if(Physics.Raycast(stumbleCheckOrigin.position, stumbleCheckOrigin.forward, out hit, raycastDistance, obstacleLayers))
-        {
-            Debug.Log("Stumbled from close call");
-            Debug.DrawLine(stumbleCheckOrigin.position, hit.point, Color.red, 2);
-            StumbleHandle();
-            StartCoroutine(LaneSwitch(targetX));
-            currentLane = targetLane;
-            OnLaneChange.Invoke();
-        }
-        else
-        {
-            //Debug.Log("Smooth lane switch!");
-            Debug.DrawLine(stumbleCheckOrigin.position, stumbleCheckOrigin.position + stumbleCheckOrigin.forward * raycastDistance, Color.green, 2);
-            StartCoroutine(LaneSwitch(targetX));    
-            //Invoke unity event when the lane switch is complete
-            currentLane = targetLane;
-            OnLaneChange.Invoke();
-        }
-    }
-
-    private IEnumerator LaneSwitch(float targetX)
-    {
-        //Math to make player smoothly switch lanes instead of snapping between them
-        float switchDuration = 0.2f;
-        float elapsedTime = 0f;
-        float startX = playerRigidbody.position.x;
-        OnLaneChange.Invoke();
-        while (elapsedTime < switchDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float newX = Mathf.SmoothStep(startX, targetX, elapsedTime / switchDuration);
-            Vector3 newPosition = new Vector3(newX, playerRigidbody.position.y, playerRigidbody.position.z);
-            playerRigidbody.MovePosition(newPosition);
-            yield return null;  
-        }
-        Vector3 newPos = new Vector3(targetX, playerRigidbody.position.y, playerRigidbody.position.z);
-        playerRigidbody.MovePosition(newPos);
-
-    }
-
-    //This function gets called when OnStumble event is invoked
-    private void StumbleHandle()
-    {
-        if(invincibilityTesting) { return; }
-        //Debug.Log("I frame duration: " + stumbleInvincibilityTime + " Current I frame duration: " + currentStumbleInvincibilityTime);
-        //If stumbling during I frames, return and do nothing
-        if(currentStumbleInvincibilityTime > 0) { return; }
-        //If not already stumbling and current invincibilty time <= 0, stumble
-        else if(!isStumbling && currentStumbleInvincibilityTime <= 0 && !isGameOver)
-        {
-            //Debug.Log("First stumble");
-            isStumbling = true;
-            currentStumbleInvincibilityTime = stumbleInvincibilityTime;
-            OnStumble.Invoke();
-            Invoke("RecoverFromStumble", stumbleRecoverTime);
-        }
-        //If stumbling while already stumbling outside of I frames, game over
-        else if(isStumbling && currentStumbleInvincibilityTime <= 0 && !isGameOver)
-        {
-            GameOverHandle();
-        }
-        else
-        {
-            Debug.LogError("StumbleHandle reached unintended branch in PlayerMovement.cs");
-        }
-    }
     public void OnPlayerDash()
     {
         isPlayerDashing = true; //toggle to let player destroy obstacles instead of dying to them
@@ -342,19 +345,6 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Dash finished at " + Time.time);
             yield return null;
         }
-    }
-
-    private void GameOverHandle()
-    {
-        OnGameOver.Invoke();
-        isGameOver = true;
-        Debug.Log("Game Over");
-    }
-
-    private void RecoverFromStumble()
-    {
-        isStumbling = false;
-        OnRecover.Invoke();
     }
 
     public bool GetIsPlayerDashing()
