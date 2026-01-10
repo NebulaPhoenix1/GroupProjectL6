@@ -59,7 +59,9 @@ public class PlayerMovement : MonoBehaviour
     private float currentStumbleInvincibilityTime;
     private float currentStumbleTimer;
     private float inputDelayTimer = 0f;
-    
+    private RigidbodyConstraints lockedX = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+    private RigidbodyConstraints unlockedX = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+
     private bool isStumbling = false;
     private bool isGameOver = false;
 
@@ -89,6 +91,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.LogError("Player cannot die as stumble recover time and stumble invincibility time are the same in PlayerMovement");
         }
+
+        playerRigidbody.constraints = lockedX;
     }
 
     // Update is called once per frame
@@ -174,9 +178,11 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Close call lane switch");
             AttemptStumble();
         }
+        playerRigidbody.constraints = unlockedX;
         StartCoroutine(SmoothLaneSwitch(targetX));
         currentLane = finalTargetLane;
         inputDelayTimer = nextInputDelay;
+        playerRigidbody.constraints = lockedX;
         OnLaneChange.Invoke();
     }
 
