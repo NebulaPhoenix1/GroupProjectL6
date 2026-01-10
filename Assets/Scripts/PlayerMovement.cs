@@ -182,7 +182,6 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(SmoothLaneSwitch(targetX));
         currentLane = finalTargetLane;
         inputDelayTimer = nextInputDelay;
-        playerRigidbody.constraints = lockedX;
         OnLaneChange.Invoke();
     }
 
@@ -200,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
         }
         Vector3 finalPosition = new Vector3(targetX, playerRigidbody.position.y, playerRigidbody.position.z);
         playerRigidbody.MovePosition(finalPosition);
+        playerRigidbody.constraints = lockedX;
     }
 
     private bool CheckForCloseCallObstacles()
