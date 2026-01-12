@@ -9086,7 +9086,7 @@ MonoBehaviour:
   isFirstTutorial: 0
   playerMovement: {fileID: 1803198818}
   gameMaster: {fileID: 1771808296}
-  devToggleFirstTutorial: 0
+  devToggleFirstTutorial: 1
 --- !u!1 &1783103914
 GameObject:
   m_ObjectHideFlags: 0
