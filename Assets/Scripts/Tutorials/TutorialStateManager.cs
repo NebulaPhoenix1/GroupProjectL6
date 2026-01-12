@@ -176,7 +176,7 @@ public class TutorialStateManager : MonoBehaviour
 
                 arrowKeysGlyphHolder.SetActive(false);
                 arrowKeysGlyphs[3].SetActive(false);
-
+                Debug.Log("Dash tutorial: Showing WASD Glyphs");
                 break;
 
             case 1:
@@ -185,7 +185,7 @@ public class TutorialStateManager : MonoBehaviour
 
                 WASDGlyphHolder.SetActive(false);
                 WASDGlyphs[3].SetActive(false);
-
+                Debug.Log("Dash tutorial: Showing ArrowKeys Glyphs");
                 break;
 
             default:
@@ -194,7 +194,7 @@ public class TutorialStateManager : MonoBehaviour
 
                 arrowKeysGlyphHolder.SetActive(false);
                 arrowKeysGlyphs[3].SetActive(false);
-
+                Debug.Log("Dash tutorial: Showing WASD Glyphs by default");
                 break;
         }
 

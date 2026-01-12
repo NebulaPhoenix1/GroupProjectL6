@@ -88,28 +88,28 @@ public class PlayerDashAndDisplay : MonoBehaviour
 
     private IEnumerator DecreaseCoinCount()
     {
-    float timePassed = 0;
-    
-    //Assume meter full (meterMaximum) at start of dash
-    float startValue = meterMaximum; 
-
-    while (timePassed < dashDuration)
-    {
-        timePassed += Time.deltaTime;
+        float timePassed = 0;
         
-        // Calculate the percentage complete 
-        float t = timePassed / dashDuration;
-        float currentValue = Mathf.Lerp(startValue, 0, t);
-        
-        dashPercentageLeft = currentValue;
-        collectedCoins = currentValue; 
+        //Assume meter full (meterMaximum) at start of dash
+        float startValue = meterMaximum; 
 
-        yield return null;
-    }
+        while (timePassed < dashDuration)
+        {
+            timePassed += Time.deltaTime;
+            
+            // Calculate the percentage complete 
+            float t = timePassed / dashDuration;
+            float currentValue = Mathf.Lerp(startValue, 0, t);
+            
+            dashPercentageLeft = currentValue;
+            collectedCoins = currentValue; 
 
-    //Ensure values are 0 at end
-    isDashing = false;
-    collectedCoins = 0;
-    dashDisplay.value = 0;
+            yield return null;
+        }
+
+        //Ensure values are 0 at end
+        isDashing = false;
+        collectedCoins = 0;
+        dashDisplay.value = 0;
     }
 }

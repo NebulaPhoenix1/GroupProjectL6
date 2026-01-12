@@ -154,6 +154,23 @@ public class GameMaster : MonoBehaviour
         return collectiblesGained;
     }
 
+    //Returns true/false depending on whether the player can spend the requested amount of collectibles
+    public bool TrySpendCollectibles(int amount)
+    {
+        int totalCollectibles = PlayerPrefs.GetInt("Collectibles", 0);
+        if (totalCollectibles >= amount)
+        {
+            totalCollectibles -= amount;
+            PlayerPrefs.SetInt("Collectibles", totalCollectibles);
+            PlayerPrefs.Save();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void IncrementCollectiblesGained()
     {
         if (gameplayStarted)
