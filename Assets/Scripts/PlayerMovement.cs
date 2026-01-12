@@ -318,6 +318,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Dash()
     {
+        OnDash.Invoke();
         float startingDashSpeed = levelSpawner.GetSpeed();
         float maxDashSpeed = levelSpawner.GetSpeed() * 3;
         //bool isDashIncreasing = true;

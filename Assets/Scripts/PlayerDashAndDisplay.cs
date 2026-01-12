@@ -87,7 +87,7 @@ public class PlayerDashAndDisplay : MonoBehaviour
     }
 
     private IEnumerator DecreaseCoinCount()
-{
+    {
     float timePassed = 0;
     
     //Assume meter full (meterMaximum) at start of dash
@@ -111,5 +111,5 @@ public class PlayerDashAndDisplay : MonoBehaviour
     isDashing = false;
     collectedCoins = 0;
     dashDisplay.value = 0;
-}
+    }
 }
