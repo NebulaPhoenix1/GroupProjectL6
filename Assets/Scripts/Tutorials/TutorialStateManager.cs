@@ -60,6 +60,8 @@ public class TutorialStateManager : MonoBehaviour
     {
         //yield return new WaitForSeconds(4.5f); //wait for the camera to fully pan around
 
+        playerMovement.EnableActions(0);
+
         switch (PlayerPrefs.GetInt("ControlSchemeKey"))
         {
             case 0:
@@ -119,6 +121,8 @@ public class TutorialStateManager : MonoBehaviour
 
     public IEnumerator ExplainJump()
     {
+        playerMovement.EnableActions(1);
+
         switch (PlayerPrefs.GetInt("ControlSchemeKey"))
         {
             case 0:
@@ -168,6 +172,8 @@ public class TutorialStateManager : MonoBehaviour
 
     public IEnumerator ExplainDash()
     {
+        playerMovement.EnableActions(2);
+
         switch (PlayerPrefs.GetInt("ControlSchemeKey"))
         {
             case 0:
@@ -213,7 +219,7 @@ public class TutorialStateManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
 
         highScoreText.SetActive(true);
         scoreText.SetActive(true);
@@ -221,6 +227,7 @@ public class TutorialStateManager : MonoBehaviour
 
         playerMovement.UnassignFirstTutorialEvents();
         gameMaster.SetStateGameplay();
+        isFirstTutorial = false;
 
         yield return null;
     }
