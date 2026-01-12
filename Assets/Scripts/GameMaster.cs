@@ -19,6 +19,8 @@ public class GameMaster : MonoBehaviour
     //Unity Events
     public UnityEvent OnHighScoreAchieved; //Called when the player gets a highscore in the current run
     public UnityEvent OnGameStart;
+    public UnityEvent OnSuccessfulPurchase;
+    public UnityEvent OnFailedPurchase;
 
     [SerializeField] private GameState gameState;
     [SerializeField] private CinemachineCamera cineCam;
@@ -163,10 +165,12 @@ public class GameMaster : MonoBehaviour
             totalCollectibles -= amount;
             PlayerPrefs.SetInt("Collectibles", totalCollectibles);
             PlayerPrefs.Save();
+            OnSuccessfulPurchase.Invoke();
             return true;
         }
         else
         {
+            OnFailedPurchase.Invoke();
             return false;
         }
     }
