@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 //This class takes the data in upgrade scriptable object and automatically fills in relevant UI fields.
 public class UpgradePanelUI : MonoBehaviour
@@ -14,9 +15,14 @@ public class UpgradePanelUI : MonoBehaviour
     [SerializeField] private TMP_Text upgradeDescriptionText;
     [SerializeField] private UnityEngine.UI.Image upgradeIconImage;
 
+    private UpgradeManager upgradeManager;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //Get reference to Upgrade Manager
+        upgradeManager = FindFirstObjectByType<UpgradeManager>();
+        
         //Check all mandatory values are assigned
         if(upgradeItem && upgradeNameText &&  upgradeCostText && purchaseButton && greyedOutButton)
         {
@@ -46,16 +52,33 @@ public class UpgradePanelUI : MonoBehaviour
                 upgradeIconImage.gameObject.SetActive(false);
                 Debug.Log("No icon assigned for upgrade: " + upgradeItem.displayedUpgradeName);
             }
-            //In future check if we have this uprade unlocked or not and set button states accorindgly
+
+            //Add CheckButtonState to the purchase button on click event
+            purchaseButton.GetComponent<Button>().onClick.AddListener(CheckButtonState);
+            CheckButtonState();
         }
         else
         {
             Debug.LogError("One or more UI components or the upgrade item is not assigned in UpgradePanelUI on " + gameObject.name);
         }
     }
-    // Update is called once per frame
-    void Update()
+
+    //Checks with Upgrade Manager to see if this upgrade is unlocked or not and sets button states accordingly
+    //This should get called on start and after an attempted purchase
+    private void CheckButtonState()
     {
-        
+        Debug.Log("Check button state called");
+        if(upgradeManager.IsUpgradePurchased(upgradeItem))
+        {
+            //We own this upgrade, grey out the button
+            purchaseButton.SetActive(false);
+            greyedOutButton.SetActive(true);
+        }
+        else
+        {
+            //We don't own this upgrade, enable purchase button
+            purchaseButton.SetActive(true);
+            greyedOutButton.SetActive(false);
+        }
     }
 }

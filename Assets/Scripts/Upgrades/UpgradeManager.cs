@@ -72,4 +72,9 @@ public class UpgradeManager : MonoBehaviour
         return;
     }
 
+    public bool IsUpgradePurchased(UpgradeSciptableItem upgrade)
+    {
+        return purchasedUpgrades.Contains(upgrade.upgradeID);
+    }
+
 }
