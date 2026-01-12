@@ -2124,7 +2124,7 @@ MonoBehaviour:
   meterMinimum: 0
   meterMaximum: 15
   canDash: 0
-  dashDuration: 6
+  dashDuration: 5.75
   fillSpeed: 5
 --- !u!114 &480294355
 MonoBehaviour:

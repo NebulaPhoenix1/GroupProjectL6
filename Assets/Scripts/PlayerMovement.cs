@@ -332,13 +332,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //duration player will stay at max speed of dash before decreasing
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
 
         //decrease player's speed
         for (float decreasingSpeed = levelSpawner.GetSpeed(); levelSpawner.GetSpeed() > startingDashSpeed; decreasingSpeed -= ((startingDashSpeed * 3) / 20))
         {
             levelSpawner.SetSpeed(decreasingSpeed);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.08f);
 
             if(levelSpawner.GetSpeed() <= startingDashSpeed)
             {
