@@ -100,7 +100,7 @@ public class GameMaster : MonoBehaviour
 
     public void ReloadScene()
     {
-        SceneManager.LoadScene("Luke's Scene");
+        SceneManager.LoadScene("Main Game Scene");
     }
 
     public void StartGame()
