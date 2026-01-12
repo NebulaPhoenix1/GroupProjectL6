@@ -53,16 +53,12 @@ public class TutorialStateManager : MonoBehaviour
             highScoreText.SetActive(false);
             scoreText.SetActive(false);
             pauseButton.SetActive(false);
-
-            StartCoroutine(ExplainLeftRight());
-
-
         }
     }
 
-    private IEnumerator ExplainLeftRight()
+    public IEnumerator ExplainLeftRight()
     {
-        yield return new WaitForSeconds(4.5f); //wait for the camera to fully pan around
+        //yield return new WaitForSeconds(4.5f); //wait for the camera to fully pan around
 
         switch (PlayerPrefs.GetInt("ControlSchemeKey"))
         {
@@ -118,12 +114,10 @@ public class TutorialStateManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
-        yield return new WaitForSeconds(2f);
-
-        StartCoroutine(ExplainJump());
+        yield return null;
     }
 
-    private IEnumerator ExplainJump()
+    public IEnumerator ExplainJump()
     {
         switch (PlayerPrefs.GetInt("ControlSchemeKey"))
         {
@@ -169,12 +163,10 @@ public class TutorialStateManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
-        yield return new WaitForSeconds(4f);
-
-        StartCoroutine(ExplainDash());
+        yield return null;
     }
 
-    private IEnumerator ExplainDash()
+    public IEnumerator ExplainDash()
     {
         switch (PlayerPrefs.GetInt("ControlSchemeKey"))
         {
@@ -221,7 +213,7 @@ public class TutorialStateManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         highScoreText.SetActive(true);
         scoreText.SetActive(true);

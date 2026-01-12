@@ -2118,11 +2118,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDashAndDisplay
   sliderFill: {fileID: 1783103914}
+  nonFilledColor: {r: 1, g: 0, b: 0, a: 1}
+  filledColor: {r: 1, g: 0.39215687, b: 0, a: 1}
   meterStartValue: 3
   meterMinimum: 0
   meterMaximum: 15
   canDash: 0
   dashDuration: 6
+  fillSpeed: 5
 --- !u!114 &480294355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10551,7 +10554,7 @@ PrefabInstance:
       objectReference: {fileID: 463125550}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: invincibilityTesting
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: tutorialStateManager

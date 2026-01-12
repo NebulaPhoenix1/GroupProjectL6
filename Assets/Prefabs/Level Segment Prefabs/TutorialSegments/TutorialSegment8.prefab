@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 951420438282891984}
   - component: {fileID: 5849352902994169770}
   - component: {fileID: 3849520822184035555}
+  - component: {fileID: 7607517482880380165}
   m_Layer: 2
   m_Name: End Flag
   m_TagString: Untagged
@@ -128,6 +129,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   segmentObject: {fileID: 9098834875976951334}
+--- !u!114 &7607517482880380165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423325354032544185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f5c2c9f364d814a8d7159fda4d5d32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstTutorialTriggerController
+  identifier: 2
 --- !u!1 &8339094749612366265
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,7 +557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 6
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -667,7 +681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: 02d41bb63d9b75a4f9df0974b6f58542, type: 3}
       propertyPath: m_Name
-      value: Obstacle 1
+      value: Obstacle 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -729,7 +743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 3
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -791,7 +805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 7
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -915,7 +929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 8
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1163,7 +1177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 9
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1225,7 +1239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 5
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1349,7 +1363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
       propertyPath: m_Name
-      value: Obstacle 4
+      value: Obstacle 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
