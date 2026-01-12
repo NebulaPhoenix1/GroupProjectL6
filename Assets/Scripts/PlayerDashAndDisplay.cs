@@ -23,6 +23,7 @@ public class PlayerDashAndDisplay : MonoBehaviour
     private bool isDashing = false;
     private float dashPercentageLeft;
 
+    [SerializeField] private float fillSpeed = 5f;
 
     private void Awake()
     {
@@ -43,7 +44,8 @@ public class PlayerDashAndDisplay : MonoBehaviour
         //Show dash charge amount on display
         if (dashDisplay && !isDashing)
         {
-            dashDisplay.value = collectedCoins;
+            //dashDisplay.value = collectedCoins;
+            dashDisplay.value = Mathf.Lerp(dashDisplay.value, collectedCoins, fillSpeed * Time.deltaTime);
         }
         //Show dash time left on display
         else if (dashDisplay && isDashing)
