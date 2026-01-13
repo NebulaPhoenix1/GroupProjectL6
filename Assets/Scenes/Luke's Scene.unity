@@ -256,7 +256,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &110592662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &165589170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11776,7 +11776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlSchemeManager
   tutorialButtons: {fileID: 834271965}
-  tutorialStateManager: {fileID: 0}
+  tutorialStateManager: {fileID: 1771808299}
   inputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!1 &2106108592
 GameObject:
@@ -12274,6 +12274,14 @@ PrefabInstance:
       propertyPath: tutorialStateManager
       value: 
       objectReference: {fileID: 1771808299}
+    - target: {fileID: 8377336787629280370, guid: 0f3f7d1d6bbc94929b265d48af9b9429, type: 3}
+      propertyPath: DashDestructionBonusAmount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8377336787629280370, guid: 0f3f7d1d6bbc94929b265d48af9b9429, type: 3}
+      propertyPath: dashDestructionBonusUpgrade
+      value: 
+      objectReference: {fileID: 11400000, guid: 9d6c38a467caf4c19bee72b88a091ef7, type: 2}
     - target: {fileID: 8377336787629280370, guid: 0f3f7d1d6bbc94929b265d48af9b9429, type: 3}
       propertyPath: OnGameStart.m_PersistentCalls.m_Calls.Array.size
       value: 2
