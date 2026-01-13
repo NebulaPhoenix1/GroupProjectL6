@@ -25,11 +25,12 @@ public class PlayerMovement : MonoBehaviour
     public UnityEvent OnGameOver; //Called when the player dies. RIP.
     public UnityEvent OnDash; //Called when the player dashes forward
     public UnityEvent OnDashFinish; //Called when the player's dash finishes
-
+    public UnityEvent OnEscapePressed;
     //Inputs
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction dashAction;
+    private InputAction pauseAction;
     
     [Header("References")]
     [SerializeField] private PlayerDashAndDisplay dashAndDisplay;
@@ -86,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         InitialiseControlScheme();
         jumpAction = InputSystem.actions.FindAction("Jump");
+        pauseAction = InputSystem.actions.FindAction("Pause");
+
 
         if(tutorialStateManager.GetIsFirstTutorial())
         {
@@ -159,6 +162,10 @@ public class PlayerMovement : MonoBehaviour
                 return;
             } 
             OnPlayerDash();
+        }
+        if(pauseAction.WasPressedThisFrame())
+        {
+            OnEscapePressed.Invoke();
         }
     }
         
