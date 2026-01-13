@@ -102,7 +102,7 @@ public class GameMaster : MonoBehaviour
 
     public void ReloadScene()
     {
-        SceneManager.LoadScene("Main Game Scene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void StartGame()

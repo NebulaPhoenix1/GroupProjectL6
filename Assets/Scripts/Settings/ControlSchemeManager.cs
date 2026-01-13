@@ -7,6 +7,7 @@ public class ControlSchemeManager : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     [SerializeField] private TutorialButtons tutorialButtons;
+    [SerializeField] private TutorialStateManager tutorialStateManager;
 
     public InputActionAsset inputActions;
 
@@ -56,7 +57,16 @@ public class ControlSchemeManager : MonoBehaviour
                 ArrowKeys.Enable();
                 break;
         }
-        tutorialButtons.UpdateGlyphs();
+
+        if (!tutorialStateManager.GetIsFirstTutorial())
+        {
+            tutorialButtons.UpdateGlyphs();
+            return;
+        }
+        else
+        {
+            playerMovement.DisableActions(0);
+        }
     }
 
     public void ChangeControlScheme()

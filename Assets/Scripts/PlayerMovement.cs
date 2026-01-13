@@ -86,6 +86,13 @@ public class PlayerMovement : MonoBehaviour
         InitialiseControlScheme();
         jumpAction = InputSystem.actions.FindAction("Jump");
 
+        if(tutorialStateManager.GetIsFirstTutorial())
+        {
+            moveAction.Disable();
+            jumpAction.Disable();
+            dashAction.Disable();
+        }
+
         //Check stumble timings are valid
         if(stumbleRecoverTime <= stumbleInvincibilityTime)
         {
@@ -306,6 +313,14 @@ public class PlayerMovement : MonoBehaviour
             moveAction = InputSystem.actions.FindAction("Move (WASD)");
             dashAction = InputSystem.actions.FindAction("Dash (WASD)");
         }
+
+        dashAction.Enable(); //this prevents a very specific bug where dashing will not work during runs following the first tutorial (if the game is not closed/reset) for the control scheme that was not used in said tutorial if the control scheme was changed before the first tutorial
+
+        if (tutorialStateManager.GetIsFirstTutorial())
+        {
+            moveAction.Disable();
+            dashAction.Disable();
+        }
     }
 
     public void OnPlayerDash()
@@ -332,13 +347,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //duration player will stay at max speed of dash before decreasing
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
 
         //decrease player's speed
         for (float decreasingSpeed = levelSpawner.GetSpeed(); levelSpawner.GetSpeed() > startingDashSpeed; decreasingSpeed -= ((startingDashSpeed * 3) / 20))
         {
             levelSpawner.SetSpeed(decreasingSpeed);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.08f);
 
             if(levelSpawner.GetSpeed() <= startingDashSpeed)
             {
@@ -362,12 +377,14 @@ public class PlayerMovement : MonoBehaviour
         return isPlayerDashing;
     }
 
+    //assign event to fade out glyphs only once first tutorial has been completed
     public void AssignTutorialEvents()
     {
         OnLaneChange.AddListener(delegate {tutorialButtons.StartFadeOut();});
         OnJump.AddListener(delegate {tutorialButtons.StartFadeOut();});
     }
 
+    //add relevant bool checks to progress through first tutorial
     public void AssignFirstTutorialEvents()
     {
         OnLaneChange.AddListener(delegate {tutorialStateManager.ToggleTutorialX(0);});
@@ -375,10 +392,24 @@ public class PlayerMovement : MonoBehaviour
         OnDash.AddListener(delegate { tutorialStateManager.ToggleTutorialX(2);});
     }
 
+    //remove the above bool checks after first tutorial is finished since they aren't needed anymore
     public void UnassignFirstTutorialEvents()
     {
         OnLaneChange.RemoveListener(delegate { tutorialStateManager.ToggleTutorialX(0);});
         OnJump.RemoveListener(delegate { tutorialStateManager.ToggleTutorialX(1);});
         OnDash.RemoveListener(delegate { tutorialStateManager.ToggleTutorialX(2);});
+    }
+
+    //methods to remotely enable and disable player's actions if needed (currently used to help with interactions between settings menu and first tutorial)
+    public void EnableActions(int i)
+    {
+        InputAction[] actions = {moveAction, jumpAction, dashAction};
+        actions[i].Enable();
+    }
+
+    public void DisableActions(int i)
+    {
+        InputAction[] actions = {moveAction, jumpAction, dashAction};
+        actions[i].Disable();
     }
 }
