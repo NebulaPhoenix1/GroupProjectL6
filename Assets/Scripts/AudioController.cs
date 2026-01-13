@@ -3,6 +3,7 @@ using UnityEngine;
 public class AudioController : MonoBehaviour
 {
     [SerializeField] private AudioSource coinCollect;
+    [SerializeField] private AudioSource dashing;
 
     private float timePassed = 0;
 
@@ -31,5 +32,11 @@ public class AudioController : MonoBehaviour
         {
             coinCollect.pitch += 0.1f;
         }
+    }
+
+    public void PlayDashing()
+    {
+        dashing.Play();
+        dashing.loop = !dashing.loop;
     }
 }
