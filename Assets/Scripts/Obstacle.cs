@@ -23,8 +23,10 @@ public class Obstacle : MonoBehaviour
                 //Notify player of collision
                 if (instantGameOver)
                 {
-                    collision.gameObject.GetComponent<PlayerMovement>().TriggerGameOver();
-                    Debug.Log("Player Collision: Game Over");
+                    //collision.gameObject.GetComponent<PlayerMovement>().TriggerGameOver();
+                    collision.gameObject.GetComponent<PlayerMovement>().AttemptStumble();
+                    Debug.Log("Player Collision: Stumble");
+                    Debug.LogWarning("On GameObject: " + gameObject.name + " Instant Game Over is enabled within Obstacle.cs; this has been disabled and a stumble attempt occured instead.");
                 }
                 else
                 {
@@ -46,14 +48,12 @@ public class Obstacle : MonoBehaviour
             //Debug.LogWarning("Obstacle collided with another obstacle, or potentially itself?");
             ObstacleSpawner.ReturnObjectToPool(collision.gameObject);
             //Debug.Log("Obstacle forced back to pool");
-
         }
         else
         {
             //Debug.Log("Obstacle collided with non player entity");
         }
     }
-
 
     public void Update()
     {

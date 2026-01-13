@@ -45,8 +45,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float nextInputDelay = 3f; //Time delay between lane switch inputs
     [SerializeField] private float jumpInputDelay = 1.0f;
     [SerializeField] private float laneChangeSpeed = 5f;
-
     [SerializeField] private bool isPlayerDashing = false;
+    [SerializeField] private float dashEndInvincibilityTime = 0.5f; //How long the player is invincible after dash ends
+    [SerializeField] private bool canDashWhileStumbling = false;
 
     [Header("Ground Detection")]
     [SerializeField] private Transform groundCheckTransform;
@@ -118,7 +119,11 @@ public class PlayerMovement : MonoBehaviour
         if(inputDelayTimer > 0f) inputDelayTimer -= Time.deltaTime;
         if(currentJumpDelay >0f) currentJumpDelay -= Time.deltaTime;
         //Stumbling logic
-        if(currentStumbleInvincibilityTime > 0f) currentStumbleInvincibilityTime -= Time.deltaTime;
+        if(currentStumbleInvincibilityTime > 0f)
+        {
+            currentStumbleInvincibilityTime -= Time.deltaTime;
+            //Debug.Log("Player is Invincible");
+        } 
         if(isStumbling)
         {
             currentStumbleTimer -= Time.deltaTime;
@@ -147,6 +152,12 @@ public class PlayerMovement : MonoBehaviour
         //Dash
         if(dashAction.WasPressedThisFrame() && dashAndDisplay.canDash && !isPlayerDashing)
         {
+            //If we cant dash while stumlbing and are stumbling, return
+            if(!canDashWhileStumbling && isStumbling) 
+            {
+                Debug.Log("Can't dash while stumbling");
+                return;
+            } 
             OnPlayerDash();
         }
     }
@@ -244,18 +255,25 @@ public class PlayerMovement : MonoBehaviour
 
     public void AttemptStumble()
     {
-        if(invincibilityTesting || isGameOver) { return; }
+        //Don't stumble if invincible, is game over or dashing
+        if(invincibilityTesting || isGameOver || isPlayerDashing)
+        {
+            Debug.Log("Stumble failed");
+             return;      
+        }
         //In I frames, ignore hit
         if(currentStumbleInvincibilityTime > 0 )
         {
             Debug.Log("Ignored stumble due to invincibility frames");
             return;
         }
+        //Death
         if(isStumbling)
         {
             Debug.Log("Player hit while stumbling, triggering game over");
             TriggerGameOver();
         }
+        //First stumble
         else
         {
             Debug.Log("Player hit, starting stumble");
@@ -369,6 +387,8 @@ public class PlayerMovement : MonoBehaviour
             isPlayerDashing = false;
             OnDashFinish.Invoke();
             //Debug.Log("Dash finished at " + Time.time);
+            //Adds dash end invincibility frames
+            currentStumbleInvincibilityTime = dashEndInvincibilityTime;
             yield return null;
         }
     }
