@@ -23,6 +23,17 @@ public class PlayerDashAndDisplay : MonoBehaviour
     private bool isDashing = false;
     private float dashPercentageLeft;
 
+    //Dash upgrade variables
+    [SerializeField] private UpgradeSciptableItem dashDurationUpgrade; //Increases dash time
+    [Tooltip("How many extra seconds the dash lasts with the upgrade")]
+    [SerializeField] private float extendedDashDuration;
+    [SerializeField] private UpgradeSciptableItem dashCostUpgrade; //Reduces number of coins used per dash
+    [Tooltip("How many fewer coins the dash costs with the upgrade")]
+    [SerializeField] private int reducedDashCost;
+    private UpgradeManager upgradeManager;
+    private bool hasDashDurationUpgrade = false;
+    private bool hasDashCostUpgrade = false;
+
     [SerializeField] private float fillSpeed = 5f;
 
     private void Awake()
@@ -32,11 +43,25 @@ public class PlayerDashAndDisplay : MonoBehaviour
 
     private void Start()
     {
-        //nonFilledColor = sliderFill.GetComponent<Image>().color;
+        //Check if we own upgrades and set values accordingly
+        upgradeManager = UpgradeManager.Instance;
+        if (upgradeManager.IsUpgradePurchased(dashDurationUpgrade))
+        {
+            hasDashDurationUpgrade = true;
+            dashDuration += extendedDashDuration;
+        }
+        if (upgradeManager.IsUpgradePurchased(dashCostUpgrade))
+        {
+            hasDashCostUpgrade = true;
+            meterMaximum -= reducedDashCost;
+        }
 
+        //nonFilledColor = sliderFill.GetComponent<Image>().color;
         dashDisplay.minValue = meterMinimum;
         dashDisplay.maxValue = meterMaximum;
         dashDisplay.value = meterStartValue;
+        Debug.Log("Dash meter max value set to: " + meterMaximum);
+        Debug.Log("Dash duration set to: " + dashDuration); 
     }
 
     private void Update()
@@ -80,6 +105,7 @@ public class PlayerDashAndDisplay : MonoBehaviour
 
     public void OnPlayerDash()
     {
+        Debug.Log("Player dashed, starting dash depletion");
         StartCoroutine(DecreaseCoinCount());
         canDash = false;
         sliderFill.GetComponent<Image>().color = nonFilledColor;
@@ -109,6 +135,7 @@ public class PlayerDashAndDisplay : MonoBehaviour
 
         //Ensure values are 0 at end
         isDashing = false;
+        Debug.Log("Dash ended, resetting coin count, time: " + timePassed);
         collectedCoins = 0;
         dashDisplay.value = 0;
     }

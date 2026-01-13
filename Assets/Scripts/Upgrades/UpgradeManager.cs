@@ -3,12 +3,30 @@ using System.IO;
 using UnityEngine;
 
 //Saves/Loads/Manages upgrades purchased by the player
+//This class is a singleton for easy access
 public class UpgradeManager : MonoBehaviour
 {
+    //Singleton Logic
+    public static UpgradeManager Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            Debug.LogWarning("Multiple UpgradeManager instances detected! Destroying duplicate.");
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
+        saveFilePath = Application.persistentDataPath + "/upgrades.json";
+        
+    }   
+    //References
     [SerializeField] private GameMaster gameMaster;
     [SerializeField] private UpgradeSciptableItem[] allUpgrades; //List of all possible upgrades in the game
     private HashSet<string> purchasedUpgrades = new HashSet<string>(); //Set of upgrade IDs that have been purchased
     private string saveFilePath;
+
 
     void Start()
     {

@@ -194,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator SmoothLaneSwitch(float targetX)
     {
-        Debug.Log("targetX: " + targetX); 
+        //Debug.Log("targetX: " + targetX); 
         float startX = playerRigidbody.position.x;
         float t = 0f;
         while(t < 1f)
@@ -209,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.MovePosition(finalPosition);
         yield return new WaitForFixedUpdate(); //Wait for physics update until we lock player X position again
         playerRigidbody.constraints = lockedX;
-        Debug.Log("Final X:" + playerRigidbody.position.x);
+        //Debug.Log("Final X:" + playerRigidbody.position.x);
     }
 
     private bool CheckForCloseCallObstacles()

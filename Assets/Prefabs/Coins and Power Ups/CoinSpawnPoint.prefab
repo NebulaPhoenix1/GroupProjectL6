@@ -47,6 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   coinPrefab: {fileID: 5749746760235969366, guid: 0dc1f687378a2ff4b9fcfb4219437160, type: 3}
   activeCoin: {fileID: 4788003448960299467}
+  magnetUpgrade: {fileID: 11400000, guid: 286bf4e863b4343d4be07a19e9e5d279, type: 2}
+  magnetPrefab: {fileID: 6446596337969368627, guid: a6962fdcfd90d4b4e829ee016d3efd45, type: 3}
+  magnetSpawnChance: 0.005
 --- !u!1001 &988913900064791197
 PrefabInstance:
   m_ObjectHideFlags: 0
