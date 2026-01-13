@@ -4,6 +4,7 @@ public class AudioController : MonoBehaviour
 {
     [SerializeField] private AudioSource coinCollect;
     [SerializeField] private AudioSource dashing;
+    [SerializeField] private AudioSource hardPlayerImpact;
 
     private float timePassed = 0;
 
@@ -38,5 +39,10 @@ public class AudioController : MonoBehaviour
     {
         dashing.Play();
         dashing.loop = !dashing.loop;
+    }
+     
+    public void PlayHardPlayerImpact()
+    {
+        hardPlayerImpact.Play();
     }
 }
