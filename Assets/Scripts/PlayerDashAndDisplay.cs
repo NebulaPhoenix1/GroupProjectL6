@@ -1,13 +1,16 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 public class PlayerDashAndDisplay : MonoBehaviour
 {
+    [SerializeField]private TutorialStateManager tutorialManager;
     private Slider dashDisplay;
     [SerializeField] private GameObject sliderFill;
 
-    private float collectedCoins = 3;
+    private float collectedCoins = 0;
     [SerializeField] private Color nonFilledColor; //Red for when using dash
     [SerializeField] private Color filledColor = new Color (1f, (100f / 255f), 0f); //Orange for fully charged
 
@@ -36,12 +39,25 @@ public class PlayerDashAndDisplay : MonoBehaviour
 
     [SerializeField] private float fillSpeed = 5f;
 
-    private void Awake()
+    [Header("Tutorial Values")]
+    [Tooltip("How many coins are required to charge dash in first tutorial")]
+
+    [SerializeField, UnityEngine.Min(1)] private int tutorialDashCost; //Must be greater than or equal to 1
+    [SerializeField, UnityEngine.Min(0)] private int tutorialDashStartValue; //Must be greater than or equal to 0
+
+
+    public void EnableTutorialDashCost()
     {
-        dashDisplay = GetComponent<Slider>();
+        dashDisplay.minValue = meterMinimum;
+        dashDisplay.maxValue = tutorialDashCost;
+        dashDisplay.value = tutorialDashStartValue;
+        Debug.Log("Tutorial Values");
+        Debug.Log("Dash meter max value set to: " + tutorialDashCost);
+        Debug.Log("Dash duration set to: " + dashDuration);
+        
     }
 
-    private void Start()
+    public void EnableDefaultDashValues()
     {
         //Check if we own upgrades and set values accordingly
         upgradeManager = UpgradeManager.Instance;
@@ -60,8 +76,23 @@ public class PlayerDashAndDisplay : MonoBehaviour
         dashDisplay.minValue = meterMinimum;
         dashDisplay.maxValue = meterMaximum;
         dashDisplay.value = meterStartValue;
+        Debug.Log("Default Values");
         Debug.Log("Dash meter max value set to: " + meterMaximum);
-        Debug.Log("Dash duration set to: " + dashDuration); 
+        Debug.Log("Dash duration set to: " + dashDuration);
+    }
+
+    private void Awake()
+    {
+        dashDisplay = GetComponent<Slider>();
+    }
+
+    private void Start()
+    {
+        if(!tutorialManager.isFirstTutorial)
+        {
+            EnableDefaultDashValues();
+        }
+        return;
     }
 
     private void Update()
@@ -82,7 +113,7 @@ public class PlayerDashAndDisplay : MonoBehaviour
             Debug.Log("Can't find display object");
         }
 
-        if (collectedCoins >= meterMaximum)
+        if (collectedCoins >= meterMaximum || (collectedCoins >= tutorialDashCost && tutorialManager.isFirstTutorial))
         {
             sliderFill.GetComponent<Image>().color = filledColor;
             canDash = true;

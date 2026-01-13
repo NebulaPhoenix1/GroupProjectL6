@@ -33,6 +33,11 @@ public class TutorialStateManager : MonoBehaviour
     [Tooltip("Toggle this to access the starting tutorial without changing the high score.")]
     [SerializeField] private bool devToggleFirstTutorial = false;
 
+    //Events to mark start/end of first in depth tutorial
+    //These get hooked into for things like modifying number of coins needed to charge dash in and outside the tutorial
+    public UnityEvent FirstTutorialStart;
+    public UnityEvent FirstTutorialEnd;
+
     private void Awake()
     {
         //either use the playerprefs editor to reset the highscore or edit the below condition to be true to have the intial tutorial run
@@ -48,6 +53,8 @@ public class TutorialStateManager : MonoBehaviour
     {
         if (isFirstTutorial)
         {
+            FirstTutorialStart.Invoke();
+            Debug.Log("Started first tutorial");
             firstTutorialObjectsHolder.SetActive(true);
 
             highScoreText.SetActive(false);
@@ -230,6 +237,9 @@ public class TutorialStateManager : MonoBehaviour
         isFirstTutorial = false;
 
         yield return null;
+        //End of tutorial
+        Debug.Log("End of tutorial");
+        FirstTutorialEnd.Invoke();
     }
 
     public void ToggleTutorialX (int n)

@@ -2638,6 +2638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0173903964a27294ba815d4a8c371f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDashAndDisplay
+  tutorialManager: {fileID: 1771808299}
   sliderFill: {fileID: 1783103914}
   nonFilledColor: {r: 1, g: 0, b: 0, a: 1}
   filledColor: {r: 1, g: 0.39215687, b: 0, a: 1}
@@ -2651,6 +2652,8 @@ MonoBehaviour:
   dashCostUpgrade: {fileID: 11400000, guid: 9e7496930e26c4677847ce7597f685ed, type: 2}
   reducedDashCost: 5
   fillSpeed: 5
+  tutorialDashCost: 3
+  tutorialDashStartValue: 0
 --- !u!114 &480294355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10582,7 +10585,37 @@ MonoBehaviour:
   isFirstTutorial: 0
   playerMovement: {fileID: 1803198818}
   gameMaster: {fileID: 1771808296}
-  devToggleFirstTutorial: 0
+  devToggleFirstTutorial: 1
+  FirstTutorialStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 480294354}
+        m_TargetAssemblyTypeName: PlayerDashAndDisplay, Assembly-CSharp
+        m_MethodName: EnableTutorialDashCost
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  FirstTutorialEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 480294354}
+        m_TargetAssemblyTypeName: PlayerDashAndDisplay, Assembly-CSharp
+        m_MethodName: EnableDefaultDashValues
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1783103914
 GameObject:
   m_ObjectHideFlags: 0
