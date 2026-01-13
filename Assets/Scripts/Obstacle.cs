@@ -6,10 +6,12 @@ public class Obstacle : MonoBehaviour
     PlayerMovement playerMovement;
     [SerializeField] private bool instantGameOver = false;
     [SerializeField] private GameObject debrisParticles;
+    private GameMaster gameMaster;
 
     private void Awake()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        gameMaster = FindFirstObjectByType<GameMaster>();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -36,6 +38,7 @@ public class Obstacle : MonoBehaviour
                 Instantiate(debrisParticles, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity);
                 //GameObject.Destroy(this.gameObject);
                 ObstacleSpawner.ReturnObjectToPool(this.gameObject);
+                gameMaster.AwardDashDestructionBonus();
             }
         }
         else if(collision.gameObject.CompareTag("Obstacle"))
@@ -43,6 +46,7 @@ public class Obstacle : MonoBehaviour
             //Debug.LogWarning("Obstacle collided with another obstacle, or potentially itself?");
             ObstacleSpawner.ReturnObjectToPool(collision.gameObject);
             //Debug.Log("Obstacle forced back to pool");
+
         }
         else
         {

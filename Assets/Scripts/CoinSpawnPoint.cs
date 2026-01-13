@@ -17,6 +17,8 @@ public class CoinSpawnPoint : MonoBehaviour
     //And with the scope of the project/time remaining it'll have to be fine
     [SerializeField] private UpgradeSciptableItem magnetUpgrade;
     [SerializeField] private GameObject magnetPrefab;
+    //Should be between 0-1
+    [Range(0, 1)]
     [SerializeField] private float magnetSpawnChance = 0.005f; //0.5% chance to spawn a magnet instead of a coin
     private bool spawnMagnets = false;
 

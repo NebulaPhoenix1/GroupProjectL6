@@ -139,4 +139,9 @@ public class PlayerDashAndDisplay : MonoBehaviour
         collectedCoins = 0;
         dashDisplay.value = 0;
     }
+
+    public float GetDashDuration()
+    {
+        return dashDuration;
+    }
 }

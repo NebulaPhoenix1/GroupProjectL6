@@ -43,6 +43,8 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private float dashScoreMultiplier = 3f;
     private float currentDashMultiplier = 1f;
     private float scoreMultiplier;
+    [SerializeField] private UpgradeSciptableItem dashDestructionBonusUpgrade;
+    [SerializeField] private int DashDestructionBonusAmount = 5;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -215,5 +217,15 @@ public class GameMaster : MonoBehaviour
     public void SetStateGameplay()
     {
         gameState = GameState.Gameplay;
+    }
+
+    public void AwardDashDestructionBonus()
+    {
+        //Check we have the upgrade
+        if (UpgradeManager.Instance.IsUpgradePurchased(dashDestructionBonusUpgrade))
+        {
+            rawScore += DashDestructionBonusAmount;
+        }
+        return;
     }
 }
