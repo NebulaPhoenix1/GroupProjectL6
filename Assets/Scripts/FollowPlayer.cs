@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class FarmerFollow : MonoBehaviour
 {
-    [Header("References")]
     [SerializeField] private Transform playerTransform;
     [SerializeField] private PlayerMovement playerScript;
 
-    [Header("Settings")]
+
     [SerializeField] private float followDistanceZ = 3.5f; //How far behind the player
     [SerializeField] private float catchDistanceZ = 0.6f;  //Close-up for the Game Over
     [SerializeField] private float laneChangeSpeed = 12f;  //How fast he switches lanes
