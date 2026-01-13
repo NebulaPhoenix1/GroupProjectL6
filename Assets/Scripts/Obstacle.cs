@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    PlayerMovement playerMovement;
+    private PlayerMovement playerMovement;
+    private AudioController audioController;
     [SerializeField] private bool instantGameOver = false;
     [SerializeField] private GameObject debrisParticles;
 
     private void Awake()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -33,6 +35,7 @@ public class Obstacle : MonoBehaviour
             //destroy obstacle on collision with player if they're dashing instead of triggering gameover/stumbling
             else if(playerMovement.GetIsPlayerDashing())
             {
+                audioController.PlayObstacleDestroy();
                 Instantiate(debrisParticles, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity);
                 //GameObject.Destroy(this.gameObject);
                 ObstacleSpawner.ReturnObjectToPool(this.gameObject);
