@@ -50,7 +50,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423325354032544185}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -307,6 +307,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinSpawnPoint (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5406116461658215525, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -369,6 +373,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinSpawnPoint (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5406116461658215525, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -430,6 +438,10 @@ PrefabInstance:
     - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_Name
       value: CoinSpawnPoint (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5276450097023937393, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_LocalPosition.z
@@ -497,6 +509,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinSpawnPoint (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5406116461658215525, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.5
@@ -558,6 +574,10 @@ PrefabInstance:
     - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_Name
       value: CoinSpawnPoint (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5406116461658215525, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_LocalPosition.x
@@ -621,6 +641,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinSpawnPoint (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5406116461658215525, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
@@ -682,6 +706,10 @@ PrefabInstance:
     - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_Name
       value: CoinSpawnPoint (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5276450097023937393, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_LocalPosition.z
@@ -749,6 +777,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinSpawnPoint (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5406116461658215525, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.5
@@ -810,6 +842,10 @@ PrefabInstance:
     - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_Name
       value: CoinSpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144726785409909332, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5406116461658215525, guid: be32eda30c9e1e24b90c329393bba814, type: 3}
       propertyPath: m_LocalPosition.x

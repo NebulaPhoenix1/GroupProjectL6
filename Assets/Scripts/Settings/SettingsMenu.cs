@@ -22,19 +22,23 @@ public class SettingsMenu : MonoBehaviour
     //declare the components
     public Slider volumeSlider;
     public Slider musicSlider;
-    private TextMeshProUGUI volumeDisplayText;
-    private TMP_Dropdown qualityOptions;
-    private Button windowToggle;
-    private Button resetToggle;
-    private Button controlsToggle;
-    private TextMeshProUGUI controlSchemeDisplay;
-    private ControlSchemeManager controlSchemeManagerScript;
-    private TextMeshProUGUI windowDisplayText;
+
+    //Serialized all of these instead of setting values in awake 
+    //So I can split settings menu from the manager so we can set default values without having to re-open the menu
+    [SerializeField]private TextMeshProUGUI volumeDisplayText;
+    [SerializeField]private TMP_Dropdown qualityOptions;
+    [SerializeField]private Button windowToggle;
+    [SerializeField]private Button resetToggle;
+    [SerializeField]private Button controlsToggle;
+    [SerializeField]private TextMeshProUGUI controlSchemeDisplay;
+    [SerializeField]private ControlSchemeManager controlSchemeManagerScript;
+    [SerializeField]private TextMeshProUGUI windowDisplayText;
 
     private void Awake()
     {
         //find and assign the components of the settings menu
-        volumeSlider = GameObject.Find("VolumeSlider").GetComponent<Slider>();
+        /*
+        olumeSlider = GameObject.Find("VolumeSlider").GetComponent<Slider>();
         musicSlider = GameObject.Find("Music Slider").GetComponent<Slider>();
         volumeDisplayText = GameObject.Find("VolumeText").GetComponent<TextMeshProUGUI>();
         qualityOptions = GameObject.Find("QualityOptions").GetComponent<TMP_Dropdown>();
@@ -43,7 +47,8 @@ public class SettingsMenu : MonoBehaviour
         controlsToggle = GameObject.Find("ControlSchemeButton").GetComponent<Button>();
         controlSchemeDisplay = GameObject.Find("ControlSchemeButtonText").GetComponent<TextMeshProUGUI>();
         controlSchemeManagerScript = GameObject.Find("ControlSchemeManager").GetComponent<ControlSchemeManager>();
-        windowDisplayText = GameObject.Find("WindowText").GetComponent<TextMeshProUGUI>();
+        windowDisplayText = GameObject.Find("WindowText").GetComponent<TextMeshProUGUI>(); 
+        */
     }
 
     void Start()
@@ -234,6 +239,7 @@ public class SettingsMenu : MonoBehaviour
     {
         volumeSlider.value = PlayerPrefs.GetFloat("Volume");
         Screen.SetResolution(PlayerPrefs.GetInt("ResolutionX"), PlayerPrefs.GetInt("ReslutionY"), currentFullScreenMode);
+        ChangeVolume(PlayerPrefs.GetFloat("Volume"));
     }
 
     private void OnDisable()

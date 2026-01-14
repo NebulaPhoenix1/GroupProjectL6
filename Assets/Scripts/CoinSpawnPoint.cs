@@ -1,4 +1,7 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class CoinSpawnPoint : MonoBehaviour
 {
@@ -8,6 +11,16 @@ public class CoinSpawnPoint : MonoBehaviour
     //Local position so the coin moves with the platform/parent
     private Vector3 initialLocalPosition;
     private bool positionCaptured = false;
+    private UpgradeManager upgradeManager;
+
+    //I'm throwing powerups in here for now as it's easier than making a separate powerup system
+    //And with the scope of the project/time remaining it'll have to be fine
+    [SerializeField] private UpgradeSciptableItem magnetUpgrade;
+    [SerializeField] private GameObject magnetPrefab;
+    //Should be between 0-1
+    [Range(0, 1)]
+    [SerializeField] private float magnetSpawnChance = 0.005f; //0.5% chance to spawn a magnet instead of a coin
+    private bool spawnMagnets = false;
 
     void Awake()
     {
@@ -23,6 +36,12 @@ public class CoinSpawnPoint : MonoBehaviour
             //Just in case: Spawn at the script holder's position
             initialLocalPosition = Vector3.zero;
             positionCaptured = true;
+        }
+        upgradeManager = UpgradeManager.Instance;
+        //Check if we have the magnet upgrade 
+        if (upgradeManager.IsUpgradePurchased(magnetUpgrade))
+        {
+            spawnMagnets = true;
         }
     }
 
@@ -44,6 +63,15 @@ public class CoinSpawnPoint : MonoBehaviour
 
     void SpawnCoin()
     { 
+        if(spawnMagnets && UnityEngine.Random.value < magnetSpawnChance && magnetPrefab != null)
+        {
+            //Spawn a magnet powerup instead of a coin
+            activeCoin = Instantiate(magnetPrefab, transform);
+            activeCoin.transform.localPosition = initialLocalPosition;
+
+            Debug.Log("Spawned a magnet powerup");
+            return;
+        }
         activeCoin = Instantiate(coinPrefab, transform);
         activeCoin.transform.localPosition = initialLocalPosition;
 

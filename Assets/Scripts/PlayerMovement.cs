@@ -25,11 +25,12 @@ public class PlayerMovement : MonoBehaviour
     public UnityEvent OnGameOver; //Called when the player dies. RIP.
     public UnityEvent OnDash; //Called when the player dashes forward
     public UnityEvent OnDashFinish; //Called when the player's dash finishes
-
+    public UnityEvent OnEscapePressed;
     //Inputs
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction dashAction;
+    private InputAction pauseAction;
     
     [Header("References")]
     [SerializeField] private PlayerDashAndDisplay dashAndDisplay;
@@ -45,8 +46,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float nextInputDelay = 3f; //Time delay between lane switch inputs
     [SerializeField] private float jumpInputDelay = 1.0f;
     [SerializeField] private float laneChangeSpeed = 5f;
-
     [SerializeField] private bool isPlayerDashing = false;
+    [SerializeField] private float dashEndInvincibilityTime = 0.5f; //How long the player is invincible after dash ends
+    [SerializeField] private bool canDashWhileStumbling = false;
 
     [Header("Ground Detection")]
     [SerializeField] private Transform groundCheckTransform;
@@ -85,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         InitialiseControlScheme();
         jumpAction = InputSystem.actions.FindAction("Jump");
+        pauseAction = InputSystem.actions.FindAction("Pause");
+
 
         if(tutorialStateManager.GetIsFirstTutorial())
         {
@@ -118,7 +122,11 @@ public class PlayerMovement : MonoBehaviour
         if(inputDelayTimer > 0f) inputDelayTimer -= Time.deltaTime;
         if(currentJumpDelay >0f) currentJumpDelay -= Time.deltaTime;
         //Stumbling logic
-        if(currentStumbleInvincibilityTime > 0f) currentStumbleInvincibilityTime -= Time.deltaTime;
+        if(currentStumbleInvincibilityTime > 0f)
+        {
+            currentStumbleInvincibilityTime -= Time.deltaTime;
+            //Debug.Log("Player is Invincible");
+        } 
         if(isStumbling)
         {
             currentStumbleTimer -= Time.deltaTime;
@@ -147,7 +155,17 @@ public class PlayerMovement : MonoBehaviour
         //Dash
         if(dashAction.WasPressedThisFrame() && dashAndDisplay.canDash && !isPlayerDashing)
         {
+            //If we cant dash while stumlbing and are stumbling, return
+            if(!canDashWhileStumbling && isStumbling) 
+            {
+                Debug.Log("Can't dash while stumbling");
+                return;
+            } 
             OnPlayerDash();
+        }
+        if(pauseAction.WasPressedThisFrame())
+        {
+            OnEscapePressed.Invoke();
         }
     }
         
@@ -194,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator SmoothLaneSwitch(float targetX)
     {
-        Debug.Log("targetX: " + targetX); 
+        //Debug.Log("targetX: " + targetX); 
         float startX = playerRigidbody.position.x;
         float t = 0f;
         while(t < 1f)
@@ -209,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.MovePosition(finalPosition);
         yield return new WaitForFixedUpdate(); //Wait for physics update until we lock player X position again
         playerRigidbody.constraints = lockedX;
-        Debug.Log("Final X:" + playerRigidbody.position.x);
+        //Debug.Log("Final X:" + playerRigidbody.position.x);
     }
 
     private bool CheckForCloseCallObstacles()
@@ -244,18 +262,25 @@ public class PlayerMovement : MonoBehaviour
 
     public void AttemptStumble()
     {
-        if(invincibilityTesting || isGameOver) { return; }
+        //Don't stumble if invincible, is game over or dashing
+        if(invincibilityTesting || isGameOver || isPlayerDashing)
+        {
+            Debug.Log("Stumble failed");
+             return;      
+        }
         //In I frames, ignore hit
         if(currentStumbleInvincibilityTime > 0 )
         {
             Debug.Log("Ignored stumble due to invincibility frames");
             return;
         }
+        //Death
         if(isStumbling)
         {
             Debug.Log("Player hit while stumbling, triggering game over");
             TriggerGameOver();
         }
+        //First stumble
         else
         {
             Debug.Log("Player hit, starting stumble");
@@ -347,7 +372,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //duration player will stay at max speed of dash before decreasing
-        yield return new WaitForSeconds(4f);
+        float dashTime = dashAndDisplay.GetDashDuration();
+        yield return new WaitForSeconds(dashTime);
 
         //decrease player's speed
         for (float decreasingSpeed = levelSpawner.GetSpeed(); levelSpawner.GetSpeed() > startingDashSpeed; decreasingSpeed -= ((startingDashSpeed * 3) / 20))
@@ -368,6 +394,8 @@ public class PlayerMovement : MonoBehaviour
             isPlayerDashing = false;
             OnDashFinish.Invoke();
             //Debug.Log("Dash finished at " + Time.time);
+            //Adds dash end invincibility frames
+            currentStumbleInvincibilityTime = dashEndInvincibilityTime;
             yield return null;
         }
     }

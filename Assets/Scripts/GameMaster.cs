@@ -19,6 +19,8 @@ public class GameMaster : MonoBehaviour
     //Unity Events
     public UnityEvent OnHighScoreAchieved; //Called when the player gets a highscore in the current run
     public UnityEvent OnGameStart;
+    public UnityEvent OnSuccessfulPurchase;
+    public UnityEvent OnFailedPurchase;
 
     [SerializeField] private GameState gameState;
     [SerializeField] private CinemachineCamera cineCam;
@@ -41,6 +43,8 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private float dashScoreMultiplier = 3f;
     private float currentDashMultiplier = 1f;
     private float scoreMultiplier;
+    [SerializeField] private UpgradeSciptableItem dashDestructionBonusUpgrade;
+    [SerializeField] private int DashDestructionBonusAmount = 5;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -154,6 +158,25 @@ public class GameMaster : MonoBehaviour
         return collectiblesGained;
     }
 
+    //Returns true/false depending on whether the player can spend the requested amount of collectibles
+    public bool TrySpendCollectibles(int amount)
+    {
+        int totalCollectibles = PlayerPrefs.GetInt("Collectibles", 0);
+        if (totalCollectibles >= amount)
+        {
+            totalCollectibles -= amount;
+            PlayerPrefs.SetInt("Collectibles", totalCollectibles);
+            PlayerPrefs.Save();
+            OnSuccessfulPurchase.Invoke();
+            return true;
+        }
+        else
+        {
+            OnFailedPurchase.Invoke();
+            return false;
+        }
+    }
+
     public void IncrementCollectiblesGained()
     {
         if (gameplayStarted)
@@ -194,5 +217,15 @@ public class GameMaster : MonoBehaviour
     public void SetStateGameplay()
     {
         gameState = GameState.Gameplay;
+    }
+
+    public void AwardDashDestructionBonus()
+    {
+        //Check we have the upgrade
+        if (UpgradeManager.Instance.IsUpgradePurchased(dashDestructionBonusUpgrade))
+        {
+            rawScore += DashDestructionBonusAmount;
+        }
+        return;
     }
 }

@@ -86,7 +86,7 @@ public abstract class ObjectSpawner : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Attempted to return object to non-existent pool: " + returnObject.name);
+            //Debug.LogWarning("Attempted to return object to non-existent pool: " + returnObject.name);
             Destroy(returnObject);
         }
     }
