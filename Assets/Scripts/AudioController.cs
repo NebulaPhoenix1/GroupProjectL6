@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class AudioController : MonoBehaviour
@@ -12,27 +13,22 @@ public class AudioController : MonoBehaviour
     public void PlayCoinCollect()
     {
         coinCollect.Play();
-        CountTimePassed();
+        coinCollect.pitch += 0.03f;
+        timePassed = 0f;
+        StartCoroutine(CountTimePassed());
     }
 
-    private void CountTimePassed()
+    private IEnumerator CountTimePassed()
     {
         while (timePassed < 1)
         {
             timePassed += Time.deltaTime;
+            yield return null;
         }
-        IncreaseCoinCollectPitch();
-    }
-
-    private void IncreaseCoinCollectPitch()
-    {
-        if (timePassed == 0)
+        if (timePassed >= 1)
         {
-            coinCollect.pitch = 0;
-        }
-        else
-        {
-            coinCollect.pitch += 0.1f;
+            coinCollect.pitch = 1f;
+            yield return null;
         }
     }
 

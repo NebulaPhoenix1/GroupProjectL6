@@ -2,4 +2,5 @@ https://freesound.org/people/Valenspire/sounds/699528/ - Coin Collect (modified)
 https://www.kenney.nl/assets/impact-sounds - Player Dash (multiple assets + modified)
 https://www.kenney.nl/assets/impact-sounds - Player Impact Hard (modified)
 https://pixabay.com/sound-effects/film-special-effects-rock-destroy-6409/ - Obstacle Destroy (modified)
+https://www.kenney.nl/assets/ui-pack - Majority of UI Elements
 
