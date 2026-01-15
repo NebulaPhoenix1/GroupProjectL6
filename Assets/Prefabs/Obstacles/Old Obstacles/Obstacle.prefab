@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4440170673920354599}
   - component: {fileID: 707973698470535194}
   - component: {fileID: 3444233792667786413}
+  - component: {fileID: 5137944955820583540}
   - component: {fileID: 6030766854207656239}
-  - component: {fileID: 8581798399415498001}
   m_Layer: 0
-  m_Name: Obstacle 1
+  m_Name: Obstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 6445847162815758754}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1.0265, y: 0.985245, z: 1.0265}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6445847162815758754}
-  m_Mesh: {fileID: 1283933253497184851, guid: 3ff9d0b8af89c7d43bf545a0cdb5620d, type: 3}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &3444233792667786413
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b58e3f32b144d4541a1c713746ae827c, type: 2}
+  - {fileID: 2100000, guid: 09197077cdc2ad34db180248ba2c9d2a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,22 +91,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6030766854207656239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6445847162815758754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94c41ed92ec12647b31f28b3fd6c953, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Obstacle
-  instantGameOver: 0
-  debrisParticles: {fileID: 1105822864513978609, guid: 89ef7be19e3803b47ab8f7c98e92105d, type: 3}
---- !u!65 &8581798399415498001
-BoxCollider:
+--- !u!135 &5137944955820583540
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -124,5 +110,19 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8090125, y: 1.0105832, z: 0.8605977}
-  m_Center: {x: 0.04270625, y: 0.47326338, z: 0.0049788654}
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6030766854207656239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6445847162815758754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94c41ed92ec12647b31f28b3fd6c953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Obstacle
+  instantGameOver: 0
+  debrisParticles: {fileID: 1105822864513978609, guid: 89ef7be19e3803b47ab8f7c98e92105d, type: 3}

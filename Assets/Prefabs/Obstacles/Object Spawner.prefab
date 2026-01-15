@@ -49,3 +49,8 @@ MonoBehaviour:
   - {fileID: 6445847162815758754, guid: b40d431cec4ed5d47953dbc9a5ed2659, type: 3}
   - {fileID: 4191161046741582990, guid: d8588ffa8c792194786fc5c3238235f4, type: 3}
   - {fileID: 4191161046741582990, guid: 02d41bb63d9b75a4f9df0974b6f58542, type: 3}
+  - {fileID: 4191161046741582990, guid: 338887aeb62fae242ac67e4e34e09d4f, type: 3}
+  - {fileID: 4191161046741582990, guid: 6bbff23cb9ae9b646a414664cad771c1, type: 3}
+  - {fileID: 4191161046741582990, guid: 8bbea17507adebf448ee49167c2b6fbe, type: 3}
+  - {fileID: 6445847162815758754, guid: c04a73ba5f23fd44cb3e0e88a40ee781, type: 3}
+  spawnTransform: {fileID: 2460128461260440685}
