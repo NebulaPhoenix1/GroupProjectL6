@@ -738,6 +738,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -8823573466675411108, guid: f59ad863bdd7e20419d98d1fedc9119e, type: 3}
+    - target: {fileID: 8406913139190091259, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8994216162380056024, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_Type
       value: 0
@@ -5694,6 +5698,7 @@ GameObject:
   - component: {fileID: 834271959}
   - component: {fileID: 834271964}
   - component: {fileID: 834271965}
+  - component: {fileID: 834271966}
   m_Layer: 5
   m_Name: Gameplay UI
   m_TagString: Untagged
@@ -5847,6 +5852,26 @@ MonoBehaviour:
   fadeOutDuration: 2.5
   tutorialStateManager: {fileID: 1771808299}
   playerMovement: {fileID: 1803198818}
+--- !u!114 &834271966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834271958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd198e13c2420e489b1cbc5e54679ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameplayUIFading
+  primaryFade:
+  - {fileID: 604313750}
+  - {fileID: 508606229}
+  - {fileID: 480294352}
+  secondaryFade:
+  - {fileID: 1853942969}
+  - {fileID: 1387837906}
+  tutorialStateManager: {fileID: 1771808299}
 --- !u!1 &835173382
 GameObject:
   m_ObjectHideFlags: 0
@@ -7115,6 +7140,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1771808299}
         m_TargetAssemblyTypeName: TutorialStateManager, Assembly-CSharp
         m_MethodName: SetFirstTutorialSequence
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 834271966}
+        m_TargetAssemblyTypeName: GameplayUIFading, Assembly-CSharp
+        m_MethodName: StartFadeSequence
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13842,6 +13879,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -8823573466675411108, guid: f59ad863bdd7e20419d98d1fedc9119e, type: 3}
+    - target: {fileID: 8406913139190091259, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8994216162380056024, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_Type
       value: 0
@@ -15784,6 +15825,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -8823573466675411108, guid: f59ad863bdd7e20419d98d1fedc9119e, type: 3}
+    - target: {fileID: 8406913139190091259, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8994216162380056024, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_Type
       value: 0
@@ -17827,6 +17872,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -8823573466675411108, guid: f59ad863bdd7e20419d98d1fedc9119e, type: 3}
+    - target: {fileID: 8406913139190091259, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8994216162380056024, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_Type
       value: 0
