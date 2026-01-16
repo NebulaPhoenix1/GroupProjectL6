@@ -410,6 +410,7 @@ public class PlayerMovement : MonoBehaviour
     {
         OnLaneChange.AddListener(delegate {tutorialButtons.StartFadeOut();});
         OnJump.AddListener(delegate {tutorialButtons.StartFadeOut();});
+        OnDash.AddListener(delegate () { tutorialButtons.StartFadeOut();});
     }
 
     //add relevant bool checks to progress through first tutorial
