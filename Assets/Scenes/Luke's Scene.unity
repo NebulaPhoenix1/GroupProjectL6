@@ -19203,7 +19203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: levelPrefabs.Array.size
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: menuInitialSegmentCount
@@ -19221,6 +19221,22 @@ PrefabInstance:
       propertyPath: 'levelPrefabs.Array.data[2]'
       value: 
       objectReference: {fileID: 9098834875976951334, guid: e5e903a9266091f46b76011efbacbfb6, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'levelPrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: aa798f03174e6d34abd54386cb63760d, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'levelPrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 5b2e501fd309fff4f8a33f0599a66afd, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'levelPrefabs.Array.data[5]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: b4a4dca8e40c7974cb263156cad3bcc8, type: 3}
+    - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
+      propertyPath: 'levelPrefabs.Array.data[6]'
+      value: 
+      objectReference: {fileID: 9098834875976951334, guid: 758db34451a453d43ace25d4aae6813b, type: 3}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: additionalInitialSegmentCount
       value: 11
