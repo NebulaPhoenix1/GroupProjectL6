@@ -182,8 +182,7 @@ public class GameMaster : MonoBehaviour
         if (gameplayStarted)
         {
             collectiblesGained++;
-            //Collecibles = Total collectibles collected across all runs
-            PlayerPrefs.SetInt("Collectibles", PlayerPrefs.GetInt("Collectibles", 0) + 1);
+            SaveValues();
             if (!playerMovement.GetIsPlayerDashing())
             {
                 PlayerDashAndDisplay.IncrementCollectedCoins();
@@ -197,6 +196,8 @@ public class GameMaster : MonoBehaviour
         {
             PlayerPrefs.SetInt("HighScore", highScore);
         }
+        //Collecibles = Total collectibles collected across all runs
+        PlayerPrefs.SetInt("Collectibles", PlayerPrefs.GetInt("Collectibles", 0) + collectiblesGained);
         PlayerPrefs.Save();
     }
 

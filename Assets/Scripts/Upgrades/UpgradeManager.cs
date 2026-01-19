@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 
 //Saves/Loads/Manages upgrades purchased by the player
 //This class is a singleton for easy access
@@ -9,13 +8,11 @@ public class UpgradeManager : MonoBehaviour
 {
     //Singleton Logic
     public static UpgradeManager Instance { get; private set; }
-
-    [SerializeField] private Button[] upgradeButtons;
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            //Destroy(this.gameObject);
+            Destroy(this.gameObject);
             Debug.LogWarning("Multiple UpgradeManager instances detected! Destroying duplicate.");
             return;
         }
@@ -37,11 +34,6 @@ public class UpgradeManager : MonoBehaviour
         if(allUpgrades.Length == 0) { Debug.LogWarning("UpgradeManager: No upgrades assigned in inspector!"); }
         saveFilePath = Application.persistentDataPath + "/upgrades.json";
         LoadUpgrades();
-
-        for(int i = 0; i < allUpgrades.Length; i++)
-        {
-            upgradeButtons[i].onClick.AddListener(delegate { PurchaseUpgrade(allUpgrades[i]); });
-        }
     }
 
     //Wrapper class for serializing the HashSet
