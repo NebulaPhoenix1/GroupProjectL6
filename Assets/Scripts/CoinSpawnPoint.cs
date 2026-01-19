@@ -37,7 +37,7 @@ public class CoinSpawnPoint : MonoBehaviour
             initialLocalPosition = Vector3.zero;
             positionCaptured = true;
         }
-        upgradeManager = UpgradeManager.Instance;
+        upgradeManager = GameObject.Find("Upgrades Manager").GetComponent<UpgradeManager>();
         //Check if we have the magnet upgrade 
         if (upgradeManager.IsUpgradePurchased(magnetUpgrade))
         {

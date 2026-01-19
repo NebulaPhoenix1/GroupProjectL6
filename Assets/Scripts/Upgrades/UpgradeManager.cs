@@ -4,32 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //Saves/Loads/Manages upgrades purchased by the player
-//This class is a singleton for easy access
+
 public class UpgradeManager : MonoBehaviour
 {
-    //Singleton Logic
-    public static UpgradeManager Instance { get; private set; }
-
+    
     [SerializeField] private Button[] upgradeButtons;
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            //Destroy(this.gameObject);
-            Debug.LogWarning("Multiple UpgradeManager instances detected! Destroying duplicate.");
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(this.gameObject);
-        saveFilePath = Application.persistentDataPath + "/upgrades.json";
-        
-    }   
     //References
     [SerializeField] private GameMaster gameMaster;
     [SerializeField] private UpgradeSciptableItem[] allUpgrades; //List of all possible upgrades in the game
-    private HashSet<string> purchasedUpgrades = new HashSet<string>(); //Set of upgrade IDs that have been purchased
+    private static HashSet<string> purchasedUpgrades = new HashSet<string>(); //Set of upgrade IDs that have been purchased
     private string saveFilePath;
 
+    private void Awake()
+    {
+        saveFilePath = Application.persistentDataPath + "/upgrades.json";
+        if(purchasedUpgrades == null)
+        {
+            LoadUpgrades();
+        }
+    }   
 
     void Start()
     {
@@ -40,7 +33,11 @@ public class UpgradeManager : MonoBehaviour
 
         for(int i = 0; i < allUpgrades.Length; i++)
         {
-            upgradeButtons[i].onClick.AddListener(delegate { PurchaseUpgrade(allUpgrades[i]); });
+            int index = i; 
+            if(upgradeButtons.Length > index && upgradeButtons[index] != null)
+            {
+               upgradeButtons[index].onClick.AddListener(delegate { PurchaseUpgrade(allUpgrades[index]); });
+            }
         }
     }
 
@@ -63,6 +60,7 @@ public class UpgradeManager : MonoBehaviour
         //No file found
         else
         {
+            purchasedUpgrades = new HashSet<string>();
             Debug.Log("No upgrade save file found, starting fresh.");
         }
     }

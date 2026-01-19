@@ -60,7 +60,7 @@ public class PlayerDashAndDisplay : MonoBehaviour
     public void EnableDefaultDashValues()
     {
         //Check if we own upgrades and set values accordingly
-        upgradeManager = UpgradeManager.Instance;
+        upgradeManager = GameObject.Find("Upgrades Manager").GetComponent<UpgradeManager>();
         if (upgradeManager.IsUpgradePurchased(dashDurationUpgrade))
         {
             hasDashDurationUpgrade = true;

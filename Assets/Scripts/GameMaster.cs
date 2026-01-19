@@ -45,6 +45,8 @@ public class GameMaster : MonoBehaviour
     private float scoreMultiplier;
     [SerializeField] private UpgradeSciptableItem dashDestructionBonusUpgrade;
     [SerializeField] private int DashDestructionBonusAmount = 5;
+    [SerializeField] private UpgradeManager upgradeManager;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -56,6 +58,10 @@ public class GameMaster : MonoBehaviour
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         Debug.Log("Highscore:" + highScore.ToString());
         highScoreAchieved = false;
+        if(!upgradeManager)
+        {
+            upgradeManager = GameObject.Find("Upgrades Manager").GetComponent<UpgradeManager>();
+        }
     }
 
     // Update is called once per frame
@@ -221,7 +227,7 @@ public class GameMaster : MonoBehaviour
     public void AwardDashDestructionBonus()
     {
         //Check we have the upgrade
-        if (UpgradeManager.Instance.IsUpgradePurchased(dashDestructionBonusUpgrade))
+        if (upgradeManager.IsUpgradePurchased(dashDestructionBonusUpgrade))
         {
             rawScore += DashDestructionBonusAmount;
         }
