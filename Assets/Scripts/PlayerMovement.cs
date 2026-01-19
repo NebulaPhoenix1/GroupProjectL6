@@ -285,7 +285,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 gravityForce = Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime; //-1 as Unity applies gravity for us, so we don't want to add too much
             playerRigidbody.linearVelocity += gravityForce;
-            Debug.Log("Added force to fall:" +  gravityForce);
+            //Debug.Log("Added force to fall:" +  gravityForce);
         }
     }
 
