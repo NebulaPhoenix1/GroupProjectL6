@@ -42,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float jumpForce;
+    [Tooltip("The higher this number, the harder the fall")]
+    [SerializeField] private float fallMultiplier = 2.5f;
     [SerializeField] private float laneWidth = 2f;
     [SerializeField] private float nextInputDelay = 3f; //Time delay between lane switch inputs
     [SerializeField] private float jumpInputDelay = 1.0f;
@@ -65,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
     private RigidbodyConstraints unlockedX = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
 
     private bool isStumbling = false;
+    private bool isJumping = false;
     private bool isGameOver = false;
 
     //Stumble Values
@@ -79,6 +82,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask obstacleLayers;
     [SerializeField] private bool invincibilityTesting = false;
 
+    private void OnDrawGizmos()
+    {
+        if (groundCheckTransform != null)
+        {
+            // If checking fails (red), if it hits (green)
+            bool isHit = Physics.Raycast(groundCheckTransform.position, Vector3.down, groundCheckRayCastDistance, groundLayers);
+            Gizmos.color = isHit ? Color.green : Color.red;
+            Gizmos.DrawLine(groundCheckTransform.position, groundCheckTransform.position + Vector3.down * groundCheckRayCastDistance);
+        }
+    }
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -88,7 +103,6 @@ public class PlayerMovement : MonoBehaviour
         InitialiseControlScheme();
         jumpAction = InputSystem.actions.FindAction("Jump");
         pauseAction = InputSystem.actions.FindAction("Pause");
-
 
         if(tutorialStateManager.GetIsFirstTutorial())
         {
@@ -120,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //Lane switch and jump delay timers
         if(inputDelayTimer > 0f) inputDelayTimer -= Time.deltaTime;
-        if(currentJumpDelay >0f) currentJumpDelay -= Time.deltaTime;
+        if(currentJumpDelay >0f && !isJumping) currentJumpDelay -= Time.deltaTime;
         //Stumbling logic
         if(currentStumbleInvincibilityTime > 0f)
         {
@@ -152,6 +166,13 @@ public class PlayerMovement : MonoBehaviour
         {
            PerformJump();
         }
+        //Reset Jump State if grounded
+        if(GroundCheck() && isJumping && playerRigidbody.linearVelocity.y <= -0.1f) {  isJumping = false; }
+        //Check if downwards velocity needs adjusting after hitting apex of jump
+        if(!GroundCheck() && isJumping)
+        {
+            AlterJumpVelocity();
+        }
         //Dash
         if(dashAction.WasPressedThisFrame() && dashAndDisplay.canDash && !isPlayerDashing)
         {
@@ -167,6 +188,7 @@ public class PlayerMovement : MonoBehaviour
         {
             OnEscapePressed.Invoke();
         }
+        
     }
         
     private void TrySwitchLane(Lanes targetLane, Lanes oppositeLane)
@@ -252,7 +274,19 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.linearVelocity = velocity;
         playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         currentJumpDelay = jumpInputDelay;
+        isJumping = true;
         OnJump.Invoke();
+    }
+
+    private void AlterJumpVelocity()
+    {
+        //Check we are falling
+        if(playerRigidbody.linearVelocity.y < 0)
+        {
+            Vector3 gravityForce = Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime; //-1 as Unity applies gravity for us, so we don't want to add too much
+            playerRigidbody.linearVelocity += gravityForce;
+            Debug.Log("Added force to fall:" +  gravityForce);
+        }
     }
 
     private bool GroundCheck()
