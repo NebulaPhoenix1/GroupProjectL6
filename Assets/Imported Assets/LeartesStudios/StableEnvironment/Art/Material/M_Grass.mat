@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 13
+  version: 12
   hdPluginSubTargetMaterialVersions:
     m_Keys: []
     m_Values: 
@@ -51,8 +51,6 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Grass
   m_Shader: {fileID: -6465566751694194690, guid: b321bc960e4aaa4428d3d03664648cb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHATEST_ON
   - _BUILTIN_ALPHATEST_ON
@@ -76,7 +74,6 @@ Material:
   - RayTracingPrepass
   - MOTIONVECTORS
   - DepthOnly
-  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -357,4 +354,3 @@ Material:
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
-  m_AllowLocking: 1

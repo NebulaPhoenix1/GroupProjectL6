@@ -215,8 +215,6 @@ public class TutorialStateManager : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        playerMovement.ForceStumblingFalse();
-        playerMovement.AssignTutorialEvents();
         yield return new WaitUntil(() => tutorialChecks[2]);
 
         WASDGlyphHolder.SetActive(false);
