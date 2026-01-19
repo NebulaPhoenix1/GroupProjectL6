@@ -93,11 +93,11 @@ public class SettingsMenu : MonoBehaviour
     {
         if (volumeSlider.value == 0)
         {
-            volumeDisplayText.text = "Volume: Muted";
+            volumeDisplayText.text = "Master Volume: Muted";
         }
         else
         {
-            volumeDisplayText.text = "Volume: " + volumeSlider.value.ToString();
+            volumeDisplayText.text = "Master Volume: " + volumeSlider.value.ToString();
         }
     }
 

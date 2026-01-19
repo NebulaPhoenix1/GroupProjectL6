@@ -31,6 +31,8 @@ public class Obstacle : MonoBehaviour
                 else
                 {
                     collision.gameObject.GetComponent<PlayerMovement>().AttemptStumble();
+                    audioController.PlayObstacleDestroy();
+                    RemoveObject();
                     Debug.Log("Player Collision: Stumble");
                 }
             }
@@ -40,7 +42,7 @@ public class Obstacle : MonoBehaviour
                 audioController.PlayObstacleDestroy();
                 Instantiate(debrisParticles, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity);
                 //GameObject.Destroy(this.gameObject);
-                ObstacleSpawner.ReturnObjectToPool(this.gameObject);
+                RemoveObject();
                 gameMaster.AwardDashDestructionBonus();
             }
         }
@@ -48,12 +50,17 @@ public class Obstacle : MonoBehaviour
         {
             //Debug.LogWarning("Obstacle collided with another obstacle, or potentially itself?");
             ObstacleSpawner.ReturnObjectToPool(collision.gameObject);
-            //Debug.Log("Obstacle forced back to pool");
         }
         else
         {
             //Debug.Log("Obstacle collided with non player entity");
         }
+    }
+
+    private void RemoveObject()
+    {
+        ObstacleSpawner.ReturnObjectToPool(this.gameObject);
+        //Debug.Log("Obstacle forced back to pool");
     }
 
 
