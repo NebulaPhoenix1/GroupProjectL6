@@ -7,6 +7,7 @@ public class ObstacleSpawner : ObjectSpawner
 {
     private bool hasAttemptedSpawn = false;
     private GameMaster gameMaster;
+    [SerializeField] private Transform spawnTransform;
 
     protected override void Start()
     {
@@ -43,6 +44,8 @@ public class ObstacleSpawner : ObjectSpawner
     public override void SpawnObject()
     {
         base.SpawnObject();
+        spawnedObject.transform.position = spawnTransform.position;
+        //spawnedObject.transform.rotation = spawnTransform.rotation;
         //Do a check to see if this object has any children (i.e. spawned obstacle)
         if(transform.childCount == 0)
         {

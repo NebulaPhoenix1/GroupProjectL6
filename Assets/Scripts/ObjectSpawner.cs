@@ -9,7 +9,7 @@ public abstract class ObjectSpawner : MonoBehaviour
     // Pool of objects
     static private Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>();
     private static bool isInitialized = false;
-    private GameObject spawnedObject;
+    protected GameObject spawnedObject;
 
     protected virtual void Awake()
     {
@@ -33,8 +33,8 @@ public abstract class ObjectSpawner : MonoBehaviour
         GameObject spawnedPrefab = GetPooledObject(selectedPrefab);
         
         // Ensure the object is positioned correctly
-        spawnedPrefab.transform.position = transform.position;
-        spawnedPrefab.transform.rotation = transform.rotation; 
+        //spawnedPrefab.transform.position = transform.position;
+        //spawnedPrefab.transform.rotation = transform.rotation; 
         spawnedPrefab.SetActive(true);
         
         spawnedObject = spawnedPrefab;

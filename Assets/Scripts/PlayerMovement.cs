@@ -155,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
         //Dash
         if(dashAction.WasPressedThisFrame() && dashAndDisplay.canDash && !isPlayerDashing)
         {
-            //If we cant dash while stumlbing and are stumbling, return
+            //If we cant dash while stumbling and are stumbling, return
             if(!canDashWhileStumbling && isStumbling) 
             {
                 Debug.Log("Can't dash while stumbling");
@@ -410,6 +410,7 @@ public class PlayerMovement : MonoBehaviour
     {
         OnLaneChange.AddListener(delegate {tutorialButtons.StartFadeOut();});
         OnJump.AddListener(delegate {tutorialButtons.StartFadeOut();});
+        OnDash.AddListener(delegate () { tutorialButtons.StartFadeOut();});
     }
 
     //add relevant bool checks to progress through first tutorial
@@ -439,5 +440,10 @@ public class PlayerMovement : MonoBehaviour
     {
         InputAction[] actions = {moveAction, jumpAction, dashAction};
         actions[i].Disable();
+    }
+
+    public void ForceStumblingFalse() //this method is used only in the first tutorial to make sure the player can dash at the dash segment and doesn't get softlocked
+    {
+        isStumbling = false;
     }
 }
