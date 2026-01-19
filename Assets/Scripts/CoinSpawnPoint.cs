@@ -1,80 +1,105 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 
 public class CoinSpawnPoint : MonoBehaviour
 {
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private GameObject activeCoin;
 
-    //Local position so the coin moves with the platform/parent
     private Vector3 initialLocalPosition;
     private bool positionCaptured = false;
+    
+    // References
     private UpgradeManager upgradeManager;
+    private GameMaster gameMaster;
 
-    //I'm throwing powerups in here for now as it's easier than making a separate powerup system
-    //And with the scope of the project/time remaining it'll have to be fine
+    [Header("Powerups")]
     [SerializeField] private UpgradeSciptableItem magnetUpgrade;
     [SerializeField] private GameObject magnetPrefab;
-    //Should be between 0-1
-    [Range(0, 1)]
-    [SerializeField] private float magnetSpawnChance = 0.005f; //0.5% chance to spawn a magnet instead of a coin
+    [Range(0, 1)] [SerializeField] private float magnetSpawnChance = 0.005f; 
     private bool spawnMagnets = false;
 
     void Awake()
     {
-        //Get the position of the coin placed in the editor
+        //Capture Position
         if (activeCoin != null)
         {
-            //Get local position to support moving platforms/parents
             initialLocalPosition = activeCoin.transform.localPosition;
             positionCaptured = true;
         }
         else
         {
-            //Just in case: Spawn at the script holder's position
             initialLocalPosition = Vector3.zero;
             positionCaptured = true;
         }
-        upgradeManager = GameObject.Find("Upgrades Manager").GetComponent<UpgradeManager>();
-        //Check if we have the magnet upgrade 
-        if (upgradeManager.IsUpgradePurchased(magnetUpgrade))
+
+        //Find Managers
+        GameObject upgradeManager = GameObject.Find("Upgrades Manager");
+        if (upgradeManager) this.upgradeManager = upgradeManager.GetComponent<UpgradeManager>();
+        
+        GameObject gameMaster = GameObject.Find("Game Master");
+        if (gameMaster) this.gameMaster = gameMaster.GetComponent<GameMaster>();
+
+        if (this.upgradeManager && this.upgradeManager.IsUpgradePurchased(magnetUpgrade))
         {
             spawnMagnets = true;
         }
     }
 
+    void Start()
+    {
+        //Hide existing coin immediately on load
+        if (activeCoin != null && gameMaster != null && !gameMaster.GetGameplayState())
+        {
+            activeCoin.SetActive(false);
+        }
+    }
+
     void OnEnable()
     {
-        //Debug.Log("Coin spawner enabled");
-
-        // If the coin is missing
-        if (activeCoin == null && positionCaptured)
+        if (gameMaster)
         {
-            SpawnCoin();
+            // Subscribe to the "Start Button" event
+            gameMaster.OnGameStart.AddListener(SpawnCoin);
+            
+            //Only spawn immediately if the game is running.
+            if (gameMaster.GetGameplayState())
+            {
+                SpawnCoin();
+            }
         }
-        //Re enable coin if it was just disabled
-        else if (activeCoin != null && !activeCoin.activeInHierarchy)
+    }
+
+    void OnDisable()
+    {
+        if (gameMaster)
         {
-            activeCoin.SetActive(true);
+            gameMaster.OnGameStart.RemoveListener(SpawnCoin);
         }
     }
 
     void SpawnCoin()
-    { 
-        if(spawnMagnets && UnityEngine.Random.value < magnetSpawnChance && magnetPrefab != null)
+    {
+        //Handle the hidden coins from start
+        if (activeCoin != null)
         {
-            //Spawn a magnet powerup instead of a coin
-            activeCoin = Instantiate(magnetPrefab, transform);
-            activeCoin.transform.localPosition = initialLocalPosition;
-
-            Debug.Log("Spawned a magnet powerup");
+            // We only turn it on. We assume if it's there, it's the one we hid.
+            activeCoin.SetActive(true);
             return;
         }
-        activeCoin = Instantiate(coinPrefab, transform);
-        activeCoin.transform.localPosition = initialLocalPosition;
 
-        //Debug.Log("Spawned a new coin");
+        //Spawning Logic in case no coin exists at the moment
+        if (spawnMagnets && UnityEngine.Random.value < magnetSpawnChance && magnetPrefab != null)
+        {
+            activeCoin = Instantiate(magnetPrefab, transform);
+            activeCoin.transform.localPosition = initialLocalPosition;
+            return;
+        }
+
+        if (coinPrefab != null)
+        {
+            activeCoin = Instantiate(coinPrefab, transform);
+            activeCoin.transform.localPosition = initialLocalPosition;
+        }
     }
 }
