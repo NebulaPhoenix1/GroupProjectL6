@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2460128461260440685}
   - component: {fileID: 5064218894301442272}
+  - component: {fileID: 8519206723091176738}
   m_Layer: 0
   m_Name: Object Spawner
   m_TagString: Untagged
@@ -54,3 +55,18 @@ MonoBehaviour:
   - {fileID: 4191161046741582990, guid: 8bbea17507adebf448ee49167c2b6fbe, type: 3}
   - {fileID: 6445847162815758754, guid: c04a73ba5f23fd44cb3e0e88a40ee781, type: 3}
   spawnTransform: {fileID: 2460128461260440685}
+--- !u!114 &8519206723091176738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033424028336290306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63414365994b6da4ea65be2f278e242d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObstacleDebugDraw
+  boxColor: {r: 0, g: 1, b: 0, a: 1}
+  boxSize: {x: 2, y: 2, z: 2}
+  showOnlyWhenSelected: 0
