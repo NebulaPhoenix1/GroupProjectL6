@@ -15,7 +15,7 @@ public class UpgradeManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            //Destroy(this.gameObject);
+            Destroy(this.gameObject);
             Debug.LogWarning("Multiple UpgradeManager instances detected! Destroying duplicate.");
             return;
         }

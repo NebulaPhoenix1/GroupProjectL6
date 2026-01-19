@@ -5871,6 +5871,9 @@ MonoBehaviour:
   secondaryFade:
   - {fileID: 1853942969}
   - {fileID: 1387837906}
+  tertiaryFade:
+  - {fileID: 1561792097}
+  - {fileID: 1042441452}
   tutorialStateManager: {fileID: 1771808299}
 --- !u!1 &835173382
 GameObject:
