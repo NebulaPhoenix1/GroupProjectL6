@@ -5852,6 +5852,7 @@ MonoBehaviour:
   fadeOutDuration: 2.5
   tutorialStateManager: {fileID: 1771808299}
   playerMovement: {fileID: 1803198818}
+  gameplayUIFading: {fileID: 834271966}
 --- !u!114 &834271966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5875,6 +5876,8 @@ MonoBehaviour:
   - {fileID: 1561792097}
   - {fileID: 1042441452}
   tutorialStateManager: {fileID: 1771808299}
+  tutorialButtons: {fileID: 834271965}
+  playerMovement: {fileID: 1803198818}
 --- !u!1 &835173382
 GameObject:
   m_ObjectHideFlags: 0
@@ -19259,7 +19262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: menuInitialSegmentCount
-      value: 4
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: 'levelPrefabs.Array.data[0]'
@@ -19275,7 +19278,7 @@ PrefabInstance:
       objectReference: {fileID: 9098834875976951334, guid: e5e903a9266091f46b76011efbacbfb6, type: 3}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: additionalInitialSegmentCount
-      value: 11
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: tutorialLevelPrefabs.Array.size
