@@ -892,6 +892,81 @@ RectTransform:
   m_AnchoredPosition: {x: 0.17689514, y: 0}
   m_SizeDelta: {x: 1.4538, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &162089263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162089264}
+  - component: {fileID: 162089266}
+  - component: {fileID: 162089265}
+  m_Layer: 5
+  m_Name: MagnetIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &162089264
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162089263}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 834271963}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 449, y: 312}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &162089265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162089263}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: d5834cbaad1a14029b4617116831502f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &162089266
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162089263}
+  m_CullTransparentMesh: 1
 --- !u!1 &176390678
 GameObject:
   m_ObjectHideFlags: 0
@@ -5932,6 +6007,7 @@ GameObject:
   - component: {fileID: 834271964}
   - component: {fileID: 834271965}
   - component: {fileID: 834271966}
+  - component: {fileID: 834271967}
   m_Layer: 5
   m_Name: Gameplay UI
   m_TagString: Untagged
@@ -6037,6 +6113,7 @@ RectTransform:
   - {fileID: 604313751}
   - {fileID: 1521943081}
   - {fileID: 907385053}
+  - {fileID: 162089264}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6101,6 +6178,23 @@ MonoBehaviour:
   stumbleRecoverySlider: {fileID: 2134622833}
   dashChargeFillArea: {fileID: 1783103918}
   startingDashAlpha: 0
+--- !u!114 &834271967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834271958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 392c987bf68c64ebfb8c01995899f156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  magnetIcon: {fileID: 162089265}
+  flashSpeed: 3
+  durationStartFlashing: 2.5
+  playerPowerupManager: {fileID: 1803198815}
+  magnetPowerup: {fileID: 11400000, guid: 7765c6e9bf4bd26449fbd6264e27da1b, type: 2}
 --- !u!1 &835173382
 GameObject:
   m_ObjectHideFlags: 0
@@ -19424,7 +19518,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2134622832
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20025,7 +20119,7 @@ PrefabInstance:
       objectReference: {fileID: 463125550}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: invincibilityTesting
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: tutorialStateManager

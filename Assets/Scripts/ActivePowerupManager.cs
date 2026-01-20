@@ -50,4 +50,13 @@ public class ActivePowerupManager : MonoBehaviour
             powerup.OnActivate(gameObject);
         }
     }
+
+    public float GetRemainingDuration(PowerUpEffect powerup)
+    {
+        return powerupDurations[powerup];
+    }
+    public bool HasPowerup(PowerUpEffect powerup)
+    {
+        return powerupDurations.ContainsKey(powerup);
+    }
 }

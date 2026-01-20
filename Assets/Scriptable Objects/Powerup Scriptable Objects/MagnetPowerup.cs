@@ -6,21 +6,19 @@ public class MagnetPowerup : PowerUpEffect
 {
     [SerializeField] private float radius = 5f;
     [SerializeField] private float attractionSpeed = 5f;
-    private GameObject magnetIcon; //The icon to display when the powerup is active
+    private MagnetIconFlash magnetIcon; //The icon to display when the powerup is active
     public override void OnActivate(GameObject target)
     {
         Debug.Log("Magnet Powerup activated!");
         //Find the magnet icon in the player's UI and enable it
-        magnetIcon = GameObject.Find("Gameplay UI/Magnet Icon");
-        if(magnetIcon != null)
+        magnetIcon = FindFirstObjectByType<MagnetIconFlash>();
+        if(magnetIcon)
         {
-            magnetIcon.SetActive(true);
-            Debug.Log("Magnet icon activated in UI");
+            magnetIcon.MagnetPickedUp();
+            Debug.Log("Magnet Icon found");
+            return;
         }
-        else
-        {
-            Debug.LogError("Magnet icon not found in UI");
-        }
+        Debug.LogWarning("Magnet Icon not found");
     }
 
     public override void OnTick(GameObject target)
@@ -28,6 +26,10 @@ public class MagnetPowerup : PowerUpEffect
         //Debug.Log("Magnet Powerup ticked!");
         //Use find objects by tag to find all collectibles named coins in the scene
         //If within radius, move towards player
+        if(magnetIcon != null)
+        {
+            magnetIcon.MagnetIconUpdated();
+        }
         GameObject[] collectibles = GameObject.FindGameObjectsWithTag("Coin");
         foreach (GameObject collectible in collectibles)
         {
@@ -46,7 +48,7 @@ public class MagnetPowerup : PowerUpEffect
         Debug.Log("Magnet Powerup deactivated!");
         if(magnetIcon != null)
         {
-            magnetIcon.SetActive(false);
+            magnetIcon.MagnetPowerupHidden();
         }
     }
 }
