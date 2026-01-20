@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeSciptableItem
   upgradeID: dashDestructionScore
   displayedUpgradeName: Dash Destruction Bonus
-  upgradeDescription: When destroying obstacles while dashing, get bonus score
-  upgradeCost: 1000
   upgradeIcon: {fileID: 0}
+  levelDefinitions:
+  - levelDescription: Awards bonus score when destroying obstacles while dashing.
+    cost: 300
+    upgradeValue: 1

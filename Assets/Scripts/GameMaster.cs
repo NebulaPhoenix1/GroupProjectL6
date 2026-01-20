@@ -226,8 +226,8 @@ public class GameMaster : MonoBehaviour
 
     public void AwardDashDestructionBonus()
     {
-        //Check we have the upgrade
-        if (upgradeManager.IsUpgradePurchased(dashDestructionBonusUpgrade))
+        //Check we have the upgrade (level is greater than 0)
+        if (upgradeManager.GetUpgradeCurrentLevel(dashDestructionBonusUpgrade.upgradeID) > 0)
         {
             rawScore += DashDestructionBonusAmount;
         }

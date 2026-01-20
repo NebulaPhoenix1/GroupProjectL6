@@ -40,7 +40,7 @@ public class CoinSpawnPoint : MonoBehaviour
         GameObject gameMaster = GameObject.Find("Game Master");
         if (gameMaster) this.gameMaster = gameMaster.GetComponent<GameMaster>();
 
-        if (this.upgradeManager && this.upgradeManager.IsUpgradePurchased(magnetUpgrade))
+        if (this.upgradeManager && this.upgradeManager.GetUpgradeCurrentLevel(magnetUpgrade.upgradeID) > 0) //If level is greater than 0, upgrade is owned
         {
             spawnMagnets = true;
         }

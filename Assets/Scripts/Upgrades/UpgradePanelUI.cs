@@ -9,11 +9,12 @@ public class UpgradePanelUI : MonoBehaviour
     [SerializeField] private UpgradeSciptableItem upgradeItem;
     [SerializeField] private TMP_Text upgradeNameText;
     [SerializeField] private TMP_Text upgradeCostText;
-    [SerializeField] private GameObject purchaseButton;
+    [SerializeField] private Button purchaseButton;
     [SerializeField] private GameObject greyedOutButton;
     [Header("Optional References")]
     [SerializeField] private TMP_Text upgradeDescriptionText;
     [SerializeField] private UnityEngine.UI.Image upgradeIconImage;
+    [SerializeField] private TMP_Text levelText;
 
     private UpgradeManager upgradeManager;
 
@@ -23,62 +24,59 @@ public class UpgradePanelUI : MonoBehaviour
         //Get reference to Upgrade Manager
         upgradeManager = FindFirstObjectByType<UpgradeManager>();
         
-        //Check all mandatory values are assigned
-        if(upgradeItem && upgradeNameText &&  upgradeCostText && purchaseButton && greyedOutButton)
+        if(upgradeIconImage && upgradeItem.upgradeIcon)
         {
-            //Assign values from scriptable object to relevant UI components
-            upgradeNameText.text = upgradeItem.displayedUpgradeName;
-            upgradeCostText.text = upgradeItem.upgradeCost.ToString() + " Coins";
-            //Check we have a description/icon and if so enable and set them
-            //Description
-            if(upgradeDescriptionText && upgradeItem.upgradeDescription != null)
-            {
-                upgradeDescriptionText.gameObject.SetActive(true);
-                upgradeDescriptionText.text = upgradeItem.upgradeDescription;
-            }
-            else
-            {
-                upgradeDescriptionText.gameObject.SetActive(false);
-                Debug.Log("No description assigned for upgrade: " + upgradeItem.displayedUpgradeName);
-            }
-            //Icon
-            if(upgradeIconImage && upgradeItem.upgradeIcon)
-            {
-                upgradeIconImage.gameObject.SetActive(true);
-                upgradeIconImage.sprite = upgradeItem.upgradeIcon;
-            }
-            else
-            {
-                upgradeIconImage.gameObject.SetActive(false);
-                Debug.Log("No icon assigned for upgrade: " + upgradeItem.displayedUpgradeName);
-            }
-
-            //Add CheckButtonState to the purchase button on click event
-            purchaseButton.GetComponent<Button>().onClick.AddListener(CheckButtonState);
-            CheckButtonState();
+            upgradeIconImage.sprite = upgradeItem.upgradeIcon;
         }
-        else
+        if(upgradeDescriptionText && upgradeItem.levelDefinitions.Length > 0)
         {
-            Debug.LogError("One or more UI components or the upgrade item is not assigned in UpgradePanelUI on " + gameObject.name);
+            upgradeDescriptionText.text = upgradeItem.levelDefinitions[0].levelDescription;
+            upgradeDescriptionText.gameObject.SetActive(true);
         }
+        
+        purchaseButton.onClick.AddListener(OnPurchaseClick);
+        UpdateUI();
     }
 
-    //Checks with Upgrade Manager to see if this upgrade is unlocked or not and sets button states accordingly
-    //This should get called on start and after an attempted purchase
-    private void CheckButtonState()
+    private void OnPurchaseClick()
     {
-        Debug.Log("Check button state called");
-        if(upgradeManager.IsUpgradePurchased(upgradeItem))
+        upgradeManager.PurchaseUpgrade(upgradeItem, () => UpdateUI());
+    }
+
+    private void UpdateUI()
+    {
+        int currentLvl = upgradeManager.GetUpgradeCurrentLevel(upgradeItem.upgradeID);
+        int maxLvl = upgradeItem.levelDefinitions.Length;
+
+        //Update optional Level Text
+        if(levelText)
         {
-            //We own this upgrade, grey out the button
-            purchaseButton.SetActive(false);
-            greyedOutButton.SetActive(true);
-        }
-        else
+            levelText.text = $"Lv {currentLvl}/{maxLvl}";  
+        } 
+
+        //Reached max level
+        if(currentLvl >= maxLvl)
         {
-            //We don't own this upgrade, enable purchase button
-            purchaseButton.SetActive(true);
-            greyedOutButton.SetActive(false);
+            purchaseButton.gameObject.SetActive(false);
+            greyedOutButton.SetActive(true); // Show "Maxed" visual
+            upgradeCostText.text = "Max";
+            upgradeNameText.text = upgradeItem.displayedUpgradeName;
+            
+            // Show description of the final level
+            if(upgradeDescriptionText)
+                upgradeDescriptionText.text = upgradeItem.levelDefinitions[maxLvl-1].levelDescription;
+            return;
         }
+
+        //Next level available
+        purchaseButton.gameObject.SetActive(true);
+        greyedOutButton.SetActive(false);
+
+        //Get data for next level
+        var nextLevelData = upgradeItem.levelDefinitions[currentLvl];
+
+        upgradeNameText.text = upgradeItem.displayedUpgradeName;
+        upgradeCostText.text = nextLevelData.cost.ToString();
+        if(upgradeDescriptionText) upgradeDescriptionText.text = nextLevelData.levelDescription;
     }
 }

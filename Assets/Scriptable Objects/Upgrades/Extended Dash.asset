@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeSciptableItem
   upgradeID: longerDashDuration
   displayedUpgradeName: Double Dash
-  upgradeDescription: When dashing, the duration is extended
-  upgradeCost: 500
   upgradeIcon: {fileID: 0}
+  levelDefinitions:
+  - levelDescription: Makes the dash duration longer
+    cost: 300
+    upgradeValue: 2

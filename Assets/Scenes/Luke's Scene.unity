@@ -407,17 +407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
---- !u!114 &106567082 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4163890331602685186, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
-  m_PrefabInstance: {fileID: 120553076}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &110592661
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,6 +635,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4612646186196984625, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 145
+      objectReference: {fileID: 0}
     - target: {fileID: 4865822468122049075, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_fontSize
       value: 32
@@ -725,6 +718,18 @@ PrefabInstance:
     - target: {fileID: 6322261822757481162, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -205
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 5390626c2b192234aa266c7df827497f, type: 2}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6813433010331981104, guid: 5390626c2b192234aa266c7df827497f, type: 2}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8156875050524937401, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: upgradeItem
@@ -3509,17 +3514,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544129922}
   m_CullTransparentMesh: 1
---- !u!114 &545243719 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4163890331602685186, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
-  m_PrefabInstance: {fileID: 1812291508}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &582435928
 GameObject:
   m_ObjectHideFlags: 0
@@ -13009,11 +13003,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827c79b0de33a4c3abb5857fc7489228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeManager
-  upgradeButtons:
-  - {fileID: 45256261}
-  - {fileID: 545243719}
-  - {fileID: 1542109322}
-  - {fileID: 106567082}
   gameMaster: {fileID: 1771808296}
   allUpgrades:
   - {fileID: 11400000, guid: 9e7496930e26c4677847ce7597f685ed, type: 2}
@@ -14090,6 +14079,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4612646186196984625, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 145
+      objectReference: {fileID: 0}
     - target: {fileID: 4865822468122049075, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_fontSize
       value: 32
@@ -14178,10 +14171,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 5390626c2b192234aa266c7df827497f, type: 2}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6813433010331981104, guid: 5390626c2b192234aa266c7df827497f, type: 2}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126437804543966704, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8156875050524937401, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: upgradeItem
       value: 
       objectReference: {fileID: 11400000, guid: 9e7496930e26c4677847ce7597f685ed, type: 2}
+    - target: {fileID: 8156875050524937401, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: purchaseButton
+      value: 
+      objectReference: {fileID: 45256261}
     - target: {fileID: 8406913139190091259, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_Type
       value: 0
@@ -16040,6 +16053,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4612646186196984625, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 145
+      objectReference: {fileID: 0}
     - target: {fileID: 4865822468122049075, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_fontSize
       value: 32
@@ -16119,6 +16136,18 @@ PrefabInstance:
     - target: {fileID: 6322261822757481162, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -205
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 5390626c2b192234aa266c7df827497f, type: 2}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6813433010331981104, guid: 5390626c2b192234aa266c7df827497f, type: 2}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8156875050524937401, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: upgradeItem
@@ -16246,17 +16275,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9204150088369163622, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
   m_PrefabInstance: {fileID: 1525262510}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1542109322 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4163890331602685186, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
-  m_PrefabInstance: {fileID: 1525262510}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1561792097
 GameObject:
   m_ObjectHideFlags: 0
@@ -18092,6 +18110,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4612646186196984625, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 145
+      objectReference: {fileID: 0}
     - target: {fileID: 4865822468122049075, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_fontSize
       value: 32
@@ -18175,6 +18197,18 @@ PrefabInstance:
     - target: {fileID: 6322261822757481162, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -205
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 5390626c2b192234aa266c7df827497f, type: 2}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6813433010331981104, guid: 5390626c2b192234aa266c7df827497f, type: 2}
+    - target: {fileID: 7778518724136559285, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8156875050524937401, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
       propertyPath: upgradeItem

@@ -7,98 +7,79 @@ using UnityEngine.UI;
 
 public class UpgradeManager : MonoBehaviour
 {
-    
-    [SerializeField] private Button[] upgradeButtons;
     //References
     [SerializeField] private GameMaster gameMaster;
     [SerializeField] private UpgradeSciptableItem[] allUpgrades; //List of all possible upgrades in the game
-    private static HashSet<string> purchasedUpgrades = new HashSet<string>(); //Set of upgrade IDs that have been purchased
+
+    //Maps upgrade ID to current level (if 0, not owned, 1 = lv1, 2 = lv2 etc)
+    private static Dictionary<string, int> upgradeLevels = new Dictionary<string, int>();
+    private HashSet<string> purchasedUpgrades;
     private string saveFilePath;
 
     private void Awake()
     {
         saveFilePath = Application.persistentDataPath + "/upgrades.json";
-        if(purchasedUpgrades == null)
-        {
-            LoadUpgrades();
-        }
+        LoadUpgrades();
     }   
 
-    void Start()
+    //Save System Wrappers
+    [System.Serializable]
+    public class UpgradeEntry
     {
-        if(!gameMaster) { Debug.LogError("UpgradeManager: No GameMaster assigned!"); }
-        if(allUpgrades.Length == 0) { Debug.LogWarning("UpgradeManager: No upgrades assigned in inspector!"); }
-        saveFilePath = Application.persistentDataPath + "/upgrades.json";
-        LoadUpgrades();
-
-        for(int i = 0; i < allUpgrades.Length; i++)
-        {
-            int index = i; 
-            if(upgradeButtons.Length > index && upgradeButtons[index] != null)
-            {
-               upgradeButtons[index].onClick.AddListener(delegate { PurchaseUpgrade(allUpgrades[index]); });
-            }
-        }
+        public string id;
+        public int level;
     }
 
-    //Wrapper class for serializing the HashSet
     [System.Serializable]
     private class UpgradeSaveDataWrapper
     {
-        public List<string> purchasedUpgradeIDs;
+        public List<UpgradeEntry> entries = new List<UpgradeEntry>();
     }
 
     private void LoadUpgrades()
     {
-        //Check if we have save file
+        upgradeLevels.Clear();
         if(File.Exists(saveFilePath))
         {
             string json = File.ReadAllText(saveFilePath);
             UpgradeSaveDataWrapper saveData = JsonUtility.FromJson<UpgradeSaveDataWrapper>(json);
-            purchasedUpgrades = new HashSet<string>(saveData.purchasedUpgradeIDs);
-        }
-        //No file found
-        else
-        {
-            purchasedUpgrades = new HashSet<string>();
-            Debug.Log("No upgrade save file found, starting fresh.");
-        }
+            foreach(UpgradeEntry entry in saveData.entries)
+            {
+                upgradeLevels[entry.id] = entry.level;
+            }
+        }    
     }
 
     private void SaveUpgrades()
     {
         UpgradeSaveDataWrapper saveData = new UpgradeSaveDataWrapper();
-        saveData.purchasedUpgradeIDs = new List<string>(purchasedUpgrades);  
-        string json = JsonUtility.ToJson(saveData);
-        File.WriteAllText(saveFilePath, json); 
+        foreach(var pair in upgradeLevels)
+        {
+            saveData.entries.Add(new UpgradeEntry{id = pair.Key, level = pair.Value});
+        }
+        File.WriteAllText(saveFilePath, JsonUtility.ToJson(saveData));
     }
 
-    public void PurchaseUpgrade(UpgradeSciptableItem upgrade)
+    public int GetUpgradeCurrentLevel(string id)
     {
-        //Check if we already own this upgrade
-        if(purchasedUpgrades.Contains(upgrade.upgradeID))
+        return upgradeLevels.ContainsKey(id) ? upgradeLevels[id] : 0;
+    }
+    
+    public void PurchaseUpgrade(UpgradeSciptableItem upgrade, System.Action onSuccess)
+    {
+        int currentLv = GetUpgradeCurrentLevel(upgrade.upgradeID);
+        if(currentLv >= upgrade.levelDefinitions.Length)
         {
-            Debug.Log("Upgrade already purchased: " + upgrade.displayedUpgradeName);
+            Debug.Log("Upgrade already maxed.");
             return;
         }
-        //If not, check if we can afford it
-        //The game master will check if we can spend coins, and will return true if successful and automatically deduct the coins
-        bool purchaseSuccessful = gameMaster.TrySpendCollectibles(upgrade.upgradeCost);
-        //If so, add to purchased set
-        if (purchaseSuccessful)
+        int cost = upgrade.levelDefinitions[currentLv].cost; //Cost is next levels upgrade
+        if(gameMaster.TrySpendCollectibles(cost))
         {
-            purchasedUpgrades.Add(upgrade.upgradeID);
+            upgradeLevels[upgrade.upgradeID] = currentLv + 1;
             SaveUpgrades();
-            Debug.Log("Purchased upgrade: " + upgrade.displayedUpgradeName);
-            return;
+            Debug.Log("Purchased item:" + upgrade.upgradeID);
+            onSuccess?.Invoke();
         }
-        //Else, do nothing.
-        return;
     }
-
-    public bool IsUpgradePurchased(UpgradeSciptableItem upgrade)
-    {
-        return purchasedUpgrades.Contains(upgrade.upgradeID);
-    }
-
 }

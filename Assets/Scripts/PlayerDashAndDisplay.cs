@@ -61,12 +61,12 @@ public class PlayerDashAndDisplay : MonoBehaviour
     {
         //Check if we own upgrades and set values accordingly
         upgradeManager = GameObject.Find("Upgrades Manager").GetComponent<UpgradeManager>();
-        if (upgradeManager.IsUpgradePurchased(dashDurationUpgrade))
+        if (upgradeManager.GetUpgradeCurrentLevel(dashDurationUpgrade.upgradeID) > 0) //If level is greater than 0, we own the upgrade
         {
             hasDashDurationUpgrade = true;
             dashDuration += extendedDashDuration;
         }
-        if (upgradeManager.IsUpgradePurchased(dashCostUpgrade))
+        if (upgradeManager.GetUpgradeCurrentLevel(dashCostUpgrade.upgradeID) > 0) //If level is greater than 0, we own the upgrade
         {
             hasDashCostUpgrade = true;
             meterMaximum -= reducedDashCost;

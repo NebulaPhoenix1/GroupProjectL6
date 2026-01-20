@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeSciptableItem
   upgradeID: coinMagnetsUnlocked
   displayedUpgradeName: Coin Magnet
-  upgradeDescription: With this upgrade, you can find magnets which attract all coins
-    to the player for a short time
-  upgradeCost: 500
   upgradeIcon: {fileID: 0}
+  levelDefinitions:
+  - levelDescription: Unlocks Coin Magnets Spawning
+    cost: 300
+    upgradeValue: 1
