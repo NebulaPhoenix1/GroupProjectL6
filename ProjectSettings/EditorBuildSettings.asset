@@ -13,13 +13,16 @@ EditorBuildSettings:
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 0
     path: Assets/Scenes/Shara's Scene.unity
-    guid: 1ffc9d6f0d6774a8d9df75e9b3a22172
+    guid: 754239eb4ec7b714d82648f1fa9c02ac
   - enabled: 0
     path: Assets/Scenes/Old Backup Scenes 14th Jan/Rob's Scene.unity
     guid: 65879bd4ffa114a0b88cf00857fb299e
   - enabled: 0
     path: Assets/Scenes/Leyton's Scene.unity
-    guid: 80e847767dcbe475eb013bc52ad3e3eb
+    guid: 0855dbfc8f14969479d3835b243bc337
+  - enabled: 0
+    path: Assets/Scenes/Game Icon.unity
+    guid: d84dda66509053c4798e2a977f41b213
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
