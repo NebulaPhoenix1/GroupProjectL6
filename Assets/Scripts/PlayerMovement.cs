@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerDashAndDisplay dashAndDisplay;
     [SerializeField] private TutorialStateManager tutorialStateManager;
     [SerializeField] private TutorialButtons tutorialButtons;
+    [SerializeField] private StumbleRecoveryProgress stumbleRecoveryProgress;
     private GameMaster gameMaster;
     private LevelSpawner levelSpawner;
     private Rigidbody playerRigidbody;
@@ -93,7 +94,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -148,7 +148,9 @@ public class PlayerMovement : MonoBehaviour
             if(currentStumbleTimer <= 0f)
             {
                 RecoverFromStumble();
+                return;
             }
+            stumbleRecoveryProgress.OnRecoveryTick();
         }
     }
 
@@ -327,6 +329,7 @@ public class PlayerMovement : MonoBehaviour
         isStumbling = true;
         currentStumbleInvincibilityTime = stumbleInvincibilityTime;
         currentStumbleTimer = stumbleRecoverTime;
+        stumbleRecoveryProgress.OnRecoveryStart();
         //Debug.Log("Player Stumbled");
         OnStumble.Invoke();
     }
@@ -336,6 +339,7 @@ public class PlayerMovement : MonoBehaviour
         if(isGameOver) { return; }
         isStumbling = false;
         Debug.Log("Recovered from stumble");
+        stumbleRecoveryProgress.OnRecoveryEnd();
         OnRecover.Invoke();
     }
 
@@ -346,6 +350,17 @@ public class PlayerMovement : MonoBehaviour
         OnGameOver.Invoke();
         playerRigidbody.isKinematic = true; //Stop all player movement
     }
+
+    public float GetTotalRecoveryTime()
+    {
+        return stumbleRecoverTime;
+    }
+
+    public float GetCurrentStumblingTime()
+    {
+        return currentStumbleTimer;
+    }
+
     public void InitialiseControlScheme()
     {
         if (PlayerPrefs.HasKey("ControlSchemeKey"))
