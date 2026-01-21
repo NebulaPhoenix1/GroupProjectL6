@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &202276436366352147
+--- !u!1 &4191161046741582990
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,80 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4931675093540714723}
+  - component: {fileID: 3077051995342385986}
+  - component: {fileID: 6115930494631116935}
+  - component: {fileID: 3342288401809426234}
+  - component: {fileID: 6079290286093834462}
+  - component: {fileID: 7902566405213879066}
   m_Layer: 0
-  m_Name: Obstacle 4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4931675093540714723
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202276436366352147}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7311526369212865427}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2706970821215592696
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7311526369212865427}
-  - component: {fileID: 1104865908241417282}
-  - component: {fileID: 5337891646314058745}
-  - component: {fileID: 7047770640980174625}
-  - component: {fileID: 4644265731702386751}
-  m_Layer: 0
-  m_Name: Obstacle 4
+  m_Name: Obstacle 3 (Wrong Pivot)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7311526369212865427
+--- !u!4 &3077051995342385986
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2706970821215592696}
+  m_GameObject: {fileID: 4191161046741582990}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.35}
-  m_LocalScale: {x: 1.0318962, y: 1, z: 0.5690461}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0089754, y: 1.5957662, z: 0.73763275}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4931675093540714723}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!33 &1104865908241417282
+--- !u!33 &6115930494631116935
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2706970821215592696}
-  m_Mesh: {fileID: 4060445413370775677, guid: c39841b667332c643ae3a9cc9e80055d, type: 3}
---- !u!23 &5337891646314058745
+  m_GameObject: {fileID: 4191161046741582990}
+  m_Mesh: {fileID: 4199401309831131938, guid: 0a99d2c7b45da014a9006fc6863e6471, type: 3}
+--- !u!23 &3342288401809426234
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2706970821215592696}
+  m_GameObject: {fileID: 4191161046741582990}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -123,13 +91,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7047770640980174625
+--- !u!114 &6079290286093834462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2706970821215592696}
+  m_GameObject: {fileID: 4191161046741582990}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a94c41ed92ec12647b31f28b3fd6c953, type: 3}
@@ -137,13 +105,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
   instantGameOver: 0
   debrisParticles: {fileID: 1105822864513978609, guid: 89ef7be19e3803b47ab8f7c98e92105d, type: 3}
---- !u!65 &4644265731702386751
+--- !u!65 &7902566405213879066
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2706970821215592696}
+  m_GameObject: {fileID: 4191161046741582990}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -156,5 +124,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 1.4, z: 2.15}
-  m_Center: {x: 0.36822695, y: 0.6124385, z: 0.2926928}
+  m_Size: {x: 1.8, y: 0.7871363, z: 1.8249849}
+  m_Center: {x: 0.2562546, y: 0.39356816, z: 0.019832736}
