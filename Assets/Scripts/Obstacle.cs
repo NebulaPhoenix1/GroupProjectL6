@@ -9,8 +9,8 @@ public class Obstacle : MonoBehaviour
     [SerializeField] private GameObject debrisParticles;
     private GameMaster gameMaster;
 
-    public ScreenShake camShake;
-
+    private ScreenShake screenShake;
+    
     private void Awake()
     {
         gameMaster = FindFirstObjectByType<GameMaster>();
@@ -20,11 +20,12 @@ public class Obstacle : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Collided");
+        //Hit player 
         if(collision.gameObject.CompareTag("Player"))
         {
+            //PLayer isn't dashing; trigger game over/stumble
             if (!playerMovement.GetIsPlayerDashing())
             {
-                //Notify player of collision
                 if (instantGameOver)
                 {
                     collision.gameObject.GetComponent<PlayerMovement>().AttemptStumble();
@@ -48,7 +49,8 @@ public class Obstacle : MonoBehaviour
                 gameMaster.AwardDashDestructionBonus();
             }
         }
-        else if(collision.gameObject.CompareTag("Obstacle"))
+        //Hit another obstacle somehow
+        else if (collision.gameObject.CompareTag("Obstacle"))
         {
             //Debug.LogWarning("Obstacle collided with another obstacle, or potentially itself?");
             ObstacleSpawner.ReturnObjectToPool(collision.gameObject);
@@ -59,19 +61,6 @@ public class Obstacle : MonoBehaviour
         }
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (hit.gameObject.CompareTag("Obstacle"))
-        {
-            //determine direction based on if the obstical is left or right
-            Vector3 hitDirection = (transform.position - hit.point).normalized;
-            Vector3 shakeDir = new Vector3(hitDirection.x, 0, 0);
-
-            //trigger shake
-            camShake.TriggerShake(shakeDir);
-
-        }
-    }
     private void RemoveObject()
     {
         ObstacleSpawner.ReturnObjectToPool(this.gameObject);

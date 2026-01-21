@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition.Attributes;
 
 public class ScreenShake : MonoBehaviour
 {
@@ -11,13 +12,15 @@ public class ScreenShake : MonoBehaviour
     //How far the camera moves during the shake
     public float shakeMagnitude = 0.5f;
 
+    [SerializeField] private bool startShake;
+
     //controls the shape of the shake
     public AnimationCurve dampingCurve = new AnimationCurve
-        (
-            new Keyframe(0,0), //start at the center
-            new Keyframe(0.5f, 1), //peak at half duration
-            new Keyframe(1, 0) //end at the center smoothly
-        );
+    (
+        new Keyframe(0,0), //start at the center
+        new Keyframe(0.5f, 1), //peak at half duration
+        new Keyframe(1, 0) //end at the center smoothly
+    );
 
     private Vector3 initialPosition;
     private Coroutine currentShakeCoroutine;
@@ -27,6 +30,15 @@ public class ScreenShake : MonoBehaviour
         initialPosition = transform.localPosition;
     }
 
+    //private void Update()
+    //{
+    //    if(startShake)
+    //    {
+    //        TriggerShake(Vector3.right);
+    //        startShake = false;
+    //    }
+    //}
+
     //triggers a screen shake in the speciified direction
     public void TriggerShake(Vector3 direction)
     {
@@ -34,13 +46,20 @@ public class ScreenShake : MonoBehaviour
         if (currentShakeCoroutine != null)
         {
             StopCoroutine(currentShakeCoroutine);
+            transform.localPosition = initialPosition;
         }
 
+        //If not shaking, set init position
+        else
+        {
+            initialPosition = transform.localPosition;
+        }
         currentShakeCoroutine = StartCoroutine(DoShake(direction));
     }
 
     private IEnumerator DoShake(Vector3 direction)
     {
+        Debug.Log("Do Shake Called");
         float elapsed = 0f;
 
         while (elapsed < shakeDuration)

@@ -20,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
     //Please don't hook into Update or other functions in this script for these events.
     //Oh and remember to assign functions in inspector/through script :)
     [Header("Events")]
-    public ScreenShake camShake; //Reference to the camera shake script to trigger shakes on stumble
     public UnityEvent OnStumble; //Called when the player hits into a wall but does not die
     public UnityEvent OnRecover; //Called when the player has recovered from a stumble and is back to normal
     public UnityEvent OnLaneChange; //Called when the player successfully changes lanes
@@ -39,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerDashAndDisplay dashAndDisplay;
     [SerializeField] private TutorialStateManager tutorialStateManager;
     [SerializeField] private TutorialButtons tutorialButtons;
+    [SerializeField] private CinemachineImpulseSource cinemachineImpulse; //Reference to the camera shake script to trigger shakes on stumble
     private GameMaster gameMaster;
     private LevelSpawner levelSpawner;
     private Rigidbody playerRigidbody;
@@ -120,19 +120,19 @@ public class PlayerMovement : MonoBehaviour
         HandleTimers();
         HandleInputs();
     }
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (hit.gameObject.CompareTag("Obstacle"))
-        {
-            //determine direction based on if the obstical is left or right
-            Vector3 hitDirection = (transform.position - hit.point).normalized;
-            Vector3 shakeDir = new Vector3(hitDirection.x, 0, 0);
+    //private void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+    //    if (hit.gameObject.CompareTag("Obstacle"))
+    //    {
+    //        //determine direction based on if the obstical is left or right
+    //        Vector3 hitDirection = (transform.position - hit.point).normalized;
+    //        Vector3 shakeDir = new Vector3(hitDirection.x, 0, 0);
 
-            //trigger shake
-            camShake.TriggerShake(shakeDir);
+    //        //trigger shake
+    //        camShake.TriggerShake(shakeDir);
 
-        }
-    }
+    //    }
+    //}
     private void HandleTimers()
     {
         //Lane switch and jump delay timers
@@ -192,7 +192,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if(currentLane == Lanes.Center) { finalTargetLane = Lanes.Left;}
             else if(currentLane == Lanes.Right) { finalTargetLane = Lanes.Center;}
-            else { AttemptStumble(); return;}
+            else{ AttemptStumble(); return;}
         }
         else
         {
@@ -307,27 +307,12 @@ public class PlayerMovement : MonoBehaviour
     private void StartStumble()
     {
         isStumbling = true;
+        TriggerShake();
         currentStumbleInvincibilityTime = stumbleInvincibilityTime;
         currentStumbleTimer = stumbleRecoverTime;
         //Debug.Log("Player Stumbled");
         OnStumble.Invoke();
     }
-
-    //private void StartStumble()
-    //{
-    //    isStumbling = true;
-    //    currentStumbleInvincibilityTime = stumbleInvincibilityTime;
-    //    currentStumbleTimer = stumbleRecoverTime;
-
-    //    //trigger camera shake
-    //    if (impulseSource != null)
-    //    {
-    //        impulseSource.GenerateImpulse();
-    //    }
-
-    //    Debug.Log("Player Stumbled");
-    //    OnStumble.Invoke();
-    //}
 
     private void RecoverFromStumble()
     {
@@ -339,11 +324,20 @@ public class PlayerMovement : MonoBehaviour
 
     public void TriggerGameOver()
     {
+        TriggerShake();
         isGameOver = true;
         Debug.Log("Game Over");
         OnGameOver.Invoke();
         playerRigidbody.isKinematic = true; //Stop all player movement
     }
+
+    //Have the camera shake up when stumbling
+    private void TriggerShake()
+    {
+        Debug.Log("Camera Shake Triggered");
+        cinemachineImpulse.GenerateImpulse();
+    }
+
     public void InitialiseControlScheme()
     {
         if (PlayerPrefs.HasKey("ControlSchemeKey"))
