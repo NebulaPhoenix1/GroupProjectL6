@@ -1,8 +1,10 @@
 using System.Collections;
 using NUnit.Framework;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
@@ -18,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     //Please don't hook into Update or other functions in this script for these events.
     //Oh and remember to assign functions in inspector/through script :)
     [Header("Events")]
+    public ScreenShake camShake; //Reference to the camera shake script to trigger shakes on stumble
     public UnityEvent OnStumble; //Called when the player hits into a wall but does not die
     public UnityEvent OnRecover; //Called when the player has recovered from a stumble and is back to normal
     public UnityEvent OnLaneChange; //Called when the player successfully changes lanes
@@ -56,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayers;
 
     //States
+    //private CinemachineImpulseSource impulseSource;
     private Lanes currentLane = Lanes.Center;
     private float currentJumpDelay;
     private float currentStumbleInvincibilityTime;
@@ -82,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //impulseSource = GetComponent<CinemachineImpulseSource>();
         gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
         levelSpawner = GameObject.Find("Level Spawner").GetComponent<LevelSpawner>();
         playerRigidbody = GetComponent<Rigidbody>();
@@ -109,13 +114,25 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameMaster != null && !gameMaster.GetGameplayState()){ return; }
-        if(isGameOver) { return; }
+        if (gameMaster != null && !gameMaster.GetGameplayState()) { return; }
+        if (isGameOver) { return; }
 
         HandleTimers();
         HandleInputs();
     }
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Obstacle"))
+        {
+            //determine direction based on if the obstical is left or right
+            Vector3 hitDirection = (transform.position - hit.point).normalized;
+            Vector3 shakeDir = new Vector3(hitDirection.x, 0, 0);
 
+            //trigger shake
+            camShake.TriggerShake(shakeDir);
+
+        }
+    }
     private void HandleTimers()
     {
         //Lane switch and jump delay timers
@@ -137,7 +154,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
     private void HandleInputs()
     {
         //Lane switch
@@ -296,6 +312,22 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("Player Stumbled");
         OnStumble.Invoke();
     }
+
+    //private void StartStumble()
+    //{
+    //    isStumbling = true;
+    //    currentStumbleInvincibilityTime = stumbleInvincibilityTime;
+    //    currentStumbleTimer = stumbleRecoverTime;
+
+    //    //trigger camera shake
+    //    if (impulseSource != null)
+    //    {
+    //        impulseSource.GenerateImpulse();
+    //    }
+
+    //    Debug.Log("Player Stumbled");
+    //    OnStumble.Invoke();
+    //}
 
     private void RecoverFromStumble()
     {

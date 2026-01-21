@@ -1124,7 +1124,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1280,7 +1280,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2370,7 +2370,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -6362,7 +6362,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -7036,7 +7036,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -12887,6 +12887,58 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!20 &1159606598 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4294904808366297304, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+  m_PrefabInstance: {fileID: 8702455018720419479}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1159606599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159606589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc72729ecf65db547a9a44661f71fad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreanShake
+  shakeDuration: 1
+  shakeMagnitude: 0.5
+  dampingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1159641314
 GameObject:
   m_ObjectHideFlags: 0
@@ -14660,7 +14712,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -16049,7 +16101,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -19587,6 +19639,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: camShake
+      value: 
+      objectReference: {fileID: 1159606599}
+    - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: jumpForce
       value: 6
       objectReference: {fileID: 0}
@@ -19664,7 +19720,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: OnStumble.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1145757927904071915, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: OnGameOver.m_PersistentCalls.m_Calls.Array.size
@@ -20206,6 +20262,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8483544491357984921, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1159606598}
     - target: {fileID: 8580915576106201895, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       propertyPath: m_TagString
       value: Player
@@ -20239,6 +20299,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6387864303873530698, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1159606595}
+    - targetCorrespondingSourceObject: {fileID: 6387864303873530698, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1159606599}
   m_SourcePrefab: {fileID: 100100000, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

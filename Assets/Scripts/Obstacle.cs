@@ -9,6 +9,8 @@ public class Obstacle : MonoBehaviour
     [SerializeField] private GameObject debrisParticles;
     private GameMaster gameMaster;
 
+    public ScreenShake camShake;
+
     private void Awake()
     {
         gameMaster = FindFirstObjectByType<GameMaster>();
@@ -57,6 +59,19 @@ public class Obstacle : MonoBehaviour
         }
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Obstacle"))
+        {
+            //determine direction based on if the obstical is left or right
+            Vector3 hitDirection = (transform.position - hit.point).normalized;
+            Vector3 shakeDir = new Vector3(hitDirection.x, 0, 0);
+
+            //trigger shake
+            camShake.TriggerShake(shakeDir);
+
+        }
+    }
     private void RemoveObject()
     {
         ObstacleSpawner.ReturnObjectToPool(this.gameObject);
