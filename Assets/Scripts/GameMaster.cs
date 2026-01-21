@@ -44,7 +44,6 @@ public class GameMaster : MonoBehaviour
     private float currentDashMultiplier = 1f;
     private float scoreMultiplier;
     [SerializeField] private UpgradeSciptableItem dashDestructionBonusUpgrade;
-    [SerializeField] private int DashDestructionBonusAmount = 5;
     [SerializeField] private UpgradeManager upgradeManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -226,11 +225,13 @@ public class GameMaster : MonoBehaviour
 
     public void AwardDashDestructionBonus()
     {
-        //Check we have the upgrade (level is greater than 0)
-        if (upgradeManager.GetUpgradeCurrentLevel(dashDestructionBonusUpgrade.upgradeID) > 0)
-        {
-            rawScore += DashDestructionBonusAmount;
-        }
+        int dashDestructionUpgradeLevel = upgradeManager.GetUpgradeCurrentLevel(dashDestructionBonusUpgrade.upgradeID);
+        //Upgrade not owned, return
+        if(dashDestructionUpgradeLevel == 0) { return; }
+        //Else, its owned and get the upgrade value for that level
+        float dashDestructionBonus = dashDestructionBonusUpgrade.GetValueForLevel(dashDestructionUpgradeLevel);
+        Debug.Log("Dash destruction bonus: " + dashDestructionBonus.ToString());
+        rawScore += dashDestructionBonus;
         return;
     }
 }

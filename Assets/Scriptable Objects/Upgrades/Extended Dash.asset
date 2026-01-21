@@ -19,3 +19,12 @@ MonoBehaviour:
   - levelDescription: Makes the dash duration longer
     cost: 300
     upgradeValue: 2
+  - levelDescription: Increases dash duration
+    cost: 600
+    upgradeValue: 3
+  - levelDescription: 'Futher increases dash duration '
+    cost: 900
+    upgradeValue: 4
+  - levelDescription: Increases dash duration to the maximum
+    cost: 900
+    upgradeValue: 5

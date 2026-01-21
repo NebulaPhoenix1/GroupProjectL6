@@ -5,10 +5,8 @@ public class CoinSpawnPoint : MonoBehaviour
 {
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private GameObject activeCoin;
-
     private Vector3 initialLocalPosition;
     private bool positionCaptured = false;
-    
     // References
     private UpgradeManager upgradeManager;
     private GameMaster gameMaster;
@@ -16,8 +14,9 @@ public class CoinSpawnPoint : MonoBehaviour
     [Header("Powerups")]
     [SerializeField] private UpgradeSciptableItem magnetUpgrade;
     [SerializeField] private GameObject magnetPrefab;
-    [Range(0, 1)] [SerializeField] private float magnetSpawnChance = 0.005f; 
+
     private bool spawnMagnets = false;
+    private float magnetSpawnRate;
 
     void Awake()
     {
@@ -40,9 +39,12 @@ public class CoinSpawnPoint : MonoBehaviour
         GameObject gameMaster = GameObject.Find("Game Master");
         if (gameMaster) this.gameMaster = gameMaster.GetComponent<GameMaster>();
 
-        if (this.upgradeManager && this.upgradeManager.GetUpgradeCurrentLevel(magnetUpgrade.upgradeID) > 0) //If level is greater than 0, upgrade is owned
+
+        int currentMagnetSpawnLevel = this.upgradeManager.GetUpgradeCurrentLevel(magnetUpgrade.upgradeID);
+        if (this.upgradeManager && currentMagnetSpawnLevel > 0) //If level is greater than 0, upgrade is owned
         {
             spawnMagnets = true;
+            magnetSpawnRate = magnetUpgrade.GetValueForLevel(currentMagnetSpawnLevel);
         }
     }
 
@@ -89,7 +91,7 @@ public class CoinSpawnPoint : MonoBehaviour
         }
 
         //Spawning Logic in case no coin exists at the moment
-        if (spawnMagnets && UnityEngine.Random.value < magnetSpawnChance && magnetPrefab != null)
+        if (spawnMagnets && UnityEngine.Random.value < magnetSpawnRate && magnetPrefab != null)
         {
             activeCoin = Instantiate(magnetPrefab, transform);
             activeCoin.transform.localPosition = initialLocalPosition;

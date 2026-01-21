@@ -25,4 +25,13 @@ public class UpgradeSciptableItem : ScriptableObject
 
     [Tooltip("Add 1 element for single level upgrades or add multiple for multi level upgrades")]
     public LevelDefinition[] levelDefinitions;
+
+    public float GetValueForLevel(int currentOwnedLevel)
+    {
+        //Own nothing
+        if (currentOwnedLevel <= 0) return 0f; 
+        //Clamp to max level to prevent errors if we request a level higher than exists
+        int index = Mathf.Clamp(currentOwnedLevel - 1, 0, levelDefinitions.Length - 1);
+        return levelDefinitions[index].upgradeValue;
+    }
 }

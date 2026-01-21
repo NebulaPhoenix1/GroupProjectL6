@@ -28,8 +28,6 @@ public class PlayerDashAndDisplay : MonoBehaviour
 
     //Dash upgrade variables
     [SerializeField] private UpgradeSciptableItem dashDurationUpgrade; //Increases dash time
-    [Tooltip("How many extra seconds the dash lasts with the upgrade")]
-    [SerializeField] private float extendedDashDuration;
     [SerializeField] private UpgradeSciptableItem dashCostUpgrade; //Reduces number of coins used per dash
     [Tooltip("How many fewer coins the dash costs with the upgrade")]
     [SerializeField] private int reducedDashCost;
@@ -61,10 +59,12 @@ public class PlayerDashAndDisplay : MonoBehaviour
     {
         //Check if we own upgrades and set values accordingly
         upgradeManager = GameObject.Find("Upgrades Manager").GetComponent<UpgradeManager>();
-        if (upgradeManager.GetUpgradeCurrentLevel(dashDurationUpgrade.upgradeID) > 0) //If level is greater than 0, we own the upgrade
+        int durationLevel = upgradeManager.GetUpgradeCurrentLevel(dashDurationUpgrade.upgradeID);
+        if (durationLevel > 0) //If level is greater than 0, we own the upgrade
         {
             hasDashDurationUpgrade = true;
-            dashDuration += extendedDashDuration;
+            float extendDurationAmount = dashDurationUpgrade.GetValueForLevel(durationLevel);
+            dashDuration += extendDurationAmount;
         }
         if (upgradeManager.GetUpgradeCurrentLevel(dashCostUpgrade.upgradeID) > 0) //If level is greater than 0, we own the upgrade
         {

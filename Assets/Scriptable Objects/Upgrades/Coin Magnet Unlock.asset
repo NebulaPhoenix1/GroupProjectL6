@@ -17,5 +17,14 @@ MonoBehaviour:
   upgradeIcon: {fileID: 0}
   levelDefinitions:
   - levelDescription: Unlocks Coin Magnets Spawning
-    cost: 300
-    upgradeValue: 1
+    cost: 250
+    upgradeValue: 0.005
+  - levelDescription: Increases chance of a magnet spawning
+    cost: 500
+    upgradeValue: 0.01
+  - levelDescription: Further chance of a magnet spawning
+    cost: 750
+    upgradeValue: 0.015
+  - levelDescription: Increases chance of magnet spawning to the maximum
+    cost: 1000
+    upgradeValue: 0.02

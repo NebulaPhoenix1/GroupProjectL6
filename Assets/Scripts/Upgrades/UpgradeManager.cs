@@ -64,7 +64,7 @@ public class UpgradeManager : MonoBehaviour
     {
         return upgradeLevels.ContainsKey(id) ? upgradeLevels[id] : 0;
     }
-    
+
     public void PurchaseUpgrade(UpgradeSciptableItem upgrade, System.Action onSuccess)
     {
         int currentLv = GetUpgradeCurrentLevel(upgrade.upgradeID);
