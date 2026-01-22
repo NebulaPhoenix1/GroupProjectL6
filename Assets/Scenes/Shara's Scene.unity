@@ -365,6 +365,7 @@ MonoBehaviour:
   volumeSlider: {fileID: 585900561}
   musicSlider: {fileID: 790769365}
   volumeDisplayText: {fileID: 585900560}
+  musicDisplayText: {fileID: 0}
   qualityOptions: {fileID: 585900559}
   windowToggle: {fileID: 585900558}
   resetToggle: {fileID: 585900557}
@@ -396,28 +397,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1716775985845467871, guid: 92fe787665398460c93f490b205ff7c8, type: 3}
   m_PrefabInstance: {fileID: 8702455018720419479}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &45256261 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4163890331602685186, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
-  m_PrefabInstance: {fileID: 1220822104}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
---- !u!114 &106567082 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4163890331602685186, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
-  m_PrefabInstance: {fileID: 120553076}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &110592661
 GameObject:
   m_ObjectHideFlags: 0
@@ -2507,7 +2486,6 @@ MonoBehaviour:
   canDash: 0
   dashDuration: 6
   dashDurationUpgrade: {fileID: 11400000, guid: 8f4c88367edcb45f6b6a8b038e380271, type: 2}
-  extendedDashDuration: 2
   dashCostUpgrade: {fileID: 11400000, guid: 9e7496930e26c4677847ce7597f685ed, type: 2}
   reducedDashCost: 5
   fillSpeed: 5
@@ -2626,7 +2604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineSplineDolly
   m_SplineSettings:
-    Spline: {fileID: 1161848749}
+    Spline: {fileID: 0}
     Position: 0
     Units: 1
   SplineOffset: {x: 0, y: 0, z: 0}
@@ -3127,17 +3105,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544129922}
   m_CullTransparentMesh: 1
---- !u!114 &545243719 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4163890331602685186, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
-  m_PrefabInstance: {fileID: 1812291508}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &582435928
 GameObject:
   m_ObjectHideFlags: 0
@@ -5666,6 +5633,7 @@ MonoBehaviour:
   fadeOutDuration: 2.5
   tutorialStateManager: {fileID: 1771808299}
   playerMovement: {fileID: 1803198818}
+  gameplayUIFading: {fileID: 0}
 --- !u!1 &835173382
 GameObject:
   m_ObjectHideFlags: 0
@@ -12468,11 +12436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827c79b0de33a4c3abb5857fc7489228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeManager
-  upgradeButtons:
-  - {fileID: 45256261}
-  - {fileID: 545243719}
-  - {fileID: 1542109322}
-  - {fileID: 106567082}
   gameMaster: {fileID: 1771808296}
   allUpgrades:
   - {fileID: 11400000, guid: 9e7496930e26c4677847ce7597f685ed, type: 2}
@@ -13061,212 +13024,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1159641314}
   m_CullTransparentMesh: 1
---- !u!1 &1161848747
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1161848750}
-  - component: {fileID: 1161848749}
-  - component: {fileID: 1161848748}
-  m_Layer: 0
-  m_Name: Dolly Spline (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1161848748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1161848747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5342500578afb24a9b83d6343d32a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineSplineSmoother
-  AutoSmooth: 1
---- !u!114 &1161848749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1161848747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineContainer
-  m_Spline:
-    m_EditModeType: 1
-    m_Knots: []
-    m_MetaData: []
-    m_Closed: 0
-    m_IntData:
-      m_Data: []
-    m_FloatData:
-      m_Data: []
-    m_Float4Data:
-      m_Data: []
-    m_ObjectData:
-      m_Data: []
-  m_Splines:
-  - m_EditModeType: 1
-    m_Knots:
-    - Position:
-        x: 0
-        y: 0
-        z: 0
-      TangentIn:
-        x: 0
-        y: 0
-        z: -1.3365645
-      TangentOut:
-        x: 0
-        y: 0
-        z: 1.3365645
-      Rotation:
-        value:
-          x: -0.22619277
-          y: 0.6070561
-          z: -0.18189304
-          w: 0.7397531
-    - Position:
-        x: 6
-        y: 0.8
-        z: 0
-      TangentIn:
-        x: 0
-        y: 0
-        z: -1.1616279
-      TangentOut:
-        x: 0
-        y: 0
-        z: 1.1616279
-      Rotation:
-        value:
-          x: 0.036557805
-          y: 0.93183994
-          z: 0.10204961
-          w: 0.3463001
-    - Position:
-        x: 4.5
-        y: 1.2
-        z: -4.79
-      TangentIn:
-        x: 0
-        y: 0
-        z: -2.1289358
-      TangentOut:
-        x: 0
-        y: 0
-        z: 2.1289358
-      Rotation:
-        value:
-          x: 0.0011348516
-          y: 0.9586543
-          z: 0.03143949
-          w: -0.28282875
-    - Position:
-        x: 1
-        y: 1.7
-        z: -8.94
-      TangentIn:
-        x: 0
-        y: 0
-        z: -1.4935133
-      TangentOut:
-        x: 0
-        y: 0
-        z: 1.4935133
-      Rotation:
-        value:
-          x: -0.0148417
-          y: 0.9033455
-          z: 0.07722944
-          w: -0.42164227
-    - Position:
-        x: -2
-        y: 2.24
-        z: -10.35
-      TangentIn:
-        x: 0
-        y: 0
-        z: -0.79566485
-      TangentOut:
-        x: 0
-        y: 0
-        z: 0.79566485
-      Rotation:
-        value:
-          x: -0.06826062
-          y: -0.70257103
-          z: -0.06700909
-          w: 0.70515543
-    - Position:
-        x: -3.75
-        y: 2.6
-        z: -9.4
-      TangentIn:
-        x: 0
-        y: 0
-        z: -0
-      TangentOut:
-        x: 0
-        y: 0
-        z: 0
-      Rotation:
-        value:
-          x: 0.0145420665
-          y: -2.4189198e-10
-          z: -0.27075046
-          w: 0.96253973
-    m_MetaData:
-    - Mode: 2
-      Tension: 0.5
-    - Mode: 2
-      Tension: 0.5
-    - Mode: 2
-      Tension: 0.5
-    - Mode: 2
-      Tension: 0.5
-    - Mode: 2
-      Tension: 0.5
-    - Mode: 2
-      Tension: 0.5
-    m_Closed: 0
-    m_IntData:
-      m_Data: []
-    m_FloatData:
-      m_Data: []
-    m_Float4Data:
-      m_Data: []
-    m_ObjectData:
-      m_Data: []
-  m_Knots:
-    m_KnotsLink: []
---- !u!4 &1161848750
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1161848747}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.0018984256, y: -0.18768728, z: 0.009934556, w: 0.9821768}
-  m_LocalPosition: {x: 0.08, y: 2.632, z: 2.016}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -21.637, z: 1.159}
 --- !u!1 &1189694959
 GameObject:
   m_ObjectHideFlags: 0
@@ -15927,17 +15684,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9204150088369163622, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
   m_PrefabInstance: {fileID: 1525262510}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1542109322 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4163890331602685186, guid: a197ebf32452c4f55985ec0b7db5ee18, type: 3}
-  m_PrefabInstance: {fileID: 1525262510}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1561792097
 GameObject:
   m_ObjectHideFlags: 0
@@ -20368,7 +20114,6 @@ SceneRoots:
   - {fileID: 601959599}
   - {fileID: 6090959349941962741}
   - {fileID: 485647179}
-  - {fileID: 1161848750}
   - {fileID: 1054363362}
   - {fileID: 2153721136234904144}
   - {fileID: 1481925386}
