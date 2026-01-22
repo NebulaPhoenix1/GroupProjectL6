@@ -133,6 +133,7 @@ public class SettingsMenu : MonoBehaviour
 
     public void ChangeResolution(int displayResolutionIndex)
     {
+        currentFullScreenMode = Screen.fullScreenMode;
         displayResolutionIndex = qualityOptions.value;
         Screen.SetResolution(resolutionsX[displayResolutionIndex], resolutionsY[displayResolutionIndex], currentFullScreenMode);
         PlayerPrefs.SetString("Resolution", displayResolutions[displayResolutionIndex]);
@@ -157,6 +158,13 @@ public class SettingsMenu : MonoBehaviour
             currentFullScreenMode = FullScreenMode.FullScreenWindow;
             windowDisplayText.text = "Fullscreen";
             Debug.Log("Set as fullscreen");
+        }
+        else
+        {
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+            currentFullScreenMode = FullScreenMode.Windowed;
+            windowDisplayText.text = "Windowed";
+            Debug.Log("Set as windowed");
         }
     }
 
@@ -195,10 +203,10 @@ public class SettingsMenu : MonoBehaviour
         }
         else
         {
-            //default to fullscreen settings if fullscreen mode somehow becomes an unintended option (ExclusiveFullScreen or MaximizedWindow settings)
-            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-            currentFullScreenMode = FullScreenMode.FullScreenWindow;
-            windowDisplayText.text = "Fullscreen";
+            //default to windowed settings if fullscreen mode somehow becomes an unintended option (ExclusiveFullScreen or MaximizedWindow settings)
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+            currentFullScreenMode = FullScreenMode.Windowed;
+            windowDisplayText.text = "Windowed";
         }
     }
     public void SetDefaultSettings()
@@ -213,16 +221,16 @@ public class SettingsMenu : MonoBehaviour
 
         musicSlider.value = 0.5f;
 
-        Screen.SetResolution(defaultResolution.width, defaultResolution.height, currentFullScreenMode);
+        //Screen.SetResolution(defaultResolution.width, defaultResolution.height, currentFullScreenMode);
         PlayerPrefs.SetString("Resolution", (defaultResolution.width.ToString() + "x" + defaultResolution.height.ToString()));
         PlayerPrefs.SetInt("ResolutionX", defaultResolution.width);
         PlayerPrefs.SetInt("ResolutionY", defaultResolution.height);
 
         Debug.Log(defaultResolution);
 
-        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-        currentFullScreenMode = FullScreenMode.FullScreenWindow;
-        windowDisplayText.text = "Fullscreen";
+        Screen.fullScreenMode = FullScreenMode.Windowed;
+        currentFullScreenMode = FullScreenMode.Windowed;
+        windowDisplayText.text = "Windowed";
         qualityOptions.value = defaultResolutionIndex;
 
         controlSchemeManagerScript.ResetToDefault();
@@ -232,7 +240,7 @@ public class SettingsMenu : MonoBehaviour
     private void LoadPlayerPrefs()
     {
         volumeSlider.value = PlayerPrefs.GetFloat("Volume");
-        Screen.SetResolution(PlayerPrefs.GetInt("ResolutionX"), PlayerPrefs.GetInt("ReslutionY"), currentFullScreenMode);
+        Screen.SetResolution(PlayerPrefs.GetInt("ResolutionX"), PlayerPrefs.GetInt("ResolutionY"), currentFullScreenMode);
         ChangeVolume(PlayerPrefs.GetFloat("Volume"));
     }
 

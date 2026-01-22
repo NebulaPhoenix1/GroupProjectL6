@@ -3,6 +3,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Leyton script; luke helped fix a bug with first tutorial
+
 public class GameplayUIFading : MonoBehaviour
 {
     [SerializeField] private GameObject[] primaryFade;
@@ -23,7 +25,7 @@ public class GameplayUIFading : MonoBehaviour
 
     public void StartFadeSequence() //called through the editor
     {
-        if (!(hasFadeCompleted && tutorialStateManager.GetIsFirstTutorial())) //stop this fading sequence from happening in the first tutorial
+        if (!hasFadeCompleted && !tutorialStateManager.GetIsFirstTutorial()) //stop this fading sequence from happening in the first tutorial
         {
             //disable player controls during the panning cutscene
             playerMovement.DisableActions(0);

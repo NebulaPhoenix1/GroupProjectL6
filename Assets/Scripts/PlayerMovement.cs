@@ -287,7 +287,7 @@ public class PlayerMovement : MonoBehaviour
     public void AttemptStumble()
     {
         //Don't stumble if invincible, is game over or dashing
-        if(invincibilityTesting || isGameOver || isPlayerDashing)
+        if(invincibilityTesting || isGameOver || isPlayerDashing || tutorialStateManager.GetIsFirstTutorial())
         {
             Debug.Log("Stumble failed");
              return;      

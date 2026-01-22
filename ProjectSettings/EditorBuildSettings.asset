@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Leyton's Scene.unity
     guid: 0855dbfc8f14969479d3835b243bc337
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game Icon.unity
     guid: d84dda66509053c4798e2a977f41b213
   - enabled: 1
