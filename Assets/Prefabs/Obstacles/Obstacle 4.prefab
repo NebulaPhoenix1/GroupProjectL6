@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4931675093540714723}
+  - component: {fileID: 655775145482470786}
   m_Layer: 0
   m_Name: Obstacle 4
   m_TagString: Untagged
@@ -32,6 +33,20 @@ Transform:
   - {fileID: 7311526369212865427}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &655775145482470786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202276436366352147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94c41ed92ec12647b31f28b3fd6c953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Obstacle
+  instantGameOver: 0
+  debrisParticles: {fileID: 1105822864513978609, guid: 89ef7be19e3803b47ab8f7c98e92105d, type: 3}
 --- !u!1 &2706970821215592696
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,10 +58,9 @@ GameObject:
   - component: {fileID: 7311526369212865427}
   - component: {fileID: 1104865908241417282}
   - component: {fileID: 5337891646314058745}
-  - component: {fileID: 7047770640980174625}
   - component: {fileID: 4644265731702386751}
   m_Layer: 0
-  m_Name: Obstacle 4
+  m_Name: Rock
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,20 +137,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7047770640980174625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2706970821215592696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94c41ed92ec12647b31f28b3fd6c953, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Obstacle
-  instantGameOver: 0
-  debrisParticles: {fileID: 1105822864513978609, guid: 89ef7be19e3803b47ab8f7c98e92105d, type: 3}
 --- !u!65 &4644265731702386751
 BoxCollider:
   m_ObjectHideFlags: 0
