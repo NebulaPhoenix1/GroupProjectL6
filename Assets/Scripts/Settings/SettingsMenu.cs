@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using System;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
@@ -25,14 +26,15 @@ public class SettingsMenu : MonoBehaviour
 
     //Serialized all of these instead of setting values in awake 
     //So I can split settings menu from the manager so we can set default values without having to re-open the menu
-    [SerializeField]private TextMeshProUGUI volumeDisplayText;
-    [SerializeField]private TMP_Dropdown qualityOptions;
-    [SerializeField]private Button windowToggle;
-    [SerializeField]private Button resetToggle;
-    [SerializeField]private Button controlsToggle;
-    [SerializeField]private TextMeshProUGUI controlSchemeDisplay;
-    [SerializeField]private ControlSchemeManager controlSchemeManagerScript;
-    [SerializeField]private TextMeshProUGUI windowDisplayText;
+    [SerializeField] private TextMeshProUGUI volumeDisplayText;
+    [SerializeField] private TextMeshProUGUI musicDisplayText;
+    [SerializeField] private TMP_Dropdown qualityOptions;
+    [SerializeField] private Button windowToggle;
+    [SerializeField] private Button resetToggle;
+    [SerializeField] private Button controlsToggle;
+    [SerializeField] private TextMeshProUGUI controlSchemeDisplay;
+    [SerializeField] private ControlSchemeManager controlSchemeManagerScript;
+    [SerializeField] private TextMeshProUGUI windowDisplayText;
 
     void Start()
     {
@@ -81,6 +83,15 @@ public class SettingsMenu : MonoBehaviour
         else
         {
             volumeDisplayText.text = volumeSlider.value.ToString();
+        }
+
+        if(musicSlider.value == 0)
+        {
+            musicDisplayText.text = "X";
+        }
+        else
+        {
+            musicDisplayText.text = Convert.ToInt32(musicSlider.value * 100).ToString();
         }
     }
 
