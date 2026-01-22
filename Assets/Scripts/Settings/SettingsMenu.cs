@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using System;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
@@ -25,31 +26,15 @@ public class SettingsMenu : MonoBehaviour
 
     //Serialized all of these instead of setting values in awake 
     //So I can split settings menu from the manager so we can set default values without having to re-open the menu
-    [SerializeField]private TextMeshProUGUI volumeDisplayText;
-    [SerializeField]private TMP_Dropdown qualityOptions;
-    [SerializeField]private Button windowToggle;
-    [SerializeField]private Button resetToggle;
-    [SerializeField]private Button controlsToggle;
-    [SerializeField]private TextMeshProUGUI controlSchemeDisplay;
-    [SerializeField]private ControlSchemeManager controlSchemeManagerScript;
-    [SerializeField]private TextMeshProUGUI windowDisplayText;
-
-    private void Awake()
-    {
-        //find and assign the components of the settings menu
-        /*
-        olumeSlider = GameObject.Find("VolumeSlider").GetComponent<Slider>();
-        musicSlider = GameObject.Find("Music Slider").GetComponent<Slider>();
-        volumeDisplayText = GameObject.Find("VolumeText").GetComponent<TextMeshProUGUI>();
-        qualityOptions = GameObject.Find("QualityOptions").GetComponent<TMP_Dropdown>();
-        windowToggle = GameObject.Find("WindowButton").GetComponent<Button>();
-        resetToggle = GameObject.Find("ResetToDefaultButton").GetComponent<Button>();
-        controlsToggle = GameObject.Find("ControlSchemeButton").GetComponent<Button>();
-        controlSchemeDisplay = GameObject.Find("ControlSchemeButtonText").GetComponent<TextMeshProUGUI>();
-        controlSchemeManagerScript = GameObject.Find("ControlSchemeManager").GetComponent<ControlSchemeManager>();
-        windowDisplayText = GameObject.Find("WindowText").GetComponent<TextMeshProUGUI>(); 
-        */
-    }
+    [SerializeField] private TextMeshProUGUI volumeDisplayText;
+    [SerializeField] private TextMeshProUGUI musicDisplayText;
+    [SerializeField] private TMP_Dropdown qualityOptions;
+    [SerializeField] private Button windowToggle;
+    [SerializeField] private Button resetToggle;
+    [SerializeField] private Button controlsToggle;
+    [SerializeField] private TextMeshProUGUI controlSchemeDisplay;
+    [SerializeField] private ControlSchemeManager controlSchemeManagerScript;
+    [SerializeField] private TextMeshProUGUI windowDisplayText;
 
     void Start()
     {
@@ -93,11 +78,20 @@ public class SettingsMenu : MonoBehaviour
     {
         if (volumeSlider.value == 0)
         {
-            volumeDisplayText.text = "Master Volume: Muted";
+            volumeDisplayText.text = "X";
         }
         else
         {
-            volumeDisplayText.text = "Master Volume: " + volumeSlider.value.ToString();
+            volumeDisplayText.text = volumeSlider.value.ToString();
+        }
+
+        if(musicSlider.value == 0)
+        {
+            musicDisplayText.text = "X";
+        }
+        else
+        {
+            musicDisplayText.text = Convert.ToInt32(musicSlider.value * 100).ToString();
         }
     }
 

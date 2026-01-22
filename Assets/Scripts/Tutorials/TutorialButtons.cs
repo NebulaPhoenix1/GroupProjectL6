@@ -19,6 +19,7 @@ public class TutorialButtons : MonoBehaviour
 
     [SerializeField] private TutorialStateManager tutorialStateManager;
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private GameplayUIFading gameplayUIFading;
 
     private void OnEnable()
     {
@@ -78,7 +79,7 @@ public class TutorialButtons : MonoBehaviour
                     break;
             }
             UpdateGlyphAlphas();
-            if (!hasFadedOut && this.isActiveAndEnabled)
+        if (gameplayUIFading.GetHasFadeCompleted() && !hasFadedOut && this.isActiveAndEnabled)
             {
                 StartCoroutine(GlyphFade());
             }
@@ -185,5 +186,10 @@ public class TutorialButtons : MonoBehaviour
         hasFadedOut = true; //prevent fade values being accessed again by any coroutines
 
         yield return null;
+    }
+
+    public bool GetHasFadedOut()
+    {
+        return hasFadedOut;
     }
 }
