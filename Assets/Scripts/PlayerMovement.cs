@@ -120,19 +120,7 @@ public class PlayerMovement : MonoBehaviour
         HandleTimers();
         HandleInputs();
     }
-    //private void OnControllerColliderHit(ControllerColliderHit hit)
-    //{
-    //    if (hit.gameObject.CompareTag("Obstacle"))
-    //    {
-    //        //determine direction based on if the obstical is left or right
-    //        Vector3 hitDirection = (transform.position - hit.point).normalized;
-    //        Vector3 shakeDir = new Vector3(hitDirection.x, 0, 0);
-
-    //        //trigger shake
-    //        camShake.TriggerShake(shakeDir);
-
-    //    }
-    //}
+    
     private void HandleTimers()
     {
         //Lane switch and jump delay timers
@@ -329,6 +317,16 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Game Over");
         OnGameOver.Invoke();
         playerRigidbody.isKinematic = true; //Stop all player movement
+    }
+
+    public float GetTotalRecoveryTime()
+    {
+        return stumbleRecoverTime;
+    }
+
+    public float GetCurrentStumblingTime()
+    {
+        return currentStumbleTimer;
     }
 
     //Have the camera shake up when stumbling
