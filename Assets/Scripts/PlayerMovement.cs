@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerDashAndDisplay dashAndDisplay;
     [SerializeField] private TutorialStateManager tutorialStateManager;
     [SerializeField] private TutorialButtons tutorialButtons;
+    [SerializeField] private StumbleRecoveryProgress stumbleRecoveryProgress;
     [SerializeField] private CinemachineImpulseSource cinemachineImpulse; //Reference to the camera shake script to trigger shakes on stumble
     private GameMaster gameMaster;
     private LevelSpawner levelSpawner;
@@ -46,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float jumpForce;
+    [SerializeField] private float fallMultiplier = 2.5f;
     [SerializeField] private float laneWidth = 2f;
     [SerializeField] private float nextInputDelay = 3f; //Time delay between lane switch inputs
     [SerializeField] private float jumpInputDelay = 1.0f;
@@ -70,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
     private RigidbodyConstraints unlockedX = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
 
     private bool isStumbling = false;
+    private bool isJumping = false;
     private bool isGameOver = false;
 
     //Stumble Values
@@ -141,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 RecoverFromStumble();
             }
+            stumbleRecoveryProgress.OnRecoveryTick();
         }
     }
     private void HandleInputs()
@@ -156,6 +160,12 @@ public class PlayerMovement : MonoBehaviour
         if(jumpAction.WasPressedThisFrame() && currentJumpDelay <= 0f && GroundCheck())
         {
            PerformJump();
+        }
+        //Reset jump state if grounded
+        if(GroundCheck() && isJumping && playerRigidbody.linearVelocity.y <= -0.1f) { isJumping = false; }
+        if(!GroundCheck() && isJumping)
+        {
+            AlterJumpVelocity();
         }
         //Dash
         if(dashAction.WasPressedThisFrame() && dashAndDisplay.canDash && !isPlayerDashing)
@@ -260,6 +270,15 @@ public class PlayerMovement : MonoBehaviour
         OnJump.Invoke();
     }
 
+    private void AlterJumpVelocity()
+    {
+        if(playerRigidbody.linearVelocity.y < 0)
+        {
+            Vector3 gravityForce = Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            playerRigidbody.linearVelocity += gravityForce;
+        }
+    }
+
     private bool GroundCheck()
     {
         return Physics.Raycast(groundCheckTransform.position, Vector3.down, groundCheckRayCastDistance, groundLayers);
@@ -299,6 +318,7 @@ public class PlayerMovement : MonoBehaviour
         TriggerShake();
         currentStumbleInvincibilityTime = stumbleInvincibilityTime;
         currentStumbleTimer = stumbleRecoverTime;
+        stumbleRecoveryProgress.OnRecoveryStart();
         //Debug.Log("Player Stumbled");
         OnStumble.Invoke();
     }
@@ -308,6 +328,7 @@ public class PlayerMovement : MonoBehaviour
         if(isGameOver) { return; }
         isStumbling = false;
         Debug.Log("Recovered from stumble");
+        stumbleRecoveryProgress.OnRecoveryEnd();
         OnRecover.Invoke();
     }
 
