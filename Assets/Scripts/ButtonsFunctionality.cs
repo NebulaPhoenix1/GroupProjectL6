@@ -5,7 +5,7 @@ public class ButtonsFunctionality : MonoBehaviour
     // Play game button
     public void PlayGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Shara's Scene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Main Game");
     }
 
     // Quit game button

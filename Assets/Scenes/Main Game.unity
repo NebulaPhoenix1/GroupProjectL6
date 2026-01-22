@@ -738,15 +738,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6633145447301355032, guid: 233392913bf0be54eae74b6b6cfb544f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6633145447301355032, guid: 233392913bf0be54eae74b6b6cfb544f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6633145447301355032, guid: 233392913bf0be54eae74b6b6cfb544f, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6633145447301355032, guid: 233392913bf0be54eae74b6b6cfb544f, type: 3}
       propertyPath: m_SizeDelta.x
@@ -850,11 +850,11 @@ PrefabInstance:
       objectReference: {fileID: -1209543367512752428, guid: efcf3187a15ec704eaf45f80716a8f11, type: 3}
     - target: {fileID: 7842752670716371801, guid: 233392913bf0be54eae74b6b6cfb544f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7842752670716371801, guid: 233392913bf0be54eae74b6b6cfb544f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7842752670716371801, guid: 233392913bf0be54eae74b6b6cfb544f, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2532,7 +2532,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 834271958}
+      - m_Target: {fileID: 1937449957}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -3582,7 +3582,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.90588236, g: 0.81960785, b: 0.11372549, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3882,7 +3882,7 @@ RectTransform:
   m_Father: {fileID: 1011324478}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 5.399994, y: 0}
   m_SizeDelta: {x: 0.0057, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4979,7 +4979,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &726064601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5656,7 +5656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a65cbd5e3f40a9548b908896ea69727e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  volumeSlider: {fileID: 0}
+  volumeSlider: {fileID: 202500901}
   volumeAudio: []
   volumeAudios: {fileID: 2026846009}
 --- !u!114 &859332154
@@ -6925,6 +6925,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1771808299}
         m_TargetAssemblyTypeName: TutorialStateManager, Assembly-CSharp
         m_MethodName: SetFirstTutorialSequence
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 834271968}
+        m_TargetAssemblyTypeName: GameplayUIFading, Assembly-CSharp
+        m_MethodName: StartFadeSequence
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18960,7 +18972,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.90588236, g: 0.81960785, b: 0.11372549, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -19066,7 +19078,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1937449958
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19457,7 +19469,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 47d7344fb890ecd4295a211cf36ec268, type: 3}
+  m_Resource: {fileID: 8300000, guid: 939f74cdfc02b06408c5fc7b7255778d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
@@ -19669,8 +19681,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1622370904}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -0.33999634, y: -27.600002}
   m_SizeDelta: {x: 48, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20106,7 +20118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: menuInitialSegmentCount
-      value: 4
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: 'levelPrefabs.Array.data[0]'
@@ -20146,7 +20158,7 @@ PrefabInstance:
       objectReference: {fileID: 9098834875976951334, guid: 1bab17ab37635c04b96fe8d4d3dd7177, type: 3}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: additionalInitialSegmentCount
-      value: 11
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2229341482224022280, guid: bcf8850a958ac419e82fb3ae8726cbd0, type: 3}
       propertyPath: tutorialLevelPrefabs.Array.size
