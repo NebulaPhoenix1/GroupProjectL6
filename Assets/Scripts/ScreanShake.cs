@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition.Attributes;
-
+//Shara script
 public class ScreenShake : MonoBehaviour
 {
     [Header("Shake Settings")]

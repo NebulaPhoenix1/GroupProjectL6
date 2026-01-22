@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;  
-
+//Shara script
 public class Magnet : MonoBehaviour
 {
 

@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
+//Shara script
 public class MenuHighScore : MonoBehaviour
 { 
     [SerializeField] private TMP_Text highScoreText;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
-
+//Leyton and Luke script
 public class CollectibleDisplay : MonoBehaviour
 {
     private bool enableCoinDisplay;

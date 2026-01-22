@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Shara script
 public class AudioPlayer : MonoBehaviour
 {
     private static readonly string VolumePref = "VolumePref";

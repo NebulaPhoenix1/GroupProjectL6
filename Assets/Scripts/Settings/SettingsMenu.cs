@@ -5,7 +5,7 @@ using TMPro;
 using System;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-
+//Mainly a Leyton script, Luke helped fix a few bugs
 public class SettingsMenu : MonoBehaviour
 {
     //declare the values used for the components

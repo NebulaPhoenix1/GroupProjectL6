@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Events;
 
+//Luke and Shara script
 public class ScreenFading : MonoBehaviour
 {
     public UnityEvent onFadeComplete;

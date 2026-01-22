@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Leyton script
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseButton;

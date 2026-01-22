@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-
+//Shara script
 public class Music : MonoBehaviour
 {
     private static readonly string FirstPlay = "FirstPlay";

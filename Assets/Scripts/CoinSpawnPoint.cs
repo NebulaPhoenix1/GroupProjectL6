@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-
+//Luke script
 public class CoinSpawnPoint : MonoBehaviour
 {
     [SerializeField] private GameObject coinPrefab;

@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-
+//Shara script; leyton added a few things later on
 public class EndGameDisplay : MonoBehaviour
 {
     [SerializeField] private TMP_Text lastScoreText;

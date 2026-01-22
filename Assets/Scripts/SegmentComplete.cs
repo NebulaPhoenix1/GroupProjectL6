@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Events;
-
+//Luke script 
 public class SegmentComplete : MonoBehaviour
 {
     public UnityEvent CompletedSegment; //This unity event is invoked when the segment is completed
@@ -13,7 +13,6 @@ public class SegmentComplete : MonoBehaviour
     {
 
     }
-    
     public void OnTriggerEnter(Collider other)
     {
         if(!isCompleted)

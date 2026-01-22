@@ -1,5 +1,5 @@
 using UnityEngine;
-
+//Shara script
 public class ButtonsFunctionality : MonoBehaviour
 {
     // Play game button

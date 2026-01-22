@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-
+//Luke, Shara and Leyton script
 public class ScoreText : MonoBehaviour
 {
     [SerializeField] private TMP_Text scoreText;

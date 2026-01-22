@@ -1,5 +1,5 @@
 using UnityEngine;
-
+//Luke script, Leyton added audio logic
 public class CoinCollection : MonoBehaviour
 {
     [SerializeField] private GameMaster gameMaster;

@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
-
+//Leyton script, tweaked by Luke to make bars smoothly fill/deplete and for tutorial values
 public class PlayerDashAndDisplay : MonoBehaviour
 {
     [SerializeField]private TutorialStateManager tutorialManager;

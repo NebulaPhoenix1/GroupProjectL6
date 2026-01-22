@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem;
-
+//Luke script, Leyton added tutorial and dash logic, Shara did screen shake
+//The original version of this script was done by me and everyone tweaked it
 public class PlayerMovement : MonoBehaviour
 {
     enum Lanes

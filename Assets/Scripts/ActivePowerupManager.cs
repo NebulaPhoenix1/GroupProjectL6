@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Luke script
+
 //This script will sit on any object which can collect a powerup (player)
 //It will have some kind of data structure with every powerup name with a duration as the 2nd value
 public class ActivePowerupManager : MonoBehaviour
