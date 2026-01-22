@@ -34,23 +34,6 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField]private ControlSchemeManager controlSchemeManagerScript;
     [SerializeField]private TextMeshProUGUI windowDisplayText;
 
-    private void Awake()
-    {
-        //find and assign the components of the settings menu
-        /*
-        olumeSlider = GameObject.Find("VolumeSlider").GetComponent<Slider>();
-        musicSlider = GameObject.Find("Music Slider").GetComponent<Slider>();
-        volumeDisplayText = GameObject.Find("VolumeText").GetComponent<TextMeshProUGUI>();
-        qualityOptions = GameObject.Find("QualityOptions").GetComponent<TMP_Dropdown>();
-        windowToggle = GameObject.Find("WindowButton").GetComponent<Button>();
-        resetToggle = GameObject.Find("ResetToDefaultButton").GetComponent<Button>();
-        controlsToggle = GameObject.Find("ControlSchemeButton").GetComponent<Button>();
-        controlSchemeDisplay = GameObject.Find("ControlSchemeButtonText").GetComponent<TextMeshProUGUI>();
-        controlSchemeManagerScript = GameObject.Find("ControlSchemeManager").GetComponent<ControlSchemeManager>();
-        windowDisplayText = GameObject.Find("WindowText").GetComponent<TextMeshProUGUI>(); 
-        */
-    }
-
     void Start()
     {
         //set intital values and proporties of components
@@ -93,11 +76,11 @@ public class SettingsMenu : MonoBehaviour
     {
         if (volumeSlider.value == 0)
         {
-            volumeDisplayText.text = "Master Volume: Muted";
+            volumeDisplayText.text = "X";
         }
         else
         {
-            volumeDisplayText.text = "Master Volume: " + volumeSlider.value.ToString();
+            volumeDisplayText.text = volumeSlider.value.ToString();
         }
     }
 
