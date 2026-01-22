@@ -1,4 +1,3 @@
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Upgrade Item Definition", menuName = "Upgrade System/New Upgrade Item Definition")]
