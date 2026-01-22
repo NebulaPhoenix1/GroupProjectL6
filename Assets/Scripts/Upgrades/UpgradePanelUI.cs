@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+//Luke script
 //This class takes the data in upgrade scriptable object and automatically fills in relevant UI fields.
 public class UpgradePanelUI : MonoBehaviour
 {

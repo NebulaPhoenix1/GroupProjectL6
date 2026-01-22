@@ -1,6 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
-//Luke script mainly, Leyton added audio and debris logic, Shara did screen shake (unused)
+//Luke script mainly, Leyton added audio, debris and dash logic, Shara did screen shake (unused)
 public class Obstacle : MonoBehaviour
 {
     private PlayerMovement playerMovement;

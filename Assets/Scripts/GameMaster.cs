@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using Unity.Cinemachine;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
-//Luke script mainly, shara contirbuted a few lines, Leyton added scoring/tutorial logic
+//Luke script mainly, shara contributed a few lines, Leyton added scoring/tutorial logic
 public class GameMaster : MonoBehaviour
 {
     enum GameState

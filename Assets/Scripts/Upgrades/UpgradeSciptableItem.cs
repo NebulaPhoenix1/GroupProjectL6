@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//Luke script
 [CreateAssetMenu(fileName = "New Upgrade Item Definition", menuName = "Upgrade System/New Upgrade Item Definition")]
 public class UpgradeSciptableItem : ScriptableObject
 {
