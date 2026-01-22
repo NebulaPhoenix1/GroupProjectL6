@@ -363,15 +363,31 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnDash:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashFinish:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEscapePressed:
+    m_PersistentCalls:
+      m_Calls: []
+  dashAndDisplay: {fileID: 0}
+  tutorialStateManager: {fileID: 0}
+  tutorialButtons: {fileID: 0}
   jumpForce: 0
+  laneWidth: 1.5
+  nextInputDelay: 0.2
+  jumpInputDelay: 1
+  laneChangeSpeed: 5
+  isPlayerDashing: 0
+  dashEndInvincibilityTime: 0.5
+  canDashWhileStumbling: 0
   groundCheckTransform: {fileID: 0}
   groundCheckRayCastDistance: 0
   groundLayers:
     serializedVersion: 2
     m_Bits: 0
-  laneWidth: 1.5
-  nextInputDelay: 0.2
-  jumpInputDelay: 1
   stumbleInvincibilityTime: 0
   stumbleRecoverTime: 0
   stumbleCheckOrigin: {fileID: 4866217831886955832}
@@ -380,6 +396,7 @@ MonoBehaviour:
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 0
+  invincibilityTesting: 0
 --- !u!114 &8483544491357984921
 MonoBehaviour:
   m_ObjectHideFlags: 0

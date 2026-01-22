@@ -24,7 +24,7 @@ public class GameMaster : MonoBehaviour
 
     [SerializeField] private GameState gameState;
     [SerializeField] private CinemachineCamera cineCam;
-
+    
     private float rawScore;
     private float scoreOffset;
     private float tutorialOffset;

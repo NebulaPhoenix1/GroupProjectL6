@@ -1,8 +1,10 @@
 using System.Collections;
 using NUnit.Framework;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
@@ -36,15 +38,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerDashAndDisplay dashAndDisplay;
     [SerializeField] private TutorialStateManager tutorialStateManager;
     [SerializeField] private TutorialButtons tutorialButtons;
-    [SerializeField] private StumbleRecoveryProgress stumbleRecoveryProgress;
+    [SerializeField] private CinemachineImpulseSource cinemachineImpulse; //Reference to the camera shake script to trigger shakes on stumble
     private GameMaster gameMaster;
     private LevelSpawner levelSpawner;
     private Rigidbody playerRigidbody;
 
     [Header("Movement Speed and Input Settings")]
     [SerializeField] private float jumpForce;
-    [Tooltip("The higher this number, the harder the fall")]
-    [SerializeField] private float fallMultiplier = 2.5f;
     [SerializeField] private float laneWidth = 2f;
     [SerializeField] private float nextInputDelay = 3f; //Time delay between lane switch inputs
     [SerializeField] private float jumpInputDelay = 1.0f;
@@ -59,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayers;
 
     //States
+    //private CinemachineImpulseSource impulseSource;
     private Lanes currentLane = Lanes.Center;
     private float currentJumpDelay;
     private float currentStumbleInvincibilityTime;
@@ -68,7 +69,6 @@ public class PlayerMovement : MonoBehaviour
     private RigidbodyConstraints unlockedX = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
 
     private bool isStumbling = false;
-    private bool isJumping = false;
     private bool isGameOver = false;
 
     //Stumble Values
@@ -83,26 +83,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask obstacleLayers;
     [SerializeField] private bool invincibilityTesting = false;
 
-    private void OnDrawGizmos()
-    {
-        if (groundCheckTransform != null)
-        {
-            // If checking fails (red), if it hits (green)
-            bool isHit = Physics.Raycast(groundCheckTransform.position, Vector3.down, groundCheckRayCastDistance, groundLayers);
-            Gizmos.color = isHit ? Color.green : Color.red;
-            Gizmos.DrawLine(groundCheckTransform.position, groundCheckTransform.position + Vector3.down * groundCheckRayCastDistance);
-        }
-    }
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //impulseSource = GetComponent<CinemachineImpulseSource>();
         gameMaster = GameObject.Find("Game Master").GetComponent<GameMaster>();
         levelSpawner = GameObject.Find("Level Spawner").GetComponent<LevelSpawner>();
         playerRigidbody = GetComponent<Rigidbody>();
         InitialiseControlScheme();
         jumpAction = InputSystem.actions.FindAction("Jump");
         pauseAction = InputSystem.actions.FindAction("Pause");
+
 
         if(tutorialStateManager.GetIsFirstTutorial())
         {
@@ -123,18 +114,30 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameMaster != null && !gameMaster.GetGameplayState()){ return; }
-        if(isGameOver) { return; }
+        if (gameMaster != null && !gameMaster.GetGameplayState()) { return; }
+        if (isGameOver) { return; }
 
         HandleTimers();
         HandleInputs();
     }
+    //private void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+    //    if (hit.gameObject.CompareTag("Obstacle"))
+    //    {
+    //        //determine direction based on if the obstical is left or right
+    //        Vector3 hitDirection = (transform.position - hit.point).normalized;
+    //        Vector3 shakeDir = new Vector3(hitDirection.x, 0, 0);
 
+    //        //trigger shake
+    //        camShake.TriggerShake(shakeDir);
+
+    //    }
+    //}
     private void HandleTimers()
     {
         //Lane switch and jump delay timers
         if(inputDelayTimer > 0f) inputDelayTimer -= Time.deltaTime;
-        if(currentJumpDelay >0f && !isJumping) currentJumpDelay -= Time.deltaTime;
+        if(currentJumpDelay >0f) currentJumpDelay -= Time.deltaTime;
         //Stumbling logic
         if(currentStumbleInvincibilityTime > 0f)
         {
@@ -148,12 +151,9 @@ public class PlayerMovement : MonoBehaviour
             if(currentStumbleTimer <= 0f)
             {
                 RecoverFromStumble();
-                return;
             }
-            stumbleRecoveryProgress.OnRecoveryTick();
         }
     }
-
     private void HandleInputs()
     {
         //Lane switch
@@ -167,13 +167,6 @@ public class PlayerMovement : MonoBehaviour
         if(jumpAction.WasPressedThisFrame() && currentJumpDelay <= 0f && GroundCheck())
         {
            PerformJump();
-        }
-        //Reset Jump State if grounded
-        if(GroundCheck() && isJumping && playerRigidbody.linearVelocity.y <= -0.1f) {  isJumping = false; }
-        //Check if downwards velocity needs adjusting after hitting apex of jump
-        if(!GroundCheck() && isJumping)
-        {
-            AlterJumpVelocity();
         }
         //Dash
         if(dashAction.WasPressedThisFrame() && dashAndDisplay.canDash && !isPlayerDashing)
@@ -190,7 +183,6 @@ public class PlayerMovement : MonoBehaviour
         {
             OnEscapePressed.Invoke();
         }
-        
     }
         
     private void TrySwitchLane(Lanes targetLane, Lanes oppositeLane)
@@ -200,7 +192,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if(currentLane == Lanes.Center) { finalTargetLane = Lanes.Left;}
             else if(currentLane == Lanes.Right) { finalTargetLane = Lanes.Center;}
-            else { AttemptStumble(); return;}
+            else{ AttemptStumble(); return;}
         }
         else
         {
@@ -276,19 +268,7 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.linearVelocity = velocity;
         playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         currentJumpDelay = jumpInputDelay;
-        isJumping = true;
         OnJump.Invoke();
-    }
-
-    private void AlterJumpVelocity()
-    {
-        //Check we are falling
-        if(playerRigidbody.linearVelocity.y < 0)
-        {
-            Vector3 gravityForce = Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime; //-1 as Unity applies gravity for us, so we don't want to add too much
-            playerRigidbody.linearVelocity += gravityForce;
-            //Debug.Log("Added force to fall:" +  gravityForce);
-        }
     }
 
     private bool GroundCheck()
@@ -327,9 +307,9 @@ public class PlayerMovement : MonoBehaviour
     private void StartStumble()
     {
         isStumbling = true;
+        TriggerShake();
         currentStumbleInvincibilityTime = stumbleInvincibilityTime;
         currentStumbleTimer = stumbleRecoverTime;
-        stumbleRecoveryProgress.OnRecoveryStart();
         //Debug.Log("Player Stumbled");
         OnStumble.Invoke();
     }
@@ -339,26 +319,23 @@ public class PlayerMovement : MonoBehaviour
         if(isGameOver) { return; }
         isStumbling = false;
         Debug.Log("Recovered from stumble");
-        stumbleRecoveryProgress.OnRecoveryEnd();
         OnRecover.Invoke();
     }
 
     public void TriggerGameOver()
     {
+        TriggerShake();
         isGameOver = true;
         Debug.Log("Game Over");
         OnGameOver.Invoke();
         playerRigidbody.isKinematic = true; //Stop all player movement
     }
 
-    public float GetTotalRecoveryTime()
+    //Have the camera shake up when stumbling
+    private void TriggerShake()
     {
-        return stumbleRecoverTime;
-    }
-
-    public float GetCurrentStumblingTime()
-    {
-        return currentStumbleTimer;
+        Debug.Log("Camera Shake Triggered");
+        cinemachineImpulse.GenerateImpulse();
     }
 
     public void InitialiseControlScheme()
