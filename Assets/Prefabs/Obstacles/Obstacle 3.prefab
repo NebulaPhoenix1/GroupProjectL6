@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6455451868270940403}
   - component: {fileID: 1400243932452203536}
+  - component: {fileID: 8352594276467026513}
   m_Layer: 0
   m_Name: Obstacle 3
   m_TagString: Untagged
@@ -47,6 +48,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
   instantGameOver: 0
   debrisParticles: {fileID: 1105822864513978609, guid: 89ef7be19e3803b47ab8f7c98e92105d, type: 3}
+--- !u!65 &8352594276467026513
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794460316948897037}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2523067, y: 1.4320378, z: 2.072333}
+  m_Center: {x: 0.014871359, y: 0.7280979, z: 0.09062374}
 --- !u!1 &3570370218704850309
 GameObject:
   m_ObjectHideFlags: 0
