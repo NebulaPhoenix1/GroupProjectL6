@@ -53,8 +53,8 @@ namespace DeerFunk.CartoonAdventures.Editor
             }
 
             // Check if objects already exist in scene
-            CartoonMusicManager existingManager = GameObject.FindObjectOfType<CartoonMusicManager>();
-            MusicDemoController existingController = GameObject.FindObjectOfType<MusicDemoController>();
+            CartoonMusicManager existingManager = GameObject.FindFirstObjectByType<CartoonMusicManager>();
+            MusicDemoController existingController = GameObject.FindFirstObjectByType<MusicDemoController>();
 
             if (existingManager != null || existingController != null)
             {

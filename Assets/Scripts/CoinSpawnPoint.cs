@@ -6,7 +6,7 @@ public class CoinSpawnPoint : MonoBehaviour
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private GameObject activeCoin;
     private Vector3 initialLocalPosition;
-    private bool positionCaptured = false;
+    //private bool positionCaptured = false;
     // References
     private UpgradeManager upgradeManager;
     private GameMaster gameMaster;
@@ -24,12 +24,12 @@ public class CoinSpawnPoint : MonoBehaviour
         if (activeCoin != null)
         {
             initialLocalPosition = activeCoin.transform.localPosition;
-            positionCaptured = true;
+            //positionCaptured = true;
         }
         else
         {
             initialLocalPosition = Vector3.zero;
-            positionCaptured = true;
+            //positionCaptured = true;
         }
 
         //Find Managers

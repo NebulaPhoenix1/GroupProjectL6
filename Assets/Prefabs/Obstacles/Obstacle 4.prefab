@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4931675093540714723}
   - component: {fileID: 655775145482470786}
+  - component: {fileID: 4817962940156235265}
   m_Layer: 0
   m_Name: Obstacle 4
   m_TagString: Untagged
@@ -47,6 +48,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
   instantGameOver: 0
   debrisParticles: {fileID: 1105822864513978609, guid: 89ef7be19e3803b47ab8f7c98e92105d, type: 3}
+--- !u!65 &4817962940156235265
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202276436366352147}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2259337, y: 1.4000912, z: 2.0637717}
+  m_Center: {x: 0.16474359, y: 0.6142578, z: -0.032948732}
 --- !u!1 &2706970821215592696
 GameObject:
   m_ObjectHideFlags: 0
