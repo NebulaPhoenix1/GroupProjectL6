@@ -5,7 +5,7 @@ using UnityEngine;
 //Luke script 
 public class ObstacleSpawner : ObjectSpawner
 {
-    //private bool hasAttemptedSpawn = false;
+    private bool hasAttemptedSpawn = false;
     private GameMaster gameMaster;
     [SerializeField] private Transform spawnTransform;
 
@@ -16,7 +16,7 @@ public class ObstacleSpawner : ObjectSpawner
 
     private void OnEnable()
     {
-        //hasAttemptedSpawn = false;
+        hasAttemptedSpawn = false;
     }
 
     protected override void Update()
@@ -49,9 +49,9 @@ public class ObstacleSpawner : ObjectSpawner
         //Do a check to see if this object has any children (i.e. spawned obstacle)
         if(transform.childCount == 0)
         {
-            //hasAttemptedSpawn = false;
+            hasAttemptedSpawn = false;
             Debug.LogError("Obstacle Spawner has no child objects even after SpawnObject() call");
         }
-        else { /*hasAttemptedSpawn = true;*/}
+        else { hasAttemptedSpawn = true; }
     }
 }

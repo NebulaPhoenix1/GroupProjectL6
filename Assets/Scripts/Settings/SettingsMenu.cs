@@ -161,10 +161,10 @@ public class SettingsMenu : MonoBehaviour
         }
         else
         {
-            Screen.fullScreenMode = FullScreenMode.Windowed;
-            currentFullScreenMode = FullScreenMode.Windowed;
-            windowDisplayText.text = "Windowed";
-            Debug.Log("Set as windowed");
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            currentFullScreenMode = FullScreenMode.FullScreenWindow;
+            windowDisplayText.text = "Fullscreen";
+            Debug.Log("Set as fullscreen");
         }
     }
 
@@ -203,10 +203,10 @@ public class SettingsMenu : MonoBehaviour
         }
         else
         {
-            //default to windowed settings if fullscreen mode somehow becomes an unintended option (ExclusiveFullScreen or MaximizedWindow settings)
-            Screen.fullScreenMode = FullScreenMode.Windowed;
-            currentFullScreenMode = FullScreenMode.Windowed;
-            windowDisplayText.text = "Windowed";
+            //default to fullscreen settings if fullscreen mode somehow becomes an unintended option (ExclusiveFullScreen or MaximizedWindow settings)
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            currentFullScreenMode = FullScreenMode.FullScreenWindow;
+            windowDisplayText.text = "Fullscreen";
         }
     }
     public void SetDefaultSettings()
@@ -221,16 +221,16 @@ public class SettingsMenu : MonoBehaviour
 
         musicSlider.value = 0.5f;
 
-        //Screen.SetResolution(defaultResolution.width, defaultResolution.height, currentFullScreenMode);
+        Screen.SetResolution(defaultResolution.width, defaultResolution.height, currentFullScreenMode);
         PlayerPrefs.SetString("Resolution", (defaultResolution.width.ToString() + "x" + defaultResolution.height.ToString()));
         PlayerPrefs.SetInt("ResolutionX", defaultResolution.width);
         PlayerPrefs.SetInt("ResolutionY", defaultResolution.height);
 
         Debug.Log(defaultResolution);
 
-        Screen.fullScreenMode = FullScreenMode.Windowed;
-        currentFullScreenMode = FullScreenMode.Windowed;
-        windowDisplayText.text = "Windowed";
+        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        currentFullScreenMode = FullScreenMode.FullScreenWindow;
+        windowDisplayText.text = "Fullscreen";
         qualityOptions.value = defaultResolutionIndex;
 
         controlSchemeManagerScript.ResetToDefault();

@@ -32,8 +32,8 @@ public class PlayerDashAndDisplay : MonoBehaviour
     [Tooltip("How many fewer coins the dash costs with the upgrade")]
     [SerializeField] private int reducedDashCost;
     private UpgradeManager upgradeManager;
-    //private bool hasDashDurationUpgrade = false;
-    //private bool hasDashCostUpgrade = false;
+    private bool hasDashDurationUpgrade = false;
+    private bool hasDashCostUpgrade = false;
 
     [SerializeField] private float fillSpeed = 5f;
 
@@ -62,13 +62,13 @@ public class PlayerDashAndDisplay : MonoBehaviour
         int durationLevel = upgradeManager.GetUpgradeCurrentLevel(dashDurationUpgrade.upgradeID);
         if (durationLevel > 0) //If level is greater than 0, we own the upgrade
         {
-            //hasDashDurationUpgrade = true;
+            hasDashDurationUpgrade = true;
             float extendDurationAmount = dashDurationUpgrade.GetValueForLevel(durationLevel);
             dashDuration += extendDurationAmount;
         }
         if (upgradeManager.GetUpgradeCurrentLevel(dashCostUpgrade.upgradeID) > 0) //If level is greater than 0, we own the upgrade
         {
-            //hasDashCostUpgrade = true;
+            hasDashCostUpgrade = true;
             meterMaximum -= reducedDashCost;
         }
 
