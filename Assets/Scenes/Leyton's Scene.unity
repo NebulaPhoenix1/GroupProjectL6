@@ -3424,13 +3424,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDashAndDisplay
   tutorialManager: {fileID: 1771808299}
   sliderFill: {fileID: 1783103914}
+  controlGlyphWASD: {fileID: 344883650}
+  controlGlyphArrowKeys: {fileID: 1289104976}
   nonFilledColor: {r: 1, g: 0, b: 0, a: 1}
   filledColor: {r: 1, g: 0.39215687, b: 0, a: 1}
   meterStartValue: 3
   meterMinimum: 0
   meterMaximum: 15
-  canDash: 0
   dashDuration: 6
+  canDash: 0
   dashDurationUpgrade: {fileID: 11400000, guid: 8f4c88367edcb45f6b6a8b038e380271, type: 2}
   dashCostUpgrade: {fileID: 11400000, guid: 9e7496930e26c4677847ce7597f685ed, type: 2}
   reducedDashCost: 5

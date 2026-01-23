@@ -6,9 +6,11 @@ using UnityEngine.UI;
 //Leyton script, tweaked by Luke to make bars smoothly fill/deplete and for tutorial values
 public class PlayerDashAndDisplay : MonoBehaviour
 {
-    [SerializeField]private TutorialStateManager tutorialManager;
-    private Slider dashDisplay;
+    [SerializeField] private TutorialStateManager tutorialManager;
     [SerializeField] private GameObject sliderFill;
+    [SerializeField] private GameObject controlGlyphWASD;
+    [SerializeField] private GameObject controlGlyphArrowKeys;
+    private Slider dashDisplay;
 
     private float collectedCoins = 0;
     [SerializeField] private Color nonFilledColor; //Red for when using dash
@@ -17,8 +19,8 @@ public class PlayerDashAndDisplay : MonoBehaviour
     [SerializeField] private int meterStartValue = 3;
     [SerializeField] private int meterMinimum = 0;
     [SerializeField] private int meterMaximum = 15;
-    public bool canDash = false;
     [SerializeField] private float dashDuration;
+    public bool canDash = false;
 
     //Bool to say if player is dashing; this determines how the bar fills/depletes
     //If depleting, bar shows time left on dash
@@ -117,7 +119,7 @@ public class PlayerDashAndDisplay : MonoBehaviour
         {
             sliderFill.GetComponent<Image>().color = filledColor;
             canDash = true;
-            
+            ShowDashGlyph();
         }
         //Failsafe to reset color 
         else
@@ -169,6 +171,27 @@ public class PlayerDashAndDisplay : MonoBehaviour
         Debug.Log("Dash ended, resetting coin count, time: " + timePassed);
         collectedCoins = 0;
         dashDisplay.value = 0;
+    }
+
+    private void ShowDashGlyph()
+    {
+        switch(PlayerPrefs.GetInt("ControlSchemeKey"))
+        {
+            case 0:
+                controlGlyphWASD.SetActive(true);
+                controlGlyphArrowKeys.SetActive(false);
+                break;
+
+            case 1:
+                controlGlyphArrowKeys.SetActive(true);
+                controlGlyphWASD.SetActive(false);
+                break;
+
+            default:
+                controlGlyphWASD.SetActive(true);
+                controlGlyphArrowKeys.SetActive(false);
+                break;
+        }
     }
 
     public float GetDashDuration()
