@@ -5495,7 +5495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreText
   scoreText: {fileID: 1853942970}
-  highScores: {fileID: 1387837908}
+  highScoreText: {fileID: 1387837908}
   gameMaster: {fileID: 1771808296}
 --- !u!114 &834271960
 MonoBehaviour:
@@ -15133,7 +15133,7 @@ GameObject:
   - component: {fileID: 1387837909}
   - component: {fileID: 1387837908}
   m_Layer: 5
-  m_Name: High Score Text
+  m_Name: HighScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15155,8 +15155,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 530, y: -120}
-  m_SizeDelta: {x: 1000, y: 500}
+  m_AnchoredPosition: {x: 635, y: -250}
+  m_SizeDelta: {x: 491.1004, y: 90.0122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1387837908
 MonoBehaviour:
@@ -15205,8 +15205,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -18933,7 +18933,7 @@ GameObject:
   - component: {fileID: 1853942971}
   - component: {fileID: 1853942970}
   m_Layer: 5
-  m_Name: Score Text
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18986,17 +18986,17 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 110
+  m_fontSizeBase: 110
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -19054,8 +19054,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 697, y: -226}
-  m_SizeDelta: {x: 500, y: 150}
+  m_AnchoredPosition: {x: 635, y: -145}
+  m_SizeDelta: {x: 622.6166, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1856277141 stripped
 MonoBehaviour:
