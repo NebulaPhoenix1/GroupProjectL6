@@ -8,9 +8,9 @@ public class TutorialStateManager : MonoBehaviour
 
     //tutorial elements to be individually accessed to explain controls to player
     [SerializeField] private GameObject WASDGlyphHolder;
-    [SerializeField] private GameObject[] WASDGlyphs = new GameObject[4];
+    [SerializeField] private GameObject[] WASDGlyphs = new GameObject[3];
     [SerializeField] private GameObject arrowKeysGlyphHolder;
-    [SerializeField] private GameObject[] arrowKeysGlyphs = new GameObject[4];
+    [SerializeField] private GameObject[] arrowKeysGlyphs = new GameObject[3];
     [SerializeField] private GameObject firstTutorialObjectsHolder;
     [SerializeField] private GameObject[] firstTutorialObjects = new GameObject[4];
 
@@ -181,6 +181,7 @@ public class TutorialStateManager : MonoBehaviour
     {
         playerMovement.EnableActions(2);
 
+        /*
         switch (PlayerPrefs.GetInt("ControlSchemeKey"))
         {
             case 0:
@@ -210,6 +211,7 @@ public class TutorialStateManager : MonoBehaviour
                 Debug.Log("Dash tutorial: Showing WASD Glyphs by default");
                 break;
         }
+        */
 
         firstTutorialObjects[3].SetActive(true);
 
@@ -219,10 +221,12 @@ public class TutorialStateManager : MonoBehaviour
         playerMovement.AssignTutorialEvents();
         yield return new WaitUntil(() => tutorialChecks[2]);
 
+        /*
         WASDGlyphHolder.SetActive(false);
         WASDGlyphs[3].SetActive(false);
         arrowKeysGlyphHolder.SetActive(false);
         arrowKeysGlyphs[3].SetActive(false);
+        */
         firstTutorialObjects[3].SetActive(false);
         firstTutorialObjectsHolder.SetActive(false);
 

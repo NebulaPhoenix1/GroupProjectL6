@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -20,6 +21,7 @@ public class PlayerDashAndDisplay : MonoBehaviour
     [SerializeField] private int meterMinimum = 0;
     [SerializeField] private int meterMaximum = 15;
     [SerializeField] private float dashDuration;
+    private bool isDashPrepared;
     public bool canDash = false;
 
     //Bool to say if player is dashing; this determines how the bar fills/depletes
@@ -90,6 +92,7 @@ public class PlayerDashAndDisplay : MonoBehaviour
 
     private void Start()
     {
+        isDashPrepared = false;
         if(!tutorialManager.isFirstTutorial)
         {
             EnableDefaultDashValues();
@@ -115,11 +118,13 @@ public class PlayerDashAndDisplay : MonoBehaviour
             Debug.Log("Can't find display object");
         }
 
-        if (collectedCoins >= meterMaximum || (collectedCoins >= tutorialDashCost && tutorialManager.isFirstTutorial))
+        if ((collectedCoins >= meterMaximum || (collectedCoins >= tutorialDashCost && tutorialManager.isFirstTutorial)) && !isDashPrepared)
         {
             sliderFill.GetComponent<Image>().color = filledColor;
             canDash = true;
             ShowDashGlyph();
+            StartCoroutine(TweenColorOnFullBar());
+            isDashPrepared = true;
         }
         //Failsafe to reset color 
         else
@@ -141,8 +146,12 @@ public class PlayerDashAndDisplay : MonoBehaviour
         Debug.Log("Player dashed, starting dash depletion");
         StartCoroutine(DecreaseCoinCount());
         canDash = false;
+        controlGlyphWASD.SetActive(false);
+        controlGlyphArrowKeys.SetActive(false);
+        StopCoroutine(TweenColorOnFullBar());
         sliderFill.GetComponent<Image>().color = nonFilledColor;
         isDashing = true;
+        isDashPrepared = false;
     }
 
     private IEnumerator DecreaseCoinCount()
@@ -191,6 +200,22 @@ public class PlayerDashAndDisplay : MonoBehaviour
                 controlGlyphWASD.SetActive(true);
                 controlGlyphArrowKeys.SetActive(false);
                 break;
+        }
+    }
+
+    private IEnumerator TweenColorOnFullBar()
+    {
+        var getFill = sliderFill.GetComponent<Image>();
+
+        while (true)
+        {
+            getFill.CrossFadeColor(new Color(224f, 0f, 0f), 0.5f, false, false);
+
+            yield return new WaitForSeconds(0.5f);
+
+            getFill.CrossFadeColor(filledColor, 0.5f, false, false);
+
+            yield return new WaitForSeconds(0.5f);
         }
     }
 

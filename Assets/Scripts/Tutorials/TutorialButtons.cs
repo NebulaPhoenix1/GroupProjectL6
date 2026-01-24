@@ -6,12 +6,12 @@ using TMPro;
 public class TutorialButtons : MonoBehaviour
 {
     [SerializeField] private GameObject WASDGlyphHolder;
-    [SerializeField] private GameObject[] WASDGlyphs = new GameObject[4];
+    [SerializeField] private GameObject[] WASDGlyphs = new GameObject[3];
     [SerializeField] private GameObject arrowKeysGlyphHolder;
-    [SerializeField] private GameObject[] arrowKeysGlyphs = new GameObject[4];
+    [SerializeField] private GameObject[] arrowKeysGlyphs = new GameObject[3];
 
-    private float[] backgroundAlphas = new float[4];
-    private float[] characterAlphas = new float[4];
+    private float[] backgroundAlphas = new float[3];
+    private float[] characterAlphas = new float[3];
 
     [SerializeField] private float fadeDuration;
     [SerializeField] private float fadeOutDuration;
